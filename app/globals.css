@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary:#6A48E8;
+  --secondary:#484848;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-primary:var(--primary);
+  --color-secondary:var(--secondary);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-gothic: var(--font-century-gothic);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+
+
+body {
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+
+.sfPro {
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.gothicFont {
+  font-family: var(--font-century-gothic), Arial, sans-serif;
+}
+
+.hidden-content {
+  opacity: 0 !important;
+  visibility: hidden;
+}
