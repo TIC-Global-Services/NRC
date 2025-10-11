@@ -319,7 +319,7 @@ const Navbar: React.FC<NavbarProps> = ({ visibility = true, isHomePage = false }
 
   return (
     <motion.div
-      className="fixed left-0 right-0 z-40 w-full hidden lg:block z-[999]"
+      className="fixed left-0 right-0 w-full hidden lg:block z-[999]"
       style={{ top: isHomePage ? "24px" : "40px" }}
       initial={{ y: -120, opacity: 0 }}
       animate={{
