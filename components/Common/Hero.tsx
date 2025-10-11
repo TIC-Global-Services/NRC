@@ -15,6 +15,9 @@ interface HeroProps {
   desc1?: string;
   desc2?: string;
   desc3?: string;
+  mobDes1?: string;
+  mobDes2?: string;
+  mobDes3?: string;
   isCTA?: boolean;
   CTAOne?: string;
   CTATwo?: string;
@@ -94,6 +97,9 @@ const Hero: React.FC<HeroProps> = ({
   desc1,
   desc2,
   desc3,
+  mobDes1,
+  mobDes2,
+  mobDes3,
   isCTA,
   CTAOne,
   CTATwo,
@@ -486,8 +492,8 @@ const Hero: React.FC<HeroProps> = ({
                 </motion.span>
               )}
 
-              {/* Subheading with line reveals */}
-              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto">
+              {/* Desktop - Subheading with line reveals */}
+              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:block hidden">
                 <motion.div
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
@@ -503,6 +509,26 @@ const Hero: React.FC<HeroProps> = ({
                   {desc2}
                   <br />
                   {desc3}
+                </motion.div>
+              </div>
+
+              {/* mobile desc */}
+              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden ">
+                <motion.div
+                  className="text-[#484848]"
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: "0%", opacity: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.5,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                >
+                  {mobDes1}
+                  <br />
+                  {mobDes2}
+                  <br />
+                  {mobDes3}
                 </motion.div>
               </div>
 

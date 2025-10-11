@@ -21,48 +21,44 @@ const MobileNavbarDemo = () => {
 
   const navItems = [
     { name: "Home", hasDropdown: false, link: "/" },
-    { name: "About Us", hasDropdown: false, link: "/about" },
-    { name: "Asset Management", hasDropdown: true, link: "/assets" },
-    { name: "Corporate Advisory", hasDropdown: false, link: "/advisory" },
+    { name: "About us", hasDropdown: false, link: "/about" },
+    { name: "Asset Management", hasDropdown: true, link: "#" },
+    { name: "Corporate Advisory", hasDropdown: false, link: "/corporate-advisory" },
     { name: "Team", hasDropdown: false, link: "/team" },
-    { name: "Insight", hasDropdown: false, link: "/insights" },
-    { name: "Contact us", hasDropdown: false, link: "/contact" },
+    { name: "Insights", hasDropdown: false, link: "/insights" },
+    { name: "Contact Us", hasDropdown: false, link: "/contact" },
   ];
 
   const dropdownItems = [
-    {
-      name: "Portfolio Management Services (PMS)",
-      link: "/services/portfolio",
-    },
-    {
-      name: "Alternative Investment Funds (AIF)",
-      link: "/services/investment",
-    },
+    { name: "PMS", link: "/pms" },
+    { name: "AIF", link: "/aif" }
   ];
 
-  const handleNavClick = (item: any) => {
+  const handleNavClick = (item:any) => {
     if (item.hasDropdown) {
       setExpandedDropdown(expandedDropdown === item.name ? null : item.name);
     } else {
       setActiveItem(item.name);
       setIsMenuOpen(false);
       setExpandedDropdown(null);
+      // Navigate to the link
+      window.location.href = item.link;
     }
   };
 
-  const handleSubNavClick = (subItem: any) => {
-    console.log(`Navigating to: ${subItem.link}`);
+  const handleSubNavClick = (subItem:any) => {
     setIsMenuOpen(false);
     setExpandedDropdown(null);
+    // Navigate to the link
+    window.location.href = subItem.link;
   };
 
   return (
     <div>
       {/* Fixed Header - No initial animation, immediate positioning */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 md:hidden block  transition-opacity duration-300 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 md:hidden block  transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"
+          }`}
       >
         <div className="flex items-center justify-between px-6 py-4">
           {/* Logo - Static positioning */}
@@ -148,11 +144,10 @@ const MobileNavbarDemo = () => {
                       onClick={() => handleNavClick(item)}
                     >
                       <span
-                        className={`text-2xl leading-[34px] transition-colors duration-200 ${
-                          activeItem === item.name
+                        className={`text-2xl leading-[34px] transition-colors duration-200 ${activeItem === item.name
                             ? "text-black "
                             : "text-gray-600 "
-                        }`}
+                          }`}
                       >
                         {item.name}
                       </span>

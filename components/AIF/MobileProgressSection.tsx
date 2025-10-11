@@ -19,6 +19,7 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
     const sectionsRef = useRef<HTMLDivElement>(null);
     const progressLineRef = useRef<HTMLDivElement>(null);
     const [currentProgress, setCurrentProgress] = useState(0);
+    const scrollTriggerRef = useRef<any>(null);
 
     useEffect(() => {
         const loadScript = (src: string): Promise<void> => {
@@ -55,7 +56,13 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
 
                 const getTotalWidth = () => sections.scrollWidth;
 
-                gsap.to(sections, {
+                // Kill any existing ScrollTrigger for this component
+                if (scrollTriggerRef.current) {
+                    scrollTriggerRef.current.kill();
+                }
+
+                // Create the ScrollTrigger and store the reference
+                const tl = gsap.to(sections, {
                     x: () => -(getTotalWidth() - window.innerWidth),
                     ease: "none",
                     scrollTrigger: {
@@ -65,12 +72,16 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
                         end: () => "+=" + (getTotalWidth() - window.innerWidth),
                         scrub: 1,
                         invalidateOnRefresh: true,
+                        anticipatePin: 1,
                         onUpdate: (self: any) => {
                             progressLine.style.width = `${self.progress * 100}%`;
                             setCurrentProgress(self.progress);
                         }
                     }
                 });
+
+                // Store the ScrollTrigger instance
+                scrollTriggerRef.current = tl.scrollTrigger;
 
             } catch (error) {
                 console.error('Failed to load GSAP:', error);
@@ -80,16 +91,18 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
         initAnimation();
 
         return () => {
-            if ((window as any).ScrollTrigger) {
-                (window as any).ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
+            // Clean up only this component's ScrollTrigger
+            if (scrollTriggerRef.current) {
+                scrollTriggerRef.current.kill();
+                scrollTriggerRef.current = null;
             }
         };
-    }, []);
+    }, [steps]);
 
     return (
         <div
             ref={wrapperRef}
-            className="relative w-full bg-white"
+            className="relative w-full bg-white overflow-hidden"
             style={{ height: '60vh' }}
         >
             {/* Fixed Title */}
@@ -99,7 +112,7 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
 
             <div
                 ref={sectionsRef}
-                className="flex items-center"
+                className="flex items-center will-change-transform"
                 style={{ height: '60vh' }}
             >
                 {/* Progress Line Section */}
@@ -113,7 +126,7 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
                             {/* Purple Progress Line */}
                             <div
                                 ref={progressLineRef}
-                                className="absolute top-0 left-0 h-1.5 bg-[#6366F1] rounded-full"
+                                className="absolute top-0 left-0 h-1.5 bg-[#6366F1] rounded-full transition-all duration-100"
                                 style={{ width: '0%' }}
                             />
                         </div>

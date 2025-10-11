@@ -14,6 +14,10 @@ const About = () => {
                 title2Color="Guiding with clarity."
                 desc1="Independent asset management and corporate advisory for HNIs & family offices —"
                 desc2='focused on high-growth opportunities across new economy and traditional sectors.'
+                
+                mobDes1='Independent asset management and corporate advisory '
+                mobDes2='for HNIs & family offices focused on high-growth opportunities across new economy and traditional sectors.'
+                
                 isCTA
                 CTAOne='Speak with our team'
                 CTATwo='Download our capabilities'
