@@ -148,22 +148,27 @@ const WhyNRC = () => {
           className="hidden md:grid grid-cols-[4fr_6fr] justify-start items-start gap-x-32"
         >
           {/* Left Side - Fixed */}
-          <div ref={leftSideRef} className="sticky top-0 h-screen flex flex-col justify-center">
-            <SlideUpText animationMode="always" className=" mb-4">
-              <h1 className="text-[44px] leading-[58px] font-[400]">
-                Why <span className="text-primary ">NRC?</span>
-              </h1>
-            </SlideUpText>
-            <div className="flex flex-col justify-between items-start h-[80vh]">
+          <div
+            ref={leftSideRef}
+            className="sticky top-0 h-screen flex flex-col items-center justify-center"
+          >
+            <div className="flex flex-col items-start justify-start">
+              <SlideUpText animationMode="always" className="mb-6">
+                <h1 className="text-[44px] leading-[58px] font-[400] text-left">
+                  Why <span className="text-primary">NRC?</span>
+                </h1>
+              </SlideUpText>
+
               <Image
                 src={WhyNRCImg}
                 alt="Why NRC Building"
-                className=""
                 width={540}
                 height={669}
+                className="object-cover h-[80vh] rounded-xl"
               />
             </div>
           </div>
+
 
           {/* Right Side - Scrollable Content */}
           <div ref={rightSideRef} className="py-0">

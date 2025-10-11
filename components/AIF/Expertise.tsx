@@ -33,7 +33,7 @@ const DeskCustomCard = ({
 }: CustomCardProps) => {
   return (
     <div
-      className={`relative ${cardIndex === 2 ? 'bg-[#C5C3FE]' : 'bg-[#F3F3F5]'} rounded-xl px-6 pt-8 overflow-hidden transition-all duration-300 cursor-pointer transform flex flex-col justify-between items-center gap-3 ${className}`}
+      className={`relative ${(cardIndex === 2 || cardIndex === 4) ? 'bg-[#C5C3FE]' : 'bg-[#F3F3F5]'} rounded-xl px-6 pt-8 overflow-hidden transition-all duration-300 cursor-pointer transform flex flex-col justify-between items-center gap-3 ${className}`}
       onClick={onClick}
     >
       {/* Card Content */}

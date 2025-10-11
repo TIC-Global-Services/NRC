@@ -14,6 +14,8 @@ const CorporateAdvisory = () => {
                 title1Color='Advisory'
                 desc1="Our Corporate Advisory practice is led by senior bankers who have advised"
                 desc2='marquee clients across a wide range of industries.'
+                mobDes1='Our Corporate Advisory practice is led by '
+                mobDes2='senior bankers who have advised marquee clients across a wide range of industries.'
                 isCTA
                 CTAOne="Request Factsheet"
                 CTATwo="Schedule a Call"

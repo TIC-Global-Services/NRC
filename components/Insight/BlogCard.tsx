@@ -14,7 +14,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, date, title, description }) 
         <Link
             href={`/insights/${title}`}
             key={title}
-            className=" h-[392px] overflow-hidden duration-300 cursor-pointer grid grid-rows-[65%_35%] "
+            className=" h-[392px] duration-300 cursor-pointer grid grid-rows-[65%_35%] "
         >
             <div className="relative w-full h-full mb-2">
                 <Image

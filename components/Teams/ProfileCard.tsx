@@ -1,12 +1,12 @@
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { FaLinkedin } from "react-icons/fa";
 
 interface ProfileCardProps {
   name: string;
   role: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string | StaticImageData;
   linkedinUrl?: string;
   isAdvisory?: boolean;
 }

@@ -4,6 +4,8 @@ import React from "react";
 import ProfileCard from "./ProfileCard";
 import Container from "@/components/Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
+import { FounderImg } from "@/assets/Home";
+import { StaticImageData } from "next/image";
 
 // Team Member Interface
 interface TeamMember {
@@ -11,7 +13,7 @@ interface TeamMember {
     name: string;
     role: string;
     description: string;
-    imageUrl: string;
+    imageUrl: string | StaticImageData;
     linkedinUrl?: string;
 }
 
@@ -19,12 +21,12 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
     {
         id: 1,
-        name: "Sandhya Kabra",
-        role: "Executive Director & CFO",
+        name: "Sandeep Daga",
+        role: "Founder, MD & CIO",
         description:
-            "Sandhya is a result driven finance professional with over 23 years of industry experience in leading banking and financial services companies covering financial planning and control, MIS, forecasting, capital raising, performance management, ERP implementation, internal process streamlining and more.",
+            "As the founder, I bring a passion for identifying undervalued small cap companies with strong fundamentals and compelling growth prospects. During my private equity career, prior to founding NRC, I witnessed firsthand the transformative power of several SMEs headed by dynamic entrepreneurs and it is this conviction that drives our investment philosophy. ",
         imageUrl:
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
+            FounderImg,
         linkedinUrl: "https://linkedin.com/in/arjunpatel",
     },
     {
