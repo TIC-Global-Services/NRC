@@ -278,7 +278,7 @@ const Hero: React.FC<HeroProps> = ({
           loadingQueueRef.current.add(index);
 
           const frameNo = index.toString();
-          const framePath = `/NRC_wave/${frameNo}.png`;
+          const framePath = `/NRC_wave_output/${frameNo}.webp`;
 
           try {
             // Try cache first
