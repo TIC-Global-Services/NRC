@@ -43,17 +43,17 @@ import CommerceImgEleven from "../../assets/CorporateAdvisory/TrackRecord/Commer
 import CommerceImgTwelve from "../../assets/CorporateAdvisory/TrackRecord/Commerce/CommerceImageTwelve.png";
 
 // Healthcare
-import HealthcareImgOne from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageOne.webp";
-import HealthcareImgTwo from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageTwo.jpeg";
-import HealthcareImgThree from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageThree.png";
-import HealthcareImgFour from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageFour.png";
-import HealthcareImgFive from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageFive.png";
-import HealthcareImgSix from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageSix.jpeg";
-import HealthcareImgSeven from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageSeven.jpeg";
-import HealthcareImgEight from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageEight.jpeg";
-import HealthcareImgNine from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageNine.jpg";
-import HealthcareImgTen from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageTen.jpeg";
-import HealthcareImgEleven from "../../assets/CorporateAdvisory/TrackRecord/Healthcare/HealthcareImageEleven.png";
+import HealthcareImgOne from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageOne.webp";
+import HealthcareImgTwo from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageTwo.jpeg";
+import HealthcareImgThree from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageThree.png";
+import HealthcareImgFour from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageFour.png";
+import HealthcareImgFive from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageFive.png";
+import HealthcareImgSix from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageSix.jpeg";
+import HealthcareImgSeven from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageSeven.jpeg";
+import HealthcareImgEight from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageEight.jpeg";
+import HealthcareImgNine from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageNine.jpg";
+import HealthcareImgTen from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageTen.jpeg";
+import HealthcareImgEleven from "../../assets/CorporateAdvisory/TrackRecord/HealthCare/HealthcareImageEleven.png";
 
 // Industrial Images
 import IndustrialImgOne from "../../assets/CorporateAdvisory/TrackRecord/Industrial/IndustrialImageOne.png";
