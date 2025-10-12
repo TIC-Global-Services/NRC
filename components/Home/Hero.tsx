@@ -427,10 +427,10 @@ const Hero = () => {
         <div
           ref={contentRef}
           style={{ opacity: 0, visibility: "hidden" }}
-          className="absolute inset-0 flex flex-col items-center justify-start mt-[40%] md:mt-[14%] text-center px-4 z-30 gothicFont"
+          className="absolute inset-0 flex flex-col items-center justify-start mt-[40%] lg:mt-[14%] text-center px-4 z-30 gothicFont"
         >
-          <div className="text-3xl md:text-[40px] lg:text-6xl font-light mb-2 md:mb-2 overflow-hidden gothicFont">
-            <div className="flex md:flex-row flex-col overflow-hidden">
+          <div className="text-3xl md:text-[50px] lg:text-6xl font-light mb-2 md:mb-2 overflow-hidden gothicFont">
+            <div className="flex lg:flex-row flex-col overflow-hidden">
               <span className="text-black inline-block font-[400] title-line leading-[120%]">
                 {" "}
                 Investing For Long Term&#160;
@@ -441,7 +441,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mb-6 overflow-hidden">
+          <div className="text-sm md:text-lg lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mb-6 overflow-hidden">
             <div className="text-[#484848] overflow-hidden">
               <div className="description-line">
                 At Nine Rivers Capital, we apply private-equity rigor to{" "}

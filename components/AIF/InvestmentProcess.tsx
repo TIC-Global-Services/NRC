@@ -13,10 +13,10 @@ const InvestmentProcess = () => {
   return (
 
     <>
-    <div className='md:block hidden'>
+    <div className='lg:block hidden'>
       <HorizontalScrollProgress title="Investment Process" steps={steps} />
     </div>
-      <div className='md:hidden '>
+      <div className='lg:hidden '>
         <MobileScrollProgress title="Investment Process" steps={steps} />
       {/* <HorizontalScrollProgress title="Investment Process" steps={steps} /> */}
     </div>

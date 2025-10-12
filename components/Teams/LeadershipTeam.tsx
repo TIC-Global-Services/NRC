@@ -22,7 +22,7 @@ const teamMembers: TeamMember[] = [
     {
         id: 1,
         name: "Sandeep Daga",
-        role: "Founder, MD & CIO",
+        role: "Founder, lg & CIO",
         description:
             "As the founder, I bring a passion for identifying undervalued small cap companies with strong fundamentals and compelling growth prospects. During my private equity career, prior to founding NRC, I witnessed firsthand the transformative power of several SMEs headed by dynamic entrepreneurs and it is this conviction that drives our investment philosophy. ",
         imageUrl:
@@ -59,7 +59,7 @@ const LeadershipTeam: React.FC = () => {
 
                         {/* Team Grid */}
                         <div className="w-full flex justify-center">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 justify-items-center w-[90%] md:w-[65%]">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 justify-items-center w-[90%] md:w-[100%] lg:w-[65%]">
                                 {teamMembers.map((member) => (
                                     <ProfileCard
                                         key={member.id}

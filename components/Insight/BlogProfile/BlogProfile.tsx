@@ -26,7 +26,7 @@ const BlogProfile = ({ blog }: any) => {
                 <Image
                     src={typeof blog.banner === 'string' ? blog.banner : blog.banner.src}
                     alt={blog.title}
-                    className="w-full md:h-screen h-[638px]"
+                    className="w-full lg:h-screen md:h-[80vh] h-[638px]"
                     width={1000}
                     height={900}
                 />
@@ -109,7 +109,7 @@ const BlogProfile = ({ blog }: any) => {
                                         height={400}
                                         src={typeof section.src === 'string' ? section.src : section.src?.src}
                                         alt={section.caption || 'Blog image'}
-                                        className="w-full md:h-[75vh]  h-[450px] mx-auto"
+                                        className="w-full lg:h-[75vh] md:h-[60vh]  h-[450px] mx-auto"
                                     />
                                     {section.caption && (
                                         <figcaption className="text-center text-base leading-[140%] mt-3 ">

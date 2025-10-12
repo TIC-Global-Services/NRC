@@ -47,9 +47,9 @@ const OurValue = () => {
   }, [scrollYProgress]);
 
   return (
-    <div ref={containerRef} className="h-[600vh] bg-white md:pt-14 pt-24">
-      <div className="sticky top-0 md:h-[120vh] h-screen overflow-hidden">
-        <Container disablePaddingTopMobile className="h-full">
+    <div ref={containerRef} className="h-[600vh] bg-white lg:pt-14 pt-24">
+      <div className="sticky top-0 lg:h-[120vh] h-screen overflow-hidden">
+        <Container disablePaddingTopMobile className="h-full md:-pt-36 md:-pb-36">
           <div className="h-full flex items-center justify-center">
             <div className="w-full grid grid-cols-1 lg:grid-cols-[4fr_6fr] gap-12 items-start">
 
@@ -61,13 +61,13 @@ const OurValue = () => {
                   transition={{ duration: 0.8 }}
                   className="space-y-6"
                 >
-                  <h1 className="text-4xl lg:text-5xl font-light text-black leading-tight">
+                  <h1 className="text-4xl md:text-5xl font-light text-black leading-tight">
                     Our <span className="text-primary">Values</span>
                   </h1>
                 </motion.div>
 
                 {/* Value Cards Stack */}
-                <div className="space-y-4 max-w-md">
+                <div className="space-y-4 md:w-full lg:max-w-lg">
                   {valueCards.map((card, index) => (
                     <motion.div
                       key={index}
@@ -80,12 +80,12 @@ const OurValue = () => {
                         duration: 0.6,
                         ease: "easeOut"
                       }}
-                      className="bg-[#F8F8F8] rounded-lg p-4"
+                      className="bg-[#F8F8F8] rounded-lg p-4 md:p-6 lg:p-4 w-full"
                     >
-                      <h3 className="2xl:text-[26px] xl:text-[23px] text-[20px] leading-7 font-normal text-black mb-2">
+                      <h3 className="2xl:text-[26px] md:text-[23px] text-[20px] leading-7 font-normal text-black mb-2">
                         {card.title}
                       </h3>
-                      <p className="2xl:text-[20px] lg:text-base text-sm leading-8 text-secondary">
+                      <p className="2xl:text-[20px] md:text-base text-sm leading-8 text-secondary">
                         {card.desc}
                       </p>
                     </motion.div>
@@ -94,7 +94,7 @@ const OurValue = () => {
               </div>
 
               {/* Right SVG Animation Area */}
-              <div className="relative w-full  h-full justify-items-end md:flex hidden items-center justify-center">
+              <div className="relative w-full  h-full justify-items-end lg:flex hidden items-center justify-center">
                 <svg width="580" height="381" viewBox="0 0 580 381" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="187.469" y="62.3184" width="242.664" height="234.725" rx="3.5" fill="#F2F3FD" stroke="#D8D9DE" />
                   <g clip-path="url(#clip0_262_1324)">

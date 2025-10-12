@@ -106,8 +106,8 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
             style={{ height: '60vh' }}
         >
             {/* Fixed Title */}
-            <div className="absolute top-8 left-6 z-10">
-                <h1 className="text-xl font-normal leading-tight">{title}</h1>
+            <div className="absolute top-20 lg:top-36 left-8 md:left-14 z-20">
+                <h1 className="text-2xl lg:text-4xl leading-9 font-normal">{title}</h1>
             </div>
 
             <div

@@ -180,7 +180,7 @@ export default function TrackRecordSection() {
   };
 
   return (
-    <Container disablePaddingBottomMobile disablePaddingTopMobile className="bg-[#F6F9FC] py-12 md:py-0">
+    <Container disablePaddingBottomMobile disablePaddingTopMobile className="bg-[#F6F9FC] py-12 lg:py-0">
       <section className="">
         <div className="max-w-7xl mx-auto">
           <div className="mb-3">
@@ -196,21 +196,21 @@ export default function TrackRecordSection() {
 
           <div className="grid lg:grid-cols-[0.45fr_0.55fr] items-end ">
             {/* Desktop */}
-            <div className="hidden md:block max-w-md">
+            <div className="hidden md:block lg:max-w-md">
               <div className="mb-3">
                 <Badge label="Our Track Record" />
-                <div className="max-w-2xl mt-4">
+                <div className="lg:max-w-2xl mt-4 ">
                   <h2 className="text-[26px] md:text-5xl font-[400] leading-8 md:leading-[58px] md:block hidden">
                     Focused on Value,
-                    <br />{" "}
+                    <br className="hidden lg:block"/>{" "}
                     <span className="text-primary">Powered by Experience</span>
                   </h2>
                 </div>
               </div>
-              <p className="text-sm md:text-lg text-secondary leading-6 md:leading-[31px] max-w-lg font-[400] mb-16">
+              <p className="text-sm md:text-lg text-secondary leading-6 md:leading-[31px] lg:max-w-lg font-[400] lg:mb-16 md:mb-4">
                 <SlideUpText animationMode="always" delay={0.4}>
                   We have consistently delivered strong, risk
-                  <br />
+                  <br className="lg:block hidden"/>
                   -adjusted returns across market cycles.
                 </SlideUpText>
               </p>
@@ -219,7 +219,9 @@ export default function TrackRecordSection() {
                   Offerings
                 </SlideUpText>
               </h3>
-              <div className="space-y-3">
+
+              {/* desktop only */}
+              <div className="space-y-3 lg:block md:hidden">
                 {fundOptions.map((fund) => (
                   <button
                     key={fund}
@@ -236,6 +238,23 @@ export default function TrackRecordSection() {
                     </span>
                   </button>
                 ))}
+              </div>
+
+              {/* tablet only */}
+              <div className="space-y-3 md:block lg:hidden">
+                {selectedFund && (
+                  <div className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm">
+                    <span className="font-medium w-full flex justify-center">
+                      <SlideUpText
+                        animationMode="always"
+                        delay={0.2}
+                        className="text-center"
+                      >
+                        {selectedFund}
+                      </SlideUpText>
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -283,7 +302,7 @@ export default function TrackRecordSection() {
             </div>
 
             {/* Mobile – only inactive options, clickable */}
-            <div className="block md:hidden max-w-md">
+            <div className="block lg:hidden max-w-md md:max-w-full md:mt-12">
               <div className="space-y-3">
                 {fundOptions
                   .filter((fund) => fund !== selectedFund)

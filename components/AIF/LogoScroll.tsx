@@ -44,7 +44,7 @@ export default function LogoScroll({ logos }: LogoScrollProps) {
     return (
         <div className="my-12 mb-20">
             {/* Desktop: Static logos */}
-            <div className="hidden md:flex flex-row items-center justify-between">
+            <div className="hidden lg:flex flex-row items-center justify-between">
                 {logos.map((logo, index) => (
                     <div key={index}>
                         <Image src={logo} alt={`Logo-${index}`} width={100} height={100} />
@@ -55,7 +55,7 @@ export default function LogoScroll({ logos }: LogoScrollProps) {
             {/* Mobile: Scrolling logos */}
             <div
                 ref={scrollRef}
-                className="md:hidden flex overflow-x-hidden"
+                className="lg:hidden flex overflow-x-hidden"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
                 <style jsx>{`

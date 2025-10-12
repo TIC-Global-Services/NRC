@@ -7,12 +7,12 @@ import Container from "../Reusable/Container";
 
 const WealthFlows = () => {
   return (
-    <Container disablePaddingTopMobile className="pt-8 md:pt-0">
-      <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 md:h-[80vh] lg:h-[90vh] 2xl:h-[70vh]">
+    <Container disablePaddingTopMobile className="pt-8 lg:pt-0">
+      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-5 lg:h-[80vh]  2xl:h-[70vh]">
         <div
-          className="bg-[#EDEBF1] flex flex-col items-center justify-center text-center gap-4  p-10 rounded-xl md:rounded-lg min-h-[490px] md:min-h-0"
+          className="bg-[#EDEBF1] flex flex-col items-center justify-center text-center gap-4  p-10 rounded-xl md:rounded-lg min-h-[490px] lg:min-h-0"
         >
-          <h1 className="text-2xl leading-[34px] md:text-[44px] md:leading-[58px] font-[400]">
+          <h1 className="text-2xl leading-[34px] md:text-4xl lg:text-[44px] lg:leading-[58px] font-[400]">
             When Nine Rivers Meet,
             <br />
             <span className="text-primary">Wealth Flows</span>.
@@ -33,7 +33,7 @@ const WealthFlows = () => {
         </div>
 
         <div
-          className="relative rounded-xl md:rounded-lg overflow-hidden min-h-[490px] md:min-h-0"
+          className="relative rounded-xl md:rounded-lg overflow-hidden min-h-[490px] lg:min-h-0"
         >
           <Image
             src={WealthFlow}

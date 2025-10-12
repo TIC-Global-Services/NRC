@@ -12,15 +12,15 @@ import SlideUpText from "../ui/SlideUpText";
 
 const WhoWeServeSection = () => {
   return (
-    <Container disablePaddingBottomMobile disablePaddingTopMobile className="py-12 md:py-0">
+    <Container disablePaddingBottomMobile disablePaddingTopMobile className="py-12 lg:py-0">
       <motion.section
-        className="bg-primary overflow-hidden  rounded-[12px]  pb-32 lg:pb-0"
+        className="bg-primary overflow-hidden md:h-[90vh] lg:h-auto  rounded-[12px]  pb-32 md:p-4 lg:p-0 lg:pb-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="mx-auto md:h-full">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.6fr_0.4fr] gap-8 lg:gap-12 items-center md:h-full">
+        <div className="mx-auto lg:h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.6fr_0.4fr] gap-8 lg:gap-12 items-center lg:h-full">
             {/* Left Content */}
             <motion.div
               className="space-y-8 relative p-6 lg:p-10 flex flex-col justify-between h-full"

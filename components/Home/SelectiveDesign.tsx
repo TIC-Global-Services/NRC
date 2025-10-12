@@ -50,8 +50,8 @@ export default function SelectiveDesignSection() {
           </div>
 
           {/* Features Grid */}
-          <div className="grid w-full max-w-6xl items-center justify-center grid-cols-1 md:grid-cols-2 gap-4 sm:flex flex-col lg:flex xl:gap-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 items-center justify-center">
+          <div className="grid w-full max-w-6xl items-center justify-center grid-cols-1 lg:grid-cols-2 gap-4 sm:flex flex-col lg:flex xl:gap-6">
+            <div className="grid grid-cols-2 md:hidden lg:grid lg:grid-cols-4 gap-4 md:gap-6 items-center justify-center">
               {features.slice(0, isMobile ? 2 : 4).map((feature, index) => (
                 <div
                   key={index}
@@ -66,7 +66,7 @@ export default function SelectiveDesignSection() {
               ))}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 items-center justify-center">
+            <div className="grid grid-cols-2 md:hidden lg:grid lg:grid-cols-4 gap-4 md:gap-6 items-center justify-center">
               {features
                 .slice(isMobile ? 2 : 4, isMobile ? 4 : 8)
                 .map((feature, index) => (
@@ -81,6 +81,38 @@ export default function SelectiveDesignSection() {
                     </SlideUpText>
                   </div>
                 ))}
+            </div>
+
+
+            {/* tablet alone */}
+            <div className="md:grid md:grid-cols-3 gap-4 md:gap-6 items-center justify-center lg:hidden hidden">
+              {features.slice(0, 6).map((feature, index) => (
+                <div
+                  key={index}
+                  className="md:rounded-2xl w-full rounded-md self-center justify-self-center bg-[#F6F9FC] px-5  py-4 text-center   hover:scale-105  "
+                >
+                  <SlideUpText animationMode="always">
+                    <p className="text-xs leading-8 font-medium text-black xl:text-lg">
+                      {feature}
+                    </p>
+                  </SlideUpText>
+                </div>
+              ))}
+            </div>
+
+            <div className="md:grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6 items-center justify-center lg:hidden hidden">
+              {features.slice(6, 8).map((feature, index) => (
+                <div
+                  key={index}
+                  className="md:rounded-2xl w-full rounded-md self-center justify-self-center bg-[#F6F9FC] px-5  py-4 text-center   hover:scale-105  "
+                >
+                  <SlideUpText animationMode="always">
+                    <p className="text-xs leading-8 font-medium text-black xl:text-lg">
+                      {feature}
+                    </p>
+                  </SlideUpText>
+                </div>
+              ))}
             </div>
 
             <div className="grid grid-cols-2 gap-4 md:gap-6 items-center justify-center">

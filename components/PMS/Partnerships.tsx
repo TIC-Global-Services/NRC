@@ -42,6 +42,8 @@ const Partnerships = () => {
   const mobileSliderRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mobileIndex, setMobileIndex] = useState(0);
+  const [tabletIndex, setTabletIndex] = useState(0);
+  const tabletSliderRef = useRef<HTMLDivElement>(null);
 
   // Partnership cards data array - 4 items
   const partnershipData = [
@@ -135,6 +137,39 @@ const Partnerships = () => {
     }
   };
 
+
+  // Tablet navigation - shows 2 cards at a time
+  const goToPreviousTablet = () => {
+    if (tabletIndex > 0) {
+      const newIndex = tabletIndex - 1;
+      setTabletIndex(newIndex);
+
+      if (tabletSliderRef.current) {
+        gsap.to(tabletSliderRef.current, {
+          x: `-${newIndex * (100 / 2)}%`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
+  const goToNextTablet = () => {
+    if (tabletIndex < partnershipData.length - 2) {
+      const newIndex = tabletIndex + 1;
+      setTabletIndex(newIndex);
+
+      if (tabletSliderRef.current) {
+        gsap.to(tabletSliderRef.current, {
+          x: `-${newIndex * (100 / 2)}%`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
+
   return (
     <Container disablePaddingTopMobile disablePaddingBottomMobile>
       <FlexibleHeading
@@ -151,7 +186,7 @@ const Partnerships = () => {
       />
 
       {/* Desktop View */}
-      <div className="relative hidden md:block">
+      <div className="relative hidden lg:block">
         <div className="overflow-hidden">
           <div
             ref={sliderRef}
@@ -211,6 +246,78 @@ const Partnerships = () => {
               <rect x="0.5" width="64" height="64" rx="32" fill="#EFEFF5" />
               <path
                 d="M35.1667 37.3327L40.5 31.9993M40.5 31.9993L35.1667 26.666M40.5 31.9993H24.5"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Tablet View */}
+      <div className="relative hidden md:block lg:hidden">
+        <div className="overflow-hidden">
+          <div
+            ref={tabletSliderRef}
+            className="grid grid-cols-4 gap-6 h-[40vh]"
+            style={{ width: `${(partnershipData.length / 2) * 100}%` }}
+          >
+            {partnershipData.map((card, index) => (
+              <PartnershipCard
+                key={index}
+                image={card.image}
+                alt={card.alt}
+                title={card.title}
+                description={card.description}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Tablet Navigation Arrows */}
+        <div className="flex justify-end gap-4 mt-6">
+          <button
+            onClick={goToPreviousTablet}
+            disabled={tabletIndex === 0}
+            className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg
+              width="56"
+              height="56"
+              viewBox="0 0 56 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="56" height="56" rx="28" fill="#EFEFF5" />
+              <path
+                d="M26 30L21 25M21 25L26 20M21 25H35"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            onClick={goToNextTablet}
+            disabled={tabletIndex >= partnershipData.length - 3}
+            className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg
+              width="56"
+              height="56"
+              viewBox="0 0 56 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="56" height="56" rx="28" fill="#EFEFF5" />
+              <path
+                d="M30 30L35 25M35 25L30 20M35 25H21"
                 stroke="black"
                 strokeWidth="1.5"
                 strokeMiterlimit="10"

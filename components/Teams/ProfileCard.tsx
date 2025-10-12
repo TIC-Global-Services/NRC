@@ -22,7 +22,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   return (
     <div
       className={`max-w-md mx-auto ${isAdvisory && "shadow"
-        } relative bg-white  rounded-xl overflow-hidden`}
+        } relative bg-white  rounded-xl overflow-hidden z-20`}
     >
       {/* Header Image Section */}
       <div
@@ -45,7 +45,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       </div>
 
       {/* Content Section */}
-      <div className="p-5 rounded-xl h-[280px] relative z-50   bg-white -mt-5">
+      <div className="p-5 rounded-xl h-[280px] relative z-40   bg-white -mt-5">
         {/* Name */}
         <div >
           <h2 className="text-3xl font-light text-gray-900 mb-2 pt-5">

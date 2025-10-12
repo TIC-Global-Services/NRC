@@ -159,7 +159,7 @@ const OurTrack = () => {
   return (
     <>
       {/* Desktop */}
-      <div className="md:block hidden w-full">
+      <div className="lg:block hidden w-full">
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -231,7 +231,7 @@ const OurTrack = () => {
         <Container className="max-w-full px-8">
           <div className="grid grid-cols-[40%_60%] h-screen w-full overflow-hidden">
             {/* Selection part */}
-            <div className="">
+            <div >
               <FlexibleHeading
                 title=" Our Track Record"
                 maxWidth="max-w-3xl"
@@ -320,7 +320,7 @@ const OurTrack = () => {
       </div>
 
       {/* Mobile */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -343,7 +343,7 @@ const OurTrack = () => {
         />
 
         <Container disablePaddingTopMobile disablePaddingBottomDesktop>
-          <div className="md:py-8 py-12">
+          <div className="lg:py-8 py-12">
             <FlexibleHeading
               title=" Our Track Record"
               maxWidth="max-w-3xl"
@@ -355,7 +355,7 @@ const OurTrack = () => {
 
             <div className="space-y-6 mt-8">
               {TrackRecord.map((track) => (
-                <div key={track.id} className="space-y-4 bg-white py-8 md:px-0 rounded-[12px]">
+                <div key={track.id} className="space-y-4 bg-white py-8 lg:px-0 rounded-[12px]">
                   {/* Card Header */}
                   <div className="space-y-2  px-4 ">
                     <h3 className="font-[400] text-2xl">{track.label}</h3>

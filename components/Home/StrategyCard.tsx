@@ -30,7 +30,7 @@ function StrategyCard({
 }: StrategyCardProps) {
   return (
     <div
-      className={`bg-white max-w-[572px] rounded-2xl pt-5 md:pt-7 px-5 md:px-7 pb-20 hover:shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)] border border-gray-100 relative transition-shadow duration-500 ${!hasInteracted && index === 0 ? 'shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)]' : ''
+      className={`bg-white max-w-[572px] h-full rounded-2xl pt-5 md:pt-7 px-5 md:px-7 pb-20 hover:shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)] border border-gray-100 relative transition-shadow duration-500 ${!hasInteracted && index === 0 ? 'shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)]' : ''
         }`}
       onMouseEnter={onHover} // ADD THIS
     >
@@ -230,7 +230,7 @@ export default function StrategiesSection() {
           </div>
 
           {/* Strategy Cards */}
-          <div className="md:grid md:grid-cols-2 flex flex-col-reverse gap-4 md:gap-8">
+          <div className="lg:grid lg:grid-cols-2 md:justify-center md:items-center flex flex-col-reverse gap-4 md:gap-8">
             {strategies.map((strategy, index) => (
               <StrategyCard
                 key={index}

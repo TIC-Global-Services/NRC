@@ -4,6 +4,7 @@ import NRC_Logo from "@/assets/Home/NRC_Logo.png"
 
 // Founder
 import FounderImg from "@/assets/Home/FounderImg.png";
+import FounderImgTablet from "@/assets/Home/FounderImgTablet.png";
 
 // Whoweare
 import WhoweareImg1 from "@/assets/Home/Whoweare/WhoweareImg1.png"
@@ -38,6 +39,7 @@ export {
 
     // Founder
     FounderImg,
+    FounderImgTablet,
 
     // Whoweare
     WhoweareImg1,

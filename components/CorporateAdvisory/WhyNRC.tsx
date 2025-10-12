@@ -131,7 +131,7 @@ const WhyNRC = () => {
 
   return (
     <div className="bg-white md:py-28">
-      <div className="md:min-h-screen ">
+      <div className="lg:min-h-screen ">
         <Container
           ref={sectionRef}
           disablePaddingBottomDesktop
@@ -145,7 +145,7 @@ const WhyNRC = () => {
           isNavbar
           isFooter
           isHero
-          className="hidden md:grid grid-cols-[4fr_6fr] justify-start items-start gap-x-32"
+          className="hidden lg:grid grid-cols-[4fr_6fr] justify-start items-start gap-x-32"
         >
           {/* Left Side - Fixed */}
           <div

@@ -57,16 +57,16 @@ const MobileNavbarDemo = () => {
     <div>
       {/* Fixed Header - No initial animation, immediate positioning */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 md:hidden block  transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"
+        className={`fixed top-0 left-0 right-0 z-50 lg:hidden block  transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"
           }`}
       >
         <div className="flex items-center justify-between px-6 py-4">
           {/* Logo - Static positioning */}
-          <div className="flex items-center cursor-pointer">
+          <a href="/" className="flex items-center cursor-pointer">
             <div className="w-15 h-8 rounded flex items-center justify-center">
               <Image src={NRC_Logo} alt="NRC Logo" width={60} height={26} />
             </div>
-          </div>
+          </a>
 
           {/* Login Button & Menu Toggle - Static positioning */}
           <div className="flex items-center gap-3">

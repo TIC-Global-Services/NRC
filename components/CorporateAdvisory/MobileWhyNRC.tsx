@@ -26,10 +26,10 @@ const PartnershipCard: React.FC<PartnershipCardProps> = ({
     description,
 }) => {
     return (
-        <div className="grid grid-rows-[35%_65%] h-full rounded-xl overflow-hidden">
-            <div className="flex flex-col items- justify-center mb-7">
-                <h3 className="md:text-3xl text-base leading-[23px] md:leading-[31px] text-black mb-[10px] font-bold max-w-[220px]">{title}</h3>
-                <p className="md:text-lg text-sm leading-4 font-normal md:leading-[31px] max-w-xs">{description}</p>
+        <div className="grid grid-rows-[35%_65%] md:grid-rows-[30%_70%] h-full rounded-xl overflow-hidden">
+            <div className="flex flex-col items- justify-center mb-7 md:mb-0">
+                <h3 className="md:text-3xl text-base leading-[23px] md:leading-[31px] text-black mb-[10px] font-bold max-w-[220px] md:max-w-full">{title}</h3>
+                <p className="md:text-lg text-sm leading-4 font-normal md:leading-[31px] max-w-xs md:max-w-xl">{description}</p>
             </div>
             <div>
                 <Image src={image} alt={alt} className="w-full rounded-xl h-full object-cover" />
@@ -107,7 +107,7 @@ const MobileWhyNRC = () => {
     };
 
     return (
-        <Container disablePaddingTopMobile disablePaddingBottomMobile className="md:hidden block bg-white py-12">
+        <Container disablePaddingTopMobile disablePaddingBottomMobile className="lg:hidden block bg-white py-12">
             <FlexibleHeading
                 title="Why NRC?"
                 mdTitle="Why NRC?"
@@ -116,12 +116,12 @@ const MobileWhyNRC = () => {
                     "NRC?": "text-primary",
                 }}
                 alignment="left"
-                className="text-center md:text-left"
+                className="text-center lg:text-left"
                 mobileAlignment="left"
             />
 
             {/* Mobile View - Shows full card + 30% peek of next */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
                 <div className="overflow-hidden w-full">
                     <div
                         ref={mobileSliderRef}
@@ -135,7 +135,7 @@ const MobileWhyNRC = () => {
                                 key={index}
                                 className="w-[98vw] flex-shrink-0 flex items-center justify-start pr-4"
                             >
-                                <div className="w-full h-[450px]">
+                                <div className="w-full h-[450px] md:h-[600px]">
                                     <PartnershipCard
                                         image={card.image}
                                         alt={card.alt}

@@ -157,14 +157,8 @@ const FamilyOffices = () => {
   };
 
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile className="">
-      {/* <FlexibleHeading
-        key="family-offices-heading"
-        title="Built Exclusively for HNIs & Family Offices."
-        highlights={{
-          "Family Offices.": "text-primary",
-        }}
-      /> */}
+    <Container disablePaddingTopMobile disablePaddingBottomMobile>
+
       <div className="text-center mb-12 md:mb-0">
         <h2 className="text-[26px] md:text-5xl font-normal text-black leading-tight">
           Built Exclusively for HNIs & <br className="md:hidden "/> <span className="text-primary">Family Offices.</span>

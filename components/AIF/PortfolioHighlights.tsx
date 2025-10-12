@@ -34,9 +34,9 @@ const portfolioData: PortfolioItem[] = [
 // Reusable Portfolio Card Component
 const PortfolioCard: React.FC<{ item: PortfolioItem }> = ({ item }) => {
   return (
-    <div className="bg-[#F2F3F6] rounded-[7px] md:px-7 2xl:px-12 px-5 py-10 flex md:flex-row flex-col md:items-center md:gap-12 gap-3.5 md:min-h-[280px]">
+    <div className="bg-[#F2F3F6] rounded-[7px] lg:px-7 2xl:px-12 px-5 py-10 flex lg:flex-row flex-col lg:items-center lg:gap-12 gap-3.5 lg:min-h-[280px]">
       {/* Logo */}
-      <div className={`flex-shrink-0 w-32 ${item.id === 1 ? `md:w-44` : `md:w-36`} md:h-36 flex items-center justify-center relative`}>
+      <div className={`flex-shrink-0 w-32 ${item.id === 1 ? `lg:w-44` : `lg:w-36`} lg:h-36 flex items-center justify-center relative`}>
         <Image
           src={item.logo}
           alt={`${item.companyName} logo`}
@@ -48,8 +48,8 @@ const PortfolioCard: React.FC<{ item: PortfolioItem }> = ({ item }) => {
 
       {/* Content */}
       <div className="flex-1">
-        <h3 className="md:text-2xl text-[20px] leading-9 font-medium mb-2">{item.companyName}</h3>
-        <p className="md:text-base text-sm text-[#484848] leading-6 font-medium">{item.description}</p>
+        <h3 className="lg:text-2xl text-[20px] leading-9 font-medium mb-2">{item.companyName}</h3>
+        <p className="lg:text-base text-sm text-[#484848] leading-6 font-medium">{item.description}</p>
       </div>
     </div>
   );
@@ -60,10 +60,10 @@ const PortfolioHighlights: React.FC<PortfolioHighlightsProps> = ({
   title = "Portfolio Highlights"
 }) => {
   return (
-    <Container disableYSpacing className='md:pb-24 pb-14'>
-      <h1 className="md:text-3xl text-2xl leading-9 font-normal mb-6 md:mb-5">{title}</h1>
+    <Container disableYSpacing className='lg:pb-24 pb-14'>
+      <h1 className="lg:text-3xl text-2xl leading-9 font-normal mb-6 lg:mb-5">{title}</h1>
 
-      <div className="grid grid-cols-1 gap-y-4 md:grid-cols-2 gap-x-5">
+      <div className="grid grid-cols-1 gap-y-4 lg:grid-cols-2 gap-x-5">
         {portfolioData.map((item, index) => (
           <PortfolioCard key={index} item={item} />
         ))}

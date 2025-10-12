@@ -53,7 +53,7 @@ const ContentList = () => {
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={`${activeTab}-${searchQuery}`}
-                        className={`grid grid-cols-1 ${filteredContent.length <= 0 ? `` : `lg:grid-cols-3`} gap-[19px] gap-y-8 w-full `}
+                        className={`grid grid-cols-1 ${filteredContent.length <= 0 ? `` : `md:grid-cols-2 lg:grid-cols-3`} gap-[19px] gap-y-8 w-full `}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}

@@ -454,7 +454,7 @@ const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.5 }}
         >
           {/* Main Heading with line mask reveal */}
-          <div className="text-3xl md:text-[40px] lg:text-6xl font-light mb-8 overflow-hidden gothicFont">
+          <div className="text-3xl md:text-5xl lg:text-6xl font-light mb-8 overflow-hidden gothicFont">
             <motion.div
               className="flex flex-col -gap-5"
               initial={{ opacity: 0 }} // Separate entrance opacity
@@ -493,7 +493,7 @@ const Hero: React.FC<HeroProps> = ({
               )}
 
               {/* Desktop - Subheading with line reveals */}
-              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:block hidden">
+              <div className="text-sm md:text-lg lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:block hidden">
                 <motion.div
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}

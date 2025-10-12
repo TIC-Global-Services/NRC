@@ -4,7 +4,7 @@ import SlideUpText from "../ui/SlideUpText";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[80vh] md:min-h-[100vh] flex items-start pt-40 justify-center overflow-hidden">
+    <section className="relative min-h-[80vh] md:min-h-[70vh] lg:min-h-[100vh] flex items-start pt-40 justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

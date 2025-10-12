@@ -14,9 +14,9 @@ const WeOffer = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile className="w-full py-[74px] md:py-0">
+    <Container disablePaddingTopMobile disablePaddingBottomMobile className="w-full py-[74px] lg:py-0">
       <SlideUpText animationMode="once">
-        <h1 className="md:text-[44px] text-[26px] leading-[34px] md:leading-[60px] 2xl:px-28 md:mb-12 mb-7 text-center mx-auto">
+        <h1 className="lg:text-[44px] md:text-3xl text-[26px] leading-[34px] md:leading-[40px] lg:leading-[60px] 2xl:px-28 md:mb-12 mb-7 text-center mx-auto">
           We offer{" "}
           <span className="text-primary">
             big firm capabilities with a boutique firm

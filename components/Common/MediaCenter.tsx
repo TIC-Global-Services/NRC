@@ -134,7 +134,7 @@ const MediaCentreSection = () => {
         {/* Header */}
         <div className="flex md:justify-between justify-center items-center mb-2 md:mb-8">
           <SlideUpText animationMode="once">
-            <h2 className="text-[26px] text-center md:text-left leading-8 md:leading-[58px] lg:text-5xl font-normal text-gray-900">
+            <h2 className="text-[26px] text-center md:text-left leading-8 md:leading-[58px] md:text-5xl font-normal text-gray-900">
               Media <span className="text-primary font-medium">Centre</span>
             </h2>
           </SlideUpText>

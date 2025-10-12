@@ -187,7 +187,7 @@ const Expertise = () => {
         {/* Header */}
         <div className="flex md:justify-between justify-center items-center mb-2 md:mb-8">
           <SlideUpText animationMode="always">
-            <h2 className="text-[26px] px-4 md:px-0 text-left leading-8 md:leading-[58px] lg:text-5xl font-normal text-gray-900">
+            <h2 className="text-[26px] px-4 md:px-0 text-left leading-8 md:leading-[58px] md:text-5xl font-normal text-gray-900">
               Invest with Experience <br /> <span className="text-primary font-medium">and Expertise.</span>
             </h2>
           </SlideUpText>
@@ -259,7 +259,7 @@ const Expertise = () => {
         </div>
 
         {/* Desktop Cards - 3 at a time */}
-        <div className="relative overflow-hidden hidden md:block">
+        <div className="relative overflow-hidden hidden lg:block">
           <div className="flex justify-center">
             <div
               className="flex transition-transform duration-500 ease-in-out space-x-5"
@@ -272,6 +272,34 @@ const Expertise = () => {
                 <div
                   key={card.id}
                   className="w-[32%] flex-shrink-0 flex justify-center"
+                >
+                  <DeskCustomCard
+                    title={card.title}
+                    cardIndex={card.id}
+                    description={card.description}
+                    imageUrl={card.imageUrl}
+                    onClick={() => handleCardClick(card)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* tablet Cards - 2 at a time */}
+        <div className="relative overflow-hidden hidden md:block lg:hidden">
+          <div className="flex justify-center">
+            <div
+              className="flex transition-transform duration-500 ease-in-out space-x-5"
+              style={{
+                transform: `translateX(-${currentSlide * (100 / 2)}%)`, // shift 1/3 for each step
+                width: `${(cardData.length / 2) * 100}%`, // ensures track spans enough
+              }}
+            >
+              {cardData.map((card) => (
+                <div
+                  key={card.id}
+                  className="w-[48%] flex-shrink-0 flex justify-center"
                 >
                   <DeskCustomCard
                     title={card.title}

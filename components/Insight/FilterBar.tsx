@@ -14,9 +14,9 @@ const FilterBar = ({ activeTab, setActiveTab, searchQuery, setSearchQuery }: any
 
     return (
         <div className="md:mb-20 mb-4">
-            <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center justify-between gap-4 flex-wrap md:flex-col lg:flex-row md:items-start lg:items-center lg:justify-between lg:flex-wrap">
                 {/* Tabs Section */}
-                <div className="flex items-center gap-x-6">
+                <div className="flex items-center gap-x-6 md:gap-x-3 lg:gap-x-6">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
@@ -47,7 +47,7 @@ const FilterBar = ({ activeTab, setActiveTab, searchQuery, setSearchQuery }: any
                 </div>
 
                 {/* Search Section */}
-                <div className="relative flex-1 max-w-sm">
+                <div className="relative flex-1 max-w-sm md:flex-0 md:w-full lg:flex-1 lg:max-w-sm">
                     {/* <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
 
                     <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">

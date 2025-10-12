@@ -27,7 +27,7 @@ const Footer = () => {
     <div className="md:mb-16  bg-[#F6F9FC]">
       <Container disableYSpacing disableMarginTopMobile disableMarginBottomDesktop disableMarginBottomMobile disableMarginTopDesktop disablePaddingBottomDesktop disablePaddingTopDesktop disablePaddingTopMobile disablePaddingBottomMobile>
         <motion.footer
-          className="text-white md:py-20 py-8 bg-primary px-6 md:px-16 rounded-3xl"
+          className="text-white lg:py-20 md:py-14 py-8 bg-primary px-6 md:px-10 lg:px-16 rounded-3xl"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
@@ -145,7 +145,7 @@ const Footer = () => {
             </div>
 
             {/* Officer Information */}
-            <div className="grid grid-cols-1 lg:grid-cols-[0.7fr_0.7fr_2fr] xl:grid-cols-[0.9fr_0.9fr_1.9fr] gap-8 mb-8 md:mb-0">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] lg:grid-cols-[0.7fr_0.7fr_2fr] xl:grid-cols-[0.9fr_0.9fr_1.9fr] gap-8 mb-8 md:mb-0">
               {/* Principal Officer */}
               <motion.div variants={itemVariants} className="md:space-y-3 space-y-1"> {/* Increased spacing */}
                 <h4 className="md:text-xl text-lg font-medium mb-3">Principal Officer</h4>
@@ -167,7 +167,7 @@ const Footer = () => {
               </motion.div>
 
               {/* Compliance Officer 2 */}
-              <motion.div variants={itemVariants} className="md:space-y-3 space-y-1">
+              <motion.div variants={itemVariants} className="md:space-y-3 space-y-1 md:col-span-2 lg:col-span-1">
                 <h4 className="md:text-xl text-lg font-medium mb-3">Compliance Officer</h4>
                 <div className="text-[#FFFFFF] opacity-[60%] space-y-2 text-base">
                   <p>Corporate Identification Number(CIN): U65993MH2007PTC175592</p>
@@ -184,10 +184,8 @@ const Footer = () => {
             </div>
 
             {/* Location */}
-            <motion.div variants={itemVariants} className="mb-12 md:-mt-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"> {/* Increased margin */}
+            <motion.div variants={itemVariants} className="mb-12 md:mt-8 lg:-mt-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"> {/* Increased margin */}
               <div className="flex items-start space-x-2 md:space-x-4"> {/* Increased spacing */}
-
-
                 <div>
                   <div className='flex flex-row mb-3 space-x-1 items-center'>
                     <Location />

@@ -105,33 +105,33 @@ const Strategies: React.FC = () => {
         disablePaddingBottomMobile
         disableYSpacing
         ref={contentWrapperRef as any}
-        className="min-h-screen md:pt-24 md:mt-24 flex flex-col justify-start items-center py-12 md:py-0"
+        className="min-h-screen lg:pt-24 lg:mt-24 flex flex-col justify-start items-center py-12 lg:py-0"
       >
         <FlexibleHeading
           title="Our PMS Strategies"
           highlights={{ Strategies: "text-primary" }}
           isMB={false}
-          className="xl:mb-14 md:mb-4"
+          className="xl:mb-14 lg:mb-4"
         />
 
-        <div className="flex flex-col md:grid grid-cols-3 justify-start items-center gap-3 md:gap-x-4 xl:gap-[21px]">
+        <div className="flex flex-col lg:grid grid-cols-3 justify-start items-center gap-3 lg:gap-x-4 xl:gap-[21px]">
           {/* Left Card */}
-          <div className="p-6 md:p-8 bg-[#ffffff] flex flex-col justify-between rounded-[12px] w-full h-[196px] md:h-[400px]">
-            <h3 className="text-xl md:text-[26px] text-[#000000] mb-3 md:mb-4 leading-tight">
+          <div className="p-6 md:p-8 bg-[#ffffff] flex flex-col justify-between rounded-[12px] w-full h-[196px] md:h-[250px] lg:h-[400px]">
+            <h3 className="text-xl md:text-[24px] lg:text-[26px] text-[#000000] mb-3 lg:mb-4 leading-tight">
               Aurum Small <span className="text-primary">Cap Opportunities</span>
             </h3>
             <div className="overflow-hidden relative flex-1 flex flex-col justify-end">
-              <h4 ref={leftSubRef} className="text-base md:text-2xl text-[#000000] mb-2 font-medium">
+              <h4 ref={leftSubRef} className="text-base md:text-[20px] lg:text-2xl text-[#000000] mb-2 font-medium">
                 {leftStrategyContent[currentStep].subheading}
               </h4>
-              <p ref={leftTextRef} className="text-sm md:text-lg text-[#484848] leading-[22px] md:leading-[31px]">
+              <p ref={leftTextRef} className="text-sm md:text-base lg:text-lg text-[#484848] leading-[22px] lg:leading-[31px]">
                 {leftStrategyContent[currentStep].objective}
               </p>
             </div>
           </div>
 
           {/* Center Images */}
-          <div className="w-full h-[168px] md:h-[400px] rounded-[12px] overflow-hidden bg-[#ffffff] relative flex-shrink-0">
+          <div className="w-full h-[168px] md:h-[300px] lg:h-[400px] rounded-[12px] overflow-hidden bg-[#ffffff] relative flex-shrink-0">
             {images.map((img, i) => (
               <img
                 key={i}
@@ -154,15 +154,15 @@ const Strategies: React.FC = () => {
           </div>
 
           {/* Right Card */}
-          <div className="p-6 md:p-8 bg-[#ffffff] flex flex-col justify-between rounded-[12px] w-full h-[196px] md:h-[400px]">
-            <h3 className="text-xl md:text-[26px] text-[#000000] mb-3 md:mb-4 leading-tight">
+          <div className="p-6 md:p-8 bg-[#ffffff] flex flex-col justify-between rounded-[12px] w-full h-[196px] md:h-[250px] lg:h-[400px]">
+            <h3 className="text-xl md:text-[24px] lg:text-[26px] text-[#000000] mb-3 lg:mb-4 leading-tight">
               Aurum <span className="text-primary">Multiplier Portfolio</span>
             </h3>
             <div className="overflow-hidden relative flex-1 flex flex-col justify-end">
-              <h4 ref={rightSubRef} className="text-base md:text-2xl text-[#000000] mb-2 font-medium">
+              <h4 ref={rightSubRef} className="text-base md:text-[20px] lg:text-2xl text-[#000000] mb-2 font-medium">
                 {rightStrategyContent[currentStep].subheading}
               </h4>
-              <p ref={rightTextRef} className="text-sm md:text-lg text-[#484848] leading-[22px] md:leading-[31px]">
+              <p ref={rightTextRef} className="text-sm md:text-base lg:text-lg text-[#484848] leading-[22px] lg:leading-[31px]">
                 {rightStrategyContent[currentStep].objective}
               </p>
             </div>

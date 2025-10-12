@@ -101,7 +101,7 @@ const Glance = () => {
   }, [cards.length]);
 
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile className="py-12 md:py-0">
+    <Container disablePaddingTopMobile disablePaddingBottomMobile className="py-12 lg:py-0">
       <FlexibleHeading
         title="Our PMS at a Glance."
         description="Our PMS is built for discerning investors who want long-term compounding, not index hugging. Every portfolio is curated with high conviction, disciplined risk frameworks, and skin in the game."
@@ -111,7 +111,6 @@ const Glance = () => {
         }}
         isMB={false}
       />
-
 
       <div className="flex items-center justify-center pt-6 pb-10 md:hidden">
         <AnimatedButton label="Discover Nine Rivers" className="mx-auto" />

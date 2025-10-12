@@ -56,7 +56,7 @@ const AdvisoryBouquet = () => {
           />
 
           {/* Cards Container */}
-          <div className="flex flex-col gap-4 lg:flex-row md:gap-6 min-h-[90vh] lg:h-[90vh]">
+          <div className="flex flex-col gap-4 lg:flex-row md:gap-6 min-h-[90vh] md:min-h-[70vh] lg:h-[90vh]">
             {cards.map((card, index) => (
               <motion.div
                 key={card.id}
@@ -109,6 +109,30 @@ const AdvisoryBouquet = () => {
                               />
                             </svg>
                           </motion.div>
+
+                          {/* Tablet Plus Icon */}
+                          <motion.div
+                            key="plus-mobile"
+                            initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+                            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                            exit={{ opacity: 0, scale: 0.8, rotate: 45 }}
+                            transition={{ duration: 0.3 }}
+                            className="text-5xl text-black/80 absolute top-7 right-3 lg:hidden hidden md:block"
+                          >
+                            <svg
+                              width="30"
+                              height="43"
+                              viewBox="7 -13 33 33"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M24.4222 17.8268H17.7555V24.4935C17.7555 24.8471 17.6151 25.1863 17.365 25.4363C17.115 25.6863 16.7758 25.8268 16.4222 25.8268C16.0686 25.8268 15.7294 25.6863 15.4794 25.4363C15.2293 25.1863 15.0889 24.8471 15.0889 24.4935V17.8268H8.4222C8.06858 17.8268 7.72944 17.6863 7.47939 17.4363C7.22934 17.1863 7.08887 16.8471 7.08887 16.4935C7.08887 16.1399 7.22934 15.8007 7.47939 15.5507C7.72944 15.3006 8.06858 15.1602 8.4222 15.1602H15.0889V8.49349C15.0889 8.13987 15.2293 7.80073 15.4794 7.55068C15.7294 7.30063 16.0686 7.16016 16.4222 7.16016C16.7758 7.16016 17.115 7.30063 17.365 7.55068C17.6151 7.80073 17.7555 8.13987 17.7555 8.49349V15.1602H24.4222C24.7758 15.1602 25.115 15.3006 25.365 15.5507C25.6151 15.8007 25.7555 16.1399 25.7555 16.4935C25.7555 16.8471 25.6151 17.1863 25.365 17.4363C25.115 17.6863 24.7758 17.8268 24.4222 17.8268Z"
+                                fill="black"
+                              />
+                            </svg>
+                          </motion.div>
+
                           {/* Mobile Plus Icon */}
                           <motion.div
                             key="plus-mobile"
@@ -116,7 +140,7 @@ const AdvisoryBouquet = () => {
                             animate={{ opacity: 1, scale: 1, rotate: 0 }}
                             exit={{ opacity: 0, scale: 0.8, rotate: 45 }}
                             transition={{ duration: 0.3 }}
-                            className="text-3xl text-black/80 absolute top-7 right-3 lg:hidden"
+                            className="text-3xl text-black/80 absolute top-7 right-3 md:hidden"
                           >
                             <svg
                               width="20"
@@ -215,7 +239,7 @@ const AdvisoryBouquet = () => {
 
                   {/* Bottom Section - Title (Always Visible) */}
                   <motion.div
-                    className={`flex flex-row items-center gap-4 lg:text-xl ${activeCard !== index ? `` : `mt-6`} md:mt-0  2xl:text-2xl lg:pb-6 2xl:pb-8`}
+                    className={`flex flex-row items-center gap-4 md:text-xl md:mt-6 lg:mt-0 ${activeCard !== index ? `` : `mt-6`} md:mt-0  2xl:text-2xl lg:pb-6 2xl:pb-8`}
                     animate={{
                       opacity: 1,
                       y: 0,

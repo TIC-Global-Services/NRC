@@ -2,12 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import Container from "../Reusable/Container";
 import Image from "next/image";
-import { FounderImg } from "@/assets/Home";
+import { FounderImg, FounderImgTablet } from "@/assets/Home";
 import SlideUpText from "../ui/SlideUpText";
 
 const FounderComponent = () => {
   return (
-    <Container isNavbar className="sfPro">
+    <Container isNavbar className="sfPro md:pt-16">
       <motion.section
         className=""
         initial={{ opacity: 0 }}
@@ -23,14 +23,19 @@ const FounderComponent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[0.45fr_0.55fr] items-center ">
             {/* Left side - Image */}
             <motion.div className="relative h-[100%]">
-              <h1 className="text-2xl leading-8 md:hidden block text-center mb-5">
+              <h1 className="text-2xl md:text-5xl leading-8 lg:hidden block text-center mb-5">
                 From The Founder&apos;s Desk
               </h1>
               <div className=" md:rounded-2xl rounded-[8px] overflow-hidden ">
                 <Image
                   src={FounderImg}
                   alt="Sandeep Daga - Founder, MD & CIO"
-                  className="w-full md:h-[100vh] 2xl:h-[90vh] object-cover md:rounded-2xl rounded-[8px]"
+                  className="w-full md:h-[45vh] lg:h-[100vh] 2xl:h-[90vh] object-cover md:rounded-2xl rounded-[8px]  md:hidden lg:block"
+                />
+                <Image
+                  src={FounderImgTablet}
+                  alt="Sandeep Daga - Founder, MD & CIO"
+                  className="w-full md:h-[45vh] lg:h-[100vh] 2xl:h-[90vh] object-cover md:rounded-2xl rounded-[8px] hidden md:block lg:hidden"
                 />
               </div>
             </motion.div>
@@ -58,7 +63,7 @@ const FounderComponent = () => {
                     duration: 0.5,
                   },
                 }}
-                className="md:block hidden"
+                className="lg:block hidden"
               >
                 <SlideUpText animationMode="always">
                   <h2 className="text-4xl lg:text-5xl font-medium md:leading-[54px]">
@@ -95,7 +100,7 @@ const FounderComponent = () => {
                   className="md:mb-6 mb-3"
                 >
                   <SlideUpText animationMode="always">
-                    <h3 className="text-2xl leading-7 md:leading-[51px] lg:text-3xl font-normal ">
+                    <h3 className="text-2xl leading-7 md:leading-[51px] md:text-3xl font-normal ">
                       Sandeep <span className="text-primary">Daga</span>
                     </h3>
                   </SlideUpText>
@@ -107,7 +112,7 @@ const FounderComponent = () => {
                 </motion.div>
 
                 <SlideUpText animationMode="always">
-                  <p className="text-secondary font-[400] text-sm leading-6 md:text-base md:leading-relaxed">
+                  <p className="text-secondary font-[400] text-sm leading-6 md:text-lg lg:text-base md:leading-relaxed">
                     As the founder, I bring a passion for identifying
                     undervalued small cap companies with strong fundamentals and
                     compelling growth prospects. During my private equity

@@ -128,8 +128,10 @@ export default function TrustedPartner() {
       <div className=" mx-auto">
         <div className="grid lg:grid-cols-[0.45fr_0.55fr] md:items-center items-start">
           {/* LEFT SIDE - Static with 'once' animation */}
-          <div className="max-w-md">
+          <div className=" lg:max-w-md max-w-md md:max-w-full">
             <div className="mt-4">
+
+              {/* desktop */}
               <FlexibleHeading
                 title="A Proven Journey<br/> A Trusted Partner."
                 description="For more than a decade, our PMS has delivered differentiated
@@ -141,10 +143,26 @@ export default function TrustedPartner() {
                   "A Trusted Partner.": "text-primary",
                 }}
                 isMB={false}
+                className="md:hidden lg:block"
+              />
+
+              {/* tablet */}
+              <FlexibleHeading
+                title="A Proven Journey A Trusted Partner."
+                description="For more than a decade, our PMS has delivered differentiated
+                    returns through market cycles — not by chasing trends, but
+                    by backing scalable businesses early."
+                alignment="left"
+            
+                highlights={{
+                  "A Trusted Partner.": "text-primary",
+                }}
+                isMB={false}
+                className="md:block lg:hidden hidden"
               />
 
               {/* Fund selector buttons - Desktop */}
-              <div className="hidden md:block md:mb-6 md:mt-6">
+              <div className="hidden lg:block md:mb-6 md:mt-6">
                 <div className="space-y-3">
                   {fundOptions.map((fund, index) => (
                     <button
@@ -165,11 +183,42 @@ export default function TrustedPartner() {
                 </div>
               </div>
 
+              {/* tablet only */}
+              <div className="my-6  lg:hidden hidden md:flex  flex-row items-center justify-center mx-auto">
+                <AnimatedButton isBtnScale={false} label="Detailed Performance Data" />
+              </div>
+
+              {/* tablet only */}
+              <div className="hidden md:block lg:hidden md:mb-6 md:mt-6">
+                <div className="space-y-3">
+                  {fundOptions.map((fund, index) => (
+                    fund === selectedFund && (
+                      <button
+                        key={fund}
+                        onClick={() => setSelectedFund(fund)}
+                        className={`w-full cursor-pointer text-center px-4 py-3 rounded-lg leading-[33px] text-lg transition-all duration-300 ${selectedFund === fund
+                          ? "bg-[#F0F2F4] text-black border border-[#A3A6AA]"
+                          : "opacity-20 hover:opacity-40"
+                          }`}
+                      >
+                        <span className="font-medium ">
+                          <SlideUpText animationMode="once" delay={0.3 + index * 0.1}>
+                            {fund}
+                          </SlideUpText>
+                        </span>
+                      </button>
+                    )
+                  ))}
+                </div>
+              </div>
+
+              {/* mobile only */}
               <div className="mt-6 md:mt-0 md:hidden flex  flex-row items-center justify-center mx-auto">
                 <AnimatedButton isBtnScale={false} label="Detailed Performance Data" />
               </div>
 
-              <div className="mt-6 md:block hidden">
+              {/* desktop only */}
+              <div className="mt-6 lg:block hidden">
                 <SlideUpText animationMode="once" delay={0.5}>
                   <AnimatedButton isBtnScale={false} label="Detailed Performance Data" />
                 </SlideUpText>
@@ -201,7 +250,6 @@ export default function TrustedPartner() {
                   )
                 ))}
               </div>
-
             </div>
 
 

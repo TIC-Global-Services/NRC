@@ -14,6 +14,8 @@ const Contact = () => {
                 title1Color={"Connect"}
                 desc1='We’re here to help you with your investment and corporate advisor'
                 desc2='needs. Reach out to us, and our team will get back to you soon.'
+                mobDes1='We’re here to help you with your investment '
+                mobDes2='and corporate advisor needs. Reach out to us, and our team will get back to you soon.'
             />
             <FormSection />
             <Map />

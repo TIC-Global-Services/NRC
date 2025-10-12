@@ -38,13 +38,13 @@ const InvestmentCard: React.FC<InvestmentCardProps> = ({ svg, title, highlightWo
     };
 
     return (
-        <div className="bg-[#F0F0F3] rounded-2xl px-8 pt-8 pb-8 h-[226px] md:h-96 flex flex-col items-start justify-between">
+        <div className="bg-[#F0F0F3] rounded-2xl px-8 pt-8 pb-8 h-[226px] lg:h-96 flex flex-col items-start justify-between">
             {svg && (
                 <div className="mb-4" dangerouslySetInnerHTML={{ __html: svg }} />
             )}
             <div>
-                <h3 className="md:text-[26px] text-[20px] leading-9 font-normal mb-2 md:mb-4">{renderTitle()}</h3>
-                <p className="text-secondary text-sm md:text-[20px] leading-5 md:leading-8 font-normal">{desc}</p>
+                <h3 className="lg:text-[26px] md:text-2xl text-[20px] leading-9 font-normal mb-2 lg:mb-4">{renderTitle()}</h3>
+                <p className="text-secondary text-sm md:text-base lg:text-[20px] leading-5 lg:leading-8 font-normal">{desc}</p>
             </div>
         </div>
     );
@@ -93,10 +93,10 @@ const NineRiversData: NineRiversItem[] = [
 const NineRivers: React.FC = () => {
     return (
         <Container disableYSpacing className='pb-32'>
-            <h1 className="md:text-5xl text-2xl leading-9 md:leading-14 text-center font-normal mb-6 md:mb-8">
+            <h1 className="lg:text-5xl md:text-5xl text-2xl leading-9 lg:leading-14 text-center font-normal mb-6 lg:mb-8">
                 Why clients choose <span className='text-primary'>Nine Rivers</span>
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {NineRiversData.map((card, index) => (
                     <InvestmentCard
                         key={index}
