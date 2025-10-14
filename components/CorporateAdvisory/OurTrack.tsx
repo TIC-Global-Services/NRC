@@ -271,7 +271,7 @@ const OurTrack = () => {
             <div className="relative h-full overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-around">
                 {/* Left river column */}
-                <div className="relative w-1/2 h-full overflow-hidden">
+                <div className="relative w-1/2 h-full ">
                   {currentTrack?.leftLogs.map((logo, index) => (
                     <div
                       key={`left-${index}-${activeLabel}`}
