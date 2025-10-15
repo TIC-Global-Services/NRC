@@ -1,17 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap/gsapSetup";
+import { ScrollManager } from "@/lib/gsap/scrollManager";
 import AnimatedButton from "../ui/animatedButton";
 import { useHeroScroll } from "@/context/HeroScrollContext";
 
-gsap.registerPlugin(ScrollTrigger);
-
 // IndexedDB Cache Manager
 class FrameCacheManager {
-  private dbName = 'mountainAnimationCache_v1';
-  private storeName = 'frames';
+  private dbName = "mountainAnimationCache_v1";
+  private storeName = "frames";
   private db: IDBDatabase | null = null;
 
   async init(): Promise<void> {
@@ -37,7 +35,7 @@ class FrameCacheManager {
     if (!this.db) return null;
 
     return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], 'readonly');
+      const transaction = this.db!.transaction([this.storeName], "readonly");
       const store = transaction.objectStore(this.storeName);
       const request = store.get(index);
 
@@ -50,7 +48,7 @@ class FrameCacheManager {
     if (!this.db) return;
 
     return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], 'readwrite');
+      const transaction = this.db!.transaction([this.storeName], "readwrite");
       const store = transaction.objectStore(this.storeName);
       store.put(blob, index);
 
@@ -73,14 +71,13 @@ const Hero = () => {
   const isIdleAnimatingRef = useRef<boolean>(false);
   const idleFrameRef = useRef<number>(0);
   const lastIdleTimeRef = useRef<number>(0);
-  const gsapInstancesRef = useRef<any[]>([]);
   const buttonWrapperRef = useRef<HTMLDivElement | null>(null);
 
   const totalFrames = 320;
   const idleFrameCount = 40;
   const idleFrameRate = 15;
   const idleFrameDelay = 1000 / idleFrameRate;
-  const idleDirectionRef = useRef<'forward' | 'backward'>('forward');
+  const idleDirectionRef = useRef<"forward" | "backward">("forward");
 
   const { setHeroScrolled, setHeroContentRevealed } = useHeroScroll();
 
@@ -95,10 +92,10 @@ const Hero = () => {
       setHeroScrolled(heroBottom < 0);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [setHeroScrolled]);
 
   const currentFrame = (index: number) =>
@@ -140,42 +137,45 @@ const Hero = () => {
     );
   }, []);
 
-  const animateIdle = useCallback((timestamp: number) => {
-    if (!isIdleAnimatingRef.current) return;
+  const animateIdle = useCallback(
+    (timestamp: number) => {
+      if (!isIdleAnimatingRef.current) return;
 
-    if (timestamp - lastIdleTimeRef.current >= idleFrameDelay) {
-      if (idleDirectionRef.current === 'forward') {
-        idleFrameRef.current++;
-        if (idleFrameRef.current >= idleFrameCount - 1) {
-          idleDirectionRef.current = 'backward';
+      if (timestamp - lastIdleTimeRef.current >= idleFrameDelay) {
+        if (idleDirectionRef.current === "forward") {
+          idleFrameRef.current++;
+          if (idleFrameRef.current >= idleFrameCount - 1) {
+            idleDirectionRef.current = "backward";
+          }
+        } else {
+          idleFrameRef.current--;
+          if (idleFrameRef.current <= 0) {
+            idleDirectionRef.current = "forward";
+          }
         }
-      } else {
-        idleFrameRef.current--;
-        if (idleFrameRef.current <= 0) {
-          idleDirectionRef.current = 'forward';
+
+        if (imagesRef.current[idleFrameRef.current]) {
+          render(idleFrameRef.current);
         }
+
+        lastIdleTimeRef.current = timestamp;
       }
 
-      if (imagesRef.current[idleFrameRef.current]) {
-        render(idleFrameRef.current);
+      if (isIdleAnimatingRef.current) {
+        animationFrameRef.current = requestAnimationFrame(animateIdle);
       }
-
-      lastIdleTimeRef.current = timestamp;
-    }
-
-    if (isIdleAnimatingRef.current) {
-      animationFrameRef.current = requestAnimationFrame(animateIdle);
-    }
-  }, [idleFrameCount, idleFrameDelay, render]);
+    },
+    [idleFrameCount, idleFrameDelay, render]
+  );
 
   const startIdleAnimation = useCallback(() => {
     if (isIdleAnimatingRef.current) return;
 
     const currentFrame = idleFrameRef.current;
     if (currentFrame >= idleFrameCount - 1) {
-      idleDirectionRef.current = 'backward';
+      idleDirectionRef.current = "backward";
     } else if (currentFrame <= 0) {
-      idleDirectionRef.current = 'forward';
+      idleDirectionRef.current = "forward";
     }
 
     isIdleAnimatingRef.current = true;
@@ -192,107 +192,125 @@ const Hero = () => {
   }, []);
 
   const setupGSAPAnimations = useCallback(() => {
-    gsap.set(".title-line", {
-      y: "0%",
-    });
+    // ✅ Use gsap.context for automatic cleanup
+    const ctx = gsap.context(() => {
+      // Initial setup
+      gsap.set(".title-line", { y: "0%" });
+      gsap.set(".description-line, .button-line", { y: "100%" });
+      gsap.set(contentRef.current, { opacity: 1, visibility: "visible" });
 
-    gsap.set(".description-line, .button-line", {
-      y: "100%",
-    });
+      if (buttonWrapperRef.current) {
+        buttonWrapperRef.current.style.visibility = "visible";
+      }
 
-    gsap.set(contentRef.current, {
-      opacity: 1,
-      visibility: "visible",
-    });
-
-    if (buttonWrapperRef.current) {
-      buttonWrapperRef.current.style.visibility = "visible";
-    }
-
-    // Animation for description and button with content reveal tracking
-    const anim2 = gsap.to(".description-line, .button-line", {
-      y: "0%",
-      duration: 1,
-      ease: "power2.out",
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "+=1200",
-        end: "+=1800",
-        scrub: 1,
-        onUpdate: (self) => {
-          // When animation is complete (progress >= 0.95), mark content as revealed
-          if (self.progress >= 0.95) {
-            setHeroContentRevealed(true);
-          } else {
-            setHeroContentRevealed(false);
-          }
-        },
-      },
-    });
-
-    const anim3 = gsap.to(imgSeqRef.current, {
-      frame: totalFrames - 1,
-      snap: "frame",
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "+=3000",
-        scrub: 1,
-        pin: true,
-        onUpdate: (self) => {
-          const currentFrameNum = Math.round(imgSeqRef.current.frame);
-
-          if (currentFrameNum >= idleFrameCount) {
-            stopIdleAnimation();
-          } else if (self.progress > 0 && self.getVelocity() === 0 && currentFrameNum < idleFrameCount) {
-            if (!isIdleAnimatingRef.current) {
-              idleFrameRef.current = currentFrameNum;
-              startIdleAnimation();
+      // Animation for description and button with content reveal tracking
+      gsap.to(".description-line, .button-line", {
+        y: "0%",
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "+=1200",
+          end: "+=1800",
+          scrub: 1,
+          onUpdate: (self) => {
+            if (self.progress >= 0.95) {
+              setHeroContentRevealed(true);
+            } else {
+              setHeroContentRevealed(false);
             }
-          } else if (self.getVelocity() !== 0) {
-            stopIdleAnimation();
+          },
+        },
+      });
+
+      // Frame animation
+      gsap.to(imgSeqRef.current, {
+        frame: totalFrames - 1,
+        snap: "frame",
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=3000",
+          scrub: 1,
+          pin: true,
+          pinSpacing: true, // ✅ Added for proper spacing
+          onUpdate: (self) => {
+            const currentFrameNum = Math.round(imgSeqRef.current.frame);
+
+            if (currentFrameNum >= idleFrameCount) {
+              stopIdleAnimation();
+            } else if (
+              self.progress > 0 &&
+              self.getVelocity() === 0 &&
+              currentFrameNum < idleFrameCount
+            ) {
+              if (!isIdleAnimatingRef.current) {
+                idleFrameRef.current = currentFrameNum;
+                startIdleAnimation();
+              }
+            } else if (self.getVelocity() !== 0) {
+              stopIdleAnimation();
+            }
+          },
+        },
+        onUpdate: () => {
+          const frameIndex = Math.round(imgSeqRef.current.frame);
+          if (imagesRef.current[frameIndex]) {
+            render(frameIndex);
           }
         },
-      },
-      onUpdate: () => {
-        const frameIndex = Math.round(imgSeqRef.current.frame);
-        if (imagesRef.current[frameIndex]) {
-          render(frameIndex);
-        }
-      },
-    });
+      });
 
-    gsapInstancesRef.current = [anim2, anim3];
+      // Additional ScrollTrigger for idle animation control
+      gsap.context(() => {
+        gsap.to(
+          {},
+          {
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top top",
+              end: "+=3000",
+              onUpdate: (self) => {
+                const currentFrameNum = Math.round(imgSeqRef.current.frame);
 
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top top",
-      end: "+=3000",
-      onUpdate: (self) => {
-        const currentFrameNum = Math.round(imgSeqRef.current.frame);
+                if (
+                  self.getVelocity() === 0 &&
+                  currentFrameNum < idleFrameCount &&
+                  !isIdleAnimatingRef.current
+                ) {
+                  idleFrameRef.current = currentFrameNum;
+                  startIdleAnimation();
+                }
+              },
+              onEnter: () => {
+                const currentFrameNum = Math.round(imgSeqRef.current.frame);
+                if (currentFrameNum < idleFrameCount) {
+                  idleFrameRef.current = currentFrameNum;
+                  startIdleAnimation();
+                }
+              },
+              onLeaveBack: () => {
+                idleFrameRef.current = 0;
+                startIdleAnimation();
+                setHeroContentRevealed(false);
+              },
+            },
+          }
+        );
+      });
+    }, sectionRef); // ✅ Scope context to section
 
-        if (self.getVelocity() === 0 && currentFrameNum < idleFrameCount && !isIdleAnimatingRef.current) {
-          idleFrameRef.current = currentFrameNum;
-          startIdleAnimation();
-        }
-      },
-      onEnter: () => {
-        const currentFrameNum = Math.round(imgSeqRef.current.frame);
-        if (currentFrameNum < idleFrameCount) {
-          idleFrameRef.current = currentFrameNum;
-          startIdleAnimation();
-        }
-      },
-      onLeaveBack: () => {
-        idleFrameRef.current = 0;
-        startIdleAnimation();
-        // Reset content revealed when scrolling back to top
-        setHeroContentRevealed(false);
-      },
-    });
-  }, [render, startIdleAnimation, stopIdleAnimation, setHeroContentRevealed]);
+    return ctx; // Return context for cleanup
+  }, [
+    render,
+    startIdleAnimation,
+    stopIdleAnimation,
+    setHeroContentRevealed,
+    idleFrameCount,
+    totalFrames,
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -300,7 +318,7 @@ const Hero = () => {
 
     const context = canvas.getContext("2d", {
       alpha: false,
-      desynchronized: true
+      desynchronized: true,
     });
     if (!context) return;
 
@@ -310,13 +328,18 @@ const Hero = () => {
     canvas.width = 1920;
     canvas.height = 1080;
 
+    let gsapContext: gsap.Context | null = null;
+
     const initializeAndLoad = async () => {
       try {
         const cacheManager = new FrameCacheManager();
         await cacheManager.init();
         cacheManagerRef.current = cacheManager;
 
-        const loadImage = async (index: number, isPriority: boolean = false): Promise<void> => {
+        const loadImage = async (
+          index: number,
+          isPriority: boolean = false
+        ): Promise<void> => {
           if (loadingQueueRef.current.has(index)) return;
           loadingQueueRef.current.add(index);
 
@@ -327,11 +350,11 @@ const Hero = () => {
 
             if (!blob) {
               const response = await fetch(framePath, {
-                priority: isPriority ? 'high' : 'low',
-                cache: 'force-cache'
+                priority: isPriority ? "high" : "low",
+                cache: "force-cache",
               } as any);
 
-              if (!response.ok) throw new Error('Failed to fetch');
+              if (!response.ok) throw new Error("Failed to fetch");
               blob = await response.blob();
 
               cacheManager.setFrame(index, blob);
@@ -363,11 +386,16 @@ const Hero = () => {
 
         if (imagesRef.current[0]) {
           render(0);
-          setupGSAPAnimations();
+          gsapContext = setupGSAPAnimations(); // ✅ Store context
         }
 
-        const remainingIdleFrames = Array.from({ length: idleFrameCount - 1 }, (_, i) => i + 1);
-        await Promise.all(remainingIdleFrames.map(idx => loadImage(idx, true)));
+        const remainingIdleFrames = Array.from(
+          { length: idleFrameCount - 1 },
+          (_, i) => i + 1
+        );
+        await Promise.all(
+          remainingIdleFrames.map((idx) => loadImage(idx, true))
+        );
 
         startIdleAnimation();
 
@@ -375,24 +403,25 @@ const Hero = () => {
           const batchSize = 15;
           for (let i = 0; i < priorityFrames.length; i += batchSize) {
             const batch = priorityFrames.slice(i, i + batchSize);
-            await Promise.allSettled(batch.map(idx => loadImage(idx, true)));
+            await Promise.allSettled(batch.map((idx) => loadImage(idx, true)));
           }
         };
 
         const loadRemainingFrames = async () => {
-          const remainingFrames = Array.from({ length: totalFrames }, (_, i) => i)
-            .filter(i => i >= idleFrameCount && !priorityFrames.includes(i));
+          const remainingFrames = Array.from(
+            { length: totalFrames },
+            (_, i) => i
+          ).filter((i) => i >= idleFrameCount && !priorityFrames.includes(i));
 
           const batchSize = 20;
           for (let i = 0; i < remainingFrames.length; i += batchSize) {
             const batch = remainingFrames.slice(i, i + batchSize);
-            await Promise.allSettled(batch.map(idx => loadImage(idx, false)));
-            await new Promise(resolve => setTimeout(resolve, 10));
+            await Promise.allSettled(batch.map((idx) => loadImage(idx, false)));
+            await new Promise((resolve) => setTimeout(resolve, 10));
           }
         };
 
         Promise.all([loadPriorityFrames(), loadRemainingFrames()]);
-
       } catch (err) {
         console.error("Initialization error:", err);
       }
@@ -402,14 +431,26 @@ const Hero = () => {
 
     return () => {
       stopIdleAnimation();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      gsapInstancesRef.current.forEach(anim => {
-        if (anim && anim.kill) anim.kill();
-      });
-      // Reset content revealed on unmount
+
+      // ✅ Use centralized ScrollManager for cleanup
+      ScrollManager.killAll();
+
+      // ✅ Revert GSAP context
+      if (gsapContext) {
+        gsapContext.revert();
+      }
+
       setHeroContentRevealed(false);
     };
-  }, [render, startIdleAnimation, stopIdleAnimation, setupGSAPAnimations, setHeroContentRevealed]);
+  }, [
+    render,
+    startIdleAnimation,
+    stopIdleAnimation,
+    setupGSAPAnimations,
+    setHeroContentRevealed,
+    idleFrameCount,
+    totalFrames,
+  ]);
 
   return (
     <section
@@ -452,7 +493,11 @@ const Hero = () => {
             </div>
           </div>
 
-          <div ref={buttonWrapperRef} className="overflow-hidden" style={{ visibility: "hidden" }}>
+          <div
+            ref={buttonWrapperRef}
+            className="overflow-hidden"
+            style={{ visibility: "hidden" }}
+          >
             <div className="button-line">
               <AnimatedButton
                 isBtnScale={false}

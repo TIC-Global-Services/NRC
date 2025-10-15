@@ -24,7 +24,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="md:mb-16  bg-[#F6F9FC]">
+    <div className="md:mb-16 mb-6  bg-[#F6F9FC]">
       <Container disableYSpacing disableMarginTopMobile disableMarginBottomDesktop disableMarginBottomMobile disableMarginTopDesktop disablePaddingBottomDesktop disablePaddingTopDesktop disablePaddingTopMobile disablePaddingBottomMobile>
         <motion.footer
           className="text-white lg:py-20 md:py-14 py-8 bg-primary px-6 md:px-10 lg:px-16 rounded-3xl"

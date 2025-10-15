@@ -11,11 +11,11 @@ import LeadershipTeam from "./LeadershipTeam";
 const Team = () => {
   return (
     <>
-      <Hero
+      {/* <Hero
         title1="Meet Our Leadership"
         title2="&"
         title2Color=" Expert Teams"
-      />
+      /> */}
       <div className="w-full flex justify-center">
         <SlideUpText
           animationMode="always"
@@ -28,7 +28,7 @@ const Team = () => {
         </SlideUpText>
       </div>
       {/* <FounderComponent /> */}
-      <LeadershipTeam/>
+      <LeadershipTeam />
       <AssetManagementTeam />
       <CorporateAdvisoryTeam />
       <MediaCentreSection />

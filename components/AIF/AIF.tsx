@@ -10,12 +10,12 @@ import PortfolioHighlights from "./PortfolioHighlights";
 const AIF = () => {
   return (
     <div>
-      <Hero
+      {/* <Hero
         title1="Investing in India's "
         title1Color="Growth Story"
         desc1="Nine Rivers Capital offers unique opportunities to participate in the dynamic growth of the"
         desc2="Indian economy through our AIF funds."
-      />
+      /> */}
       <div className="flex items-center justify-center text-center">
         <SlideUpText
           animationMode="always"

@@ -26,7 +26,7 @@ const PMS = () => {
   }, []);
   return (
     <div className="bg-[#F6F9FC]">
-      <Hero
+      {/* <Hero
         title1="Portfolio Management"
         title2Color="Services"
         desc1="Trusted by HNIs & Family Offices for over 12 years, our PMS strategies combine"
@@ -39,7 +39,7 @@ const PMS = () => {
         isCTA
         CTAOne="Request Factsheet"
         CTATwo="Schedule a Call"
-      />
+      /> */}
       <Glance />
       <OurEdge />
       <Strategies />
