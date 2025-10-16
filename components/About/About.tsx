@@ -9,7 +9,7 @@ import OurValue from './OurValue'
 const About = () => {
     return (
         <div className='bg-[#F6F9FC]'>
-            {/* <Hero
+            <Hero
                 title1="Investing with conviction."
                 title2Color="Guiding with clarity."
                 desc1="Independent asset management and corporate advisory for HNIs & family offices —"
@@ -21,7 +21,7 @@ const About = () => {
                 isCTA
                 CTAOne='Speak with our team'
                 CTATwo='Download our capabilities'
-            /> */}
+            />
             <WhoWeAre />
             <NineRivers />
             <OurValue/>

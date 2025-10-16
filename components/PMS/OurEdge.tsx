@@ -21,7 +21,7 @@ const OurEdge = () => {
 
       {/* tablet / mobile */}
       <FlexibleHeading
-        title="Small Caps : Our Flagship. <br/> Our Edge."
+        title="Small Caps Our Flagship. <br/> Our Edge."
         description="This is where discovery, diligence, and discipline create extraordinary long-term wealth."
         maxWidth="max-w-3xl"
         highlights={{

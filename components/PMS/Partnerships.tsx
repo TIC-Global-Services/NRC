@@ -188,9 +188,13 @@ const Partnerships = () => {
       {/* Desktop View */}
       <div className="relative hidden lg:block">
         <div className="overflow-hidden">
+
+          {/* old heights */}
+          {/* md:h-[75vh] lg:h-[70vh] xl:h-[70vh] 2xl:h-[60vh] */}
+          
           <div
             ref={sliderRef}
-            className="grid grid-cols-4 gap-6 md:h-[75vh] lg:h-[70vh] xl:h-[70vh] 2xl:h-[60vh]"
+            className="grid grid-cols-4 gap-6 lg:h-[470px] 2xl:h-[549px]"
             style={{ width: `${partnershipData.length * (100 / 3)}%` }}
           >
             {partnershipData.map((card, index) => (
@@ -364,9 +368,21 @@ const Partnerships = () => {
             disabled={mobileIndex === 0}
             className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <rect width="48" height="48" rx="24" fill="#EFEFF5" />
-              <path d="M22.6667 26.6654L20 23.9987M20 23.9987L22.6667 21.332M20 23.9987H28" stroke="black" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M22.6667 26.6654L20 23.9987M20 23.9987L22.6667 21.332M20 23.9987H28"
+                stroke="black"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
 
@@ -375,9 +391,21 @@ const Partnerships = () => {
             disabled={mobileIndex >= partnershipData.length - 1}
             className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <rect width="48" height="48" rx="24" fill="#EFEFF5" />
-              <path d="M25.3333 26.6654L28 23.9987M28 23.9987L25.3333 21.332M28 23.9987H20" stroke="black" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M25.3333 26.6654L28 23.9987M28 23.9987L25.3333 21.332M28 23.9987H20"
+                stroke="black"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
         </div>

@@ -21,13 +21,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   return (
     <div
-      className={`max-w-md mx-auto ${isAdvisory && "shadow"
-        } relative bg-white  rounded-xl overflow-hidden z-20`}
+      className={`max-w-md mx-auto ${
+        isAdvisory && "shadow"
+      } relative bg-white  rounded-xl overflow-hidden z-20`}
     >
       {/* Header Image Section */}
-      <div
-        className="relative -mb-5 h-80 z-30"
-      >
+      <div className="relative -mb-5 h-80 z-30">
         <Image
           src={imageUrl}
           alt={`${name} - ${role}`}
@@ -47,8 +46,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       {/* Content Section */}
       <div className="p-5 rounded-xl h-[280px] relative z-40   bg-white -mt-5">
         {/* Name */}
-        <div >
-          <h2 className="text-3xl font-light text-gray-900 mb-2 pt-5">
+        <div>
+          <h2 className="text-3xl font-light text-gray-900 mb-2 sfPro">
             <span className="text-black">{name.split(" ")[0]} </span>
             <span className="text-primary">{name.split(" ")[1]}</span>
           </h2>
@@ -56,7 +55,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Description */}
         <div className="pr-3">
-          <p className="text-secondary text-base leading-[24px]">{description}</p>
+          <p className="text-secondary text-base leading-[24px] w-[96%]">
+            {description}
+          </p>
         </div>
 
         {/* LinkedIn Icon */}

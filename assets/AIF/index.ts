@@ -3,6 +3,7 @@ import ExpertiseImg1 from "@/assets/AIF/Expertise/Img1.png";
 import ExpertiseImg2 from "@/assets/AIF/Expertise/Img2.png";
 import ExpertiseImg3 from "@/assets/AIF/Expertise/Img3.png";
 import ExpertiseImg4 from "@/assets/AIF/Expertise/Img4.png";
+import ExpertiseImg5 from "@/assets/AIF/Expertise/Img5.png";
 
 
 import Row1Col1 from "@/assets/AIF/TwoDistinct/Row1Col1.png";
@@ -31,6 +32,7 @@ export {
     ExpertiseImg2,
     ExpertiseImg3,
     ExpertiseImg4,
+    ExpertiseImg5,
 
     Row1Col1,
     Row3,

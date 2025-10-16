@@ -11,6 +11,7 @@ import {
   ExpertiseImg2,
   ExpertiseImg3,
   ExpertiseImg4,
+  ExpertiseImg5,
 } from "@/assets/AIF";
 import Image, { StaticImageData } from "next/image";
 
@@ -19,7 +20,7 @@ interface CustomCardProps {
   description: string;
   imageUrl?: StaticImageData;
   className?: string;
-  cardIndex?:number
+  cardIndex?: number;
   onClick?: () => void;
 }
 
@@ -33,12 +34,14 @@ const DeskCustomCard = ({
 }: CustomCardProps) => {
   return (
     <div
-      className={`relative ${(cardIndex === 2 || cardIndex === 4) ? 'bg-[#C5C3FE]' : 'bg-[#F3F3F5]'} rounded-xl px-6 pt-8 overflow-hidden transition-all duration-300 cursor-pointer transform flex flex-col justify-between items-center gap-3 ${className}`}
+      className={`relative ${
+        cardIndex === 2 || cardIndex === 4 ? "bg-[#C5C3FE]" : "bg-[#F3F3F5]"
+      } rounded-xl px-6 pt-8 overflow-hidden transition-all duration-300 cursor-pointer transform flex flex-col justify-between items-center gap-3 ${className}`}
       onClick={onClick}
     >
       {/* Card Content */}
       <div className="h-24">
-        <h4 className="md:text-[24px] leading-[28px] font-[400]  mb-2 line-clamp-2">
+        <h4 className="md:text-[24px] leading-[28px] font-[400] mb-2 line-clamp-2">
           {title}
         </h4>
         <p className="md:text-base leading-[22px] font-[400] line-clamp-3">
@@ -47,14 +50,14 @@ const DeskCustomCard = ({
       </div>
 
       {/* Card Image */}
-      <div className=" overflow-hidden">
+      <div className="overflow-hidden">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={title}
             width={381}
             height={290}
-            className="rounded-3 w-full h-full object-cover transition-transform duration-300 "
+            className="rounded-3 w-full h-full object-cover transition-transform duration-300"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
@@ -67,7 +70,6 @@ const DeskCustomCard = ({
     </div>
   );
 };
-
 
 const MobileCustomCard = ({
   title,
@@ -119,14 +121,20 @@ const MobileCustomCard = ({
 const Expertise = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsMobile(true);
-    }
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Card data - 6 cards as requested
+  // Card data - 5 cards
   const cardData = [
     {
       id: 1,
@@ -151,18 +159,23 @@ const Expertise = () => {
     },
     {
       id: 4,
-      title: "Focus on High-Growth Sectors:",
+      title: "Focus on High-Growth Sectors",
       description:
         "Showcase specific sectors of interest and examples of successful portfolio companies.",
       imageUrl: ExpertiseImg4,
     },
+    {
+      id: 5,
+      title: "Deal Flow Advantage",
+      description:
+        "Explain NRC's competitive advantage in sourcing deals (organic network, co-investors).",
+      imageUrl: ExpertiseImg5,
+    },
   ];
 
-  const cardsPerScreen = isMobile ? 1 : 3; // 3 cards for desktop, 1 for mobile
+  // Calculate cards per screen based on viewport
+  const cardsPerScreen = isMobile ? 1 : isTablet ? 2 : 3;
   const totalSlides = cardData.length - cardsPerScreen + 1;
-
-  const startIndex = currentSlide;
-  const visibleCards = cardData.slice(startIndex, startIndex + cardsPerScreen);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
@@ -174,7 +187,6 @@ const Expertise = () => {
 
   const handleCardClick = (card: any) => {
     console.log("Card clicked:", card.title);
-    // Add your card click logic here
   };
 
   return (
@@ -188,7 +200,8 @@ const Expertise = () => {
         <div className="flex md:justify-between justify-center items-center mb-2 md:mb-8">
           <SlideUpText animationMode="always">
             <h2 className="text-[26px] px-4 md:px-0 text-left leading-8 md:leading-[58px] md:text-5xl font-normal text-gray-900">
-              Invest with Experience <br /> <span className="text-primary font-medium">and Expertise.</span>
+              Invest with Experience <br />{" "}
+              <span className="text-primary font-medium">and Expertise.</span>
             </h2>
           </SlideUpText>
 
@@ -197,7 +210,7 @@ const Expertise = () => {
               <button
                 onClick={prevSlide}
                 disabled={currentSlide === 0}
-                className="md:w-16 w-14 md:h-16 h-12 bg-[#EFEFF5] rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="md:w-16 md:h-16 w-14 h-12 bg-[#EFEFF5] rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg
                   width="65"
@@ -262,16 +275,16 @@ const Expertise = () => {
         <div className="relative overflow-hidden hidden lg:block">
           <div className="flex justify-center">
             <div
-              className="flex transition-transform duration-500 ease-in-out space-x-5"
+              className="flex transition-transform duration-500 ease-in-out gap-5"
               style={{
-                transform: `translateX(-${currentSlide * (100 / 3)}%)`, // shift 1/3 for each step
-                width: `${(cardData.length / 3) * 100}%`, // ensures track spans enough
+                transform: `translateX(-${currentSlide * (100 / 3 + 1.67)}%)`,
               }}
             >
               {cardData.map((card) => (
                 <div
                   key={card.id}
-                  className="w-[32%] flex-shrink-0 flex justify-center"
+                  className="flex-shrink-0"
+                  style={{ width: "calc(33.333% - 13.33px)" }}
                 >
                   <DeskCustomCard
                     title={card.title}
@@ -286,20 +299,20 @@ const Expertise = () => {
           </div>
         </div>
 
-        {/* tablet Cards - 2 at a time */}
-        <div className="relative overflow-hidden hidden md:block lg:hidden">
-          <div className="flex justify-center">
+        {/* Tablet Cards - 2 at a time */}
+        <div className="relative overflow-visible hidden md:block lg:hidden">
+          <div className="overflow-hidden px-4">
             <div
-              className="flex transition-transform duration-500 ease-in-out space-x-5"
+              className="flex transition-transform duration-500 ease-in-out gap-5"
               style={{
-                transform: `translateX(-${currentSlide * (100 / 2)}%)`, // shift 1/3 for each step
-                width: `${(cardData.length / 2) * 100}%`, // ensures track spans enough
+                transform: `translateX(-${currentSlide * 50 + 2.3}%)`,
               }}
             >
               {cardData.map((card) => (
                 <div
                   key={card.id}
-                  className="w-[48%] flex-shrink-0 flex justify-center"
+                  className="flex-shrink-0"
+                  style={{ width: "calc(50% - 10px)" }}
                 >
                   <DeskCustomCard
                     title={card.title}
@@ -320,14 +333,16 @@ const Expertise = () => {
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
-                transform: `translateX(calc(-${currentSlide * 90}vw + 10%))`, 
-                width: `${cardData.length * 90}%`,
+                transform: `translateX(calc(-${currentSlide * 90}vw - ${
+                  currentSlide * 16
+                }px + 5vw))`,
               }}
             >
               {cardData.map((card) => (
                 <div
                   key={card.id}
-                  className="w-[90vw] flex-shrink-0 pr-4 flex justify-center"
+                  className="flex-shrink-0 pr-4"
+                  style={{ width: "90vw" }}
                 >
                   <MobileCustomCard
                     title={card.title}
@@ -341,7 +356,7 @@ const Expertise = () => {
           </div>
         </div>
 
-        <div className="md:hidden flex justify-center mt-6">
+        <div className="md:hidden flex justify-end mt-6">
           <div className="flex space-x-2">
             <button
               onClick={prevSlide}
@@ -349,25 +364,25 @@ const Expertise = () => {
               className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
+                width="49"
+                height="48"
+                viewBox="0 0 49 48"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
-                  y="0.165527"
-                  width="24"
-                  height="24"
-                  rx="12"
+                  x="0.421875"
+                  width="48"
+                  height="48"
+                  rx="24"
                   fill="#EFEFF5"
                 />
                 <path
-                  d="M10.8151 14.6258L8.14844 11.9591M8.14844 11.9591L10.8151 9.29248M8.14844 11.9591H16.1484"
+                  d="M23.0885 26.6654L20.4219 23.9987M20.4219 23.9987L23.0885 21.332M20.4219 23.9987H28.4219"
                   stroke="black"
-                  strokeMiterlimit="10"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
             </button>
@@ -377,25 +392,25 @@ const Expertise = () => {
               className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
+                width="49"
+                height="48"
+                viewBox="0 0 49 48"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
-                  y="0.165527"
-                  width="24"
-                  height="24"
-                  rx="12"
+                  x="0.421875"
+                  width="48"
+                  height="48"
+                  rx="24"
                   fill="#EFEFF5"
                 />
                 <path
-                  d="M13.4818 14.6258L16.1484 11.9591M16.1484 11.9591L13.4818 9.29248M16.1484 11.9591H8.14844"
+                  d="M25.7552 26.6654L28.4219 23.9987M28.4219 23.9987L25.7552 21.332M28.4219 23.9987H20.4219"
                   stroke="black"
-                  strokeMiterlimit="10"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
             </button>

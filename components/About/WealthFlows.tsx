@@ -7,7 +7,7 @@ import Container from "../Reusable/Container";
 
 const WealthFlows = () => {
   return (
-    <Container disablePaddingTopMobile className="pt-8 lg:pt-0">
+    <Container disablePaddingTopMobile className="pt-8 md:pt-20 lg:pt-0">
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-5 lg:h-[80vh]  2xl:h-[70vh]">
         <div
           className="bg-[#EDEBF1] flex flex-col items-center justify-center text-center gap-4  p-10 rounded-xl md:rounded-lg min-h-[490px] lg:min-h-0"

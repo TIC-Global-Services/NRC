@@ -210,7 +210,7 @@ const AdvisoryBouquet = () => {
                       >
                         {/* Description */}
                         <motion.p
-                          className="text-secondary text-sm lg:text-base leading-[31px] text-left"
+                          className="text-secondary text-sm leading-6 md:text-base md:leading-6 lg:text-base lg:leading-[31px] text-left"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5, delay: 0.3 }}

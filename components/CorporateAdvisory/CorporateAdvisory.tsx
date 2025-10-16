@@ -9,7 +9,7 @@ import OurTrack from './OurTrack'
 const CorporateAdvisory = () => {
     return (
         <div className='bg-[#F6F9FC]'>
-            {/* <Hero
+            <Hero
                 title1="Corporate"
                 title1Color='Advisory'
                 desc1="Our Corporate Advisory practice is led by senior bankers who have advised"
@@ -19,7 +19,7 @@ const CorporateAdvisory = () => {
                 isCTA
                 CTAOne="Request Factsheet"
                 CTATwo="Schedule a Call"
-            /> */}
+            />
             <WeOffer/>
             <AdvisoryBouquet/>
             <OurTrack/>

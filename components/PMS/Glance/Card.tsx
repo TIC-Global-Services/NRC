@@ -31,7 +31,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
       flex flex-col justify-between items-center
       ${className}
     `}>
-      <div className="mb-8 lg:mb-12 2xl:mb-[70px] w-full flex-shrink-0 flex justify-center items-center h-[200px] md:h-auto">
+      <div className="pb-8 lg:pb-12  2xl:mb-[70px] w-full flex-shrink-0 flex justify-center items-center h-[200px] md:h-[80%]">
         <div className="relative flex justify-center items-center w-full h-full">
           <Image
             src={imageSrc}
@@ -49,7 +49,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
         </div>
       </div>
       <h3 className="
-        text-base lg:text-lg 2xl:text-[20px] 
+        text-sm lg:text-lg 2xl:text-[20px] 
         font-[500] 
         text-black 
         leading-5 lg:leading-6 2xl:leading-[31px]

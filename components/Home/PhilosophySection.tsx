@@ -3,6 +3,7 @@ import AnimatedButton from "../ui/animatedButton";
 import Badge from "../ui/badge";
 import Container from "../Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
+import FlexibleHeading from "../ui/FlexibleHeading";
 
 export default function PhilosophySection() {
   return (
@@ -25,10 +26,11 @@ export default function PhilosophySection() {
                   </SlideUpText>
                   <SlideUpText animationMode="always">
                     <h2 className="text-[26px] md:text-5xl md:flex md:gap-3  font-[400] text-primary leading-8 md:leading-[58px]">
-                      <span className="md:block hidden ">Public</span>Market Execution.
+                      <span className="md:block hidden ">Public</span>Market&#160;Execution.
                     </h2>
                   </SlideUpText>
                 </div>
+
 
                 {/* Description */}
                 <SlideUpText animationMode="always" delay={0.4} className="mt-2 md:mt-0">

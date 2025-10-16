@@ -1,6 +1,6 @@
 'use client'
 
-import { Whoweare } from '@/assets/About'
+import { Whoweare, WhoweareWider } from '@/assets/About'
 import Image from 'next/image'
 import React, { useEffect, useRef } from 'react'
 import Container from '../Reusable/Container'
@@ -83,23 +83,26 @@ const WhoWeAre = () => {
     }, [])
 
     return (
-        <Container disableYSpacing className='md:pt-24 md:pb-32 pt-11 pb-40'>
-            <div ref={sectionRef} className='lg:grid lg:grid-cols-[40%_55%] flex flex-col-reverse items-start gap-x-10'>
-
+        <Container disableYSpacing className="md:pt-24 md:pb-32 pt-11 pb-40">
+            <div
+                ref={sectionRef}
+                className="lg:grid lg:grid-cols-[40%_55%] flex flex-col-reverse items-start gap-x-10"
+            >
                 {/* Mobile Image */}
                 <Image
-                    src={Whoweare}
-                    alt='WhoweareImg'
-                    className='lg:hidden block h-[384px] md:h-[400px] w-full'
+                    src={WhoweareWider}
+                    alt="WhoweareImg"
+                    className="lg:hidden block h-[384px] md:h-[50%] w-full rounded-xl"
                     width={532}
                     height={384}
                 />
 
                 {/* Desktop Image */}
-                <div ref={imageRef} className='lg:block hidden'>
+                <div ref={imageRef} className="lg:block hidden">
                     <Image
                         src={Whoweare}
-                        alt='WhoweareImg'
+                        alt="WhoweareImg"
+                        className=" rounded-xl"
                         width={532}
                         height={610}
                         priority
@@ -107,23 +110,29 @@ const WhoWeAre = () => {
                 </div>
 
                 {/* Content - Sticky on Desktop */}
-                <div className='mb-3 lg:mb-0 lg:h-auto'>
+                <div className="mb-3 lg:mb-0 lg:h-auto">
                     <div
                         ref={contentRef}
-                        className='will-change-transform transform-gpu'
-                        style={{ transform: 'translate3d(0, 0, 0)' }}
+                        className="will-change-transform transform-gpu"
+                        style={{ transform: "translate3d(0, 0, 0)" }}
                     >
-                        <h1 className='lg:text-[44px] md:text-5xl text-[26px] leading-8 lg:leading-14 font-normal mb-4'>
-                            Who <span className='text-primary'>we are</span>
+                        <h1 className="lg:text-[44px] md:text-5xl text-[26px] leading-8 lg:leading-14 font-normal mb-4">
+                            Who <span className="text-primary">we are</span>
                         </h1>
-                        <p className='lg:text-[20px] md:text-lg text-base leading-7 lg:leading-8 text-secondary font-normal'>
-                            Nine Rivers Capital is an independent asset management and corporate advisory group that helps high-net-worth individuals and family offices build, preserve and grow wealth through bespoke PMS and AIF strategies and strategic corporate advisory. We combine long-term, research-driven investing with active stewardship to identify asymmetric, mid-market and growth opportunities across sectors.
+                        <p className="lg:text-[20px] md:text-lg text-base leading-7 lg:leading-8 text-secondary font-normal">
+                            Nine Rivers Capital is an independent asset management and
+                            corporate advisory group that helps high-net-worth individuals
+                            and family offices build, preserve and grow wealth through
+                            bespoke PMS and AIF strategies and strategic corporate advisory.
+                            We combine long-term, research-driven investing with active
+                            stewardship to identify asymmetric, mid-market and growth
+                            opportunities across sectors.
                         </p>
                     </div>
                 </div>
             </div>
         </Container>
-    )
+    );
 }
 
 export default WhoWeAre
