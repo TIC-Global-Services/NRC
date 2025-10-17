@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
 import Badge from "../ui/badge";
 import Container from "../Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
@@ -12,7 +14,8 @@ import {
   sortDataChronologically,
 } from "@/lib/config/HomeSheetConfig";
 import { fetchPortfolioData as fetchAMPData } from "@/lib/config/PmsSheetConfig";
-import { AMP } from "../Reusable/Charts/AMP"; 
+import { AMP } from "../Reusable/Charts/AMP";
+import SMEPerformanceCard from "../Reusable/Charts/SMEPerformanceCard";
 
 export default function TrackRecordSection() {
   const [selectedFund, setSelectedFund] = useState(
@@ -24,6 +27,8 @@ export default function TrackRecordSection() {
   const [ampData, setAmpData] = useState<PortfolioRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const chartContainerRef = useRef<HTMLDivElement>(null);
 
   const fundOptions = [
     "Aurum Small Cap Opportunities (ASCO)",
@@ -76,6 +81,27 @@ export default function TrackRecordSection() {
       loadAMPData();
     }
   }, [selectedFund, ampData.length]);
+
+  // GSAP animation when fund changes
+  useEffect(() => {
+    if (chartContainerRef.current) {
+      gsap.fromTo(
+        chartContainerRef.current,
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.95,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: "power3.out",
+        }
+      );
+    }
+  }, [selectedFund]);
 
   // Get chart data based on selected fund
   const getChartData = () => {
@@ -163,14 +189,20 @@ export default function TrackRecordSection() {
         );
 
       case "Aurum SME Trust":
+        return <SMEPerformanceCard />;
       case "Aurum Rising India Fund (ARIF)":
         return (
-          <div className="flex items-center justify-center h-[200px] md:h-[300px] bg-white rounded-lg border-2 border-dashed border-gray-300">
+          <div className="flex items-center justify-center h-[200px] max-w-xl mx-auto md:h-[300px] rounded-lg ">
             <div className="text-center">
-              <p className="text-gray-500 text-lg font-medium mb-2">
-                {selectedFund}
-              </p>
-              <p className="text-gray-400 text-sm">Chart data coming soon</p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-black text-2xl font-semibold mb-2"
+              >
+                ARIF - Capturing India's growth story — rising opportunities,
+                rising returns.
+              </motion.p>
             </div>
           </div>
         );
@@ -229,14 +261,22 @@ export default function TrackRecordSection() {
 
               {/* desktop only */}
               <div className="space-y-3 lg:block md:hidden">
-                {fundOptions.map((fund) => (
-                  <button
+                {fundOptions.map((fund, index) => (
+                  <motion.button
                     key={fund}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{
+                      opacity: selectedFund === fund ? 1 : 0.2,
+                      x: 0,
+                    }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    whileHover={{ scale: 1.02, opacity: 1 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedFund(fund)}
                     className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-lg ${
                       selectedFund === fund
                         ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
-                        : "opacity-20"
+                        : ""
                     }`}
                   >
                     <span className="font-medium">
@@ -244,14 +284,20 @@ export default function TrackRecordSection() {
                         {fund}
                       </SlideUpText>
                     </span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
 
               {/* tablet only */}
               <div className="space-y-3 md:block lg:hidden">
                 {selectedFund && (
-                  <div className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm">
+                  <motion.div
+                    key={selectedFund}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm"
+                  >
                     <span className="font-medium w-full flex justify-center">
                       <SlideUpText
                         animationMode="always"
@@ -261,7 +307,7 @@ export default function TrackRecordSection() {
                         {selectedFund}
                       </SlideUpText>
                     </span>
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </div>
@@ -281,7 +327,13 @@ export default function TrackRecordSection() {
                 </SlideUpText>
               </h3>
               {selectedFund && (
-                <div className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm">
+                <motion.div
+                  key={selectedFund}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm"
+                >
                   <span className="font-medium w-full flex justify-center">
                     <SlideUpText
                       animationMode="always"
@@ -291,7 +343,7 @@ export default function TrackRecordSection() {
                       {selectedFund}
                     </SlideUpText>
                   </span>
-                </div>
+                </motion.div>
               )}
             </div>
 
@@ -306,7 +358,21 @@ export default function TrackRecordSection() {
                 </SlideUpText>
               </p>
 
-              {renderChart()}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedFund}
+                  ref={chartContainerRef}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.43, 0.13, 0.23, 0.96],
+                  }}
+                >
+                  {renderChart()}
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             {/* Mobile – only inactive options, clickable */}
@@ -315,8 +381,16 @@ export default function TrackRecordSection() {
                 {fundOptions
                   .filter((fund) => fund !== selectedFund)
                   .map((fund, index) => (
-                    <button
+                    <motion.button
                       key={fund}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{
+                        opacity: index === 0 ? 0.8 : 0.2,
+                        y: 0,
+                      }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02, opacity: 1 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => setSelectedFund(fund)}
                       className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] md:text-lg ${
                         index === 0
@@ -329,7 +403,7 @@ export default function TrackRecordSection() {
                           {fund}
                         </SlideUpText>
                       </span>
-                    </button>
+                    </motion.button>
                   ))}
               </div>
             </div>
