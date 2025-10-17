@@ -11,12 +11,8 @@ import {
   getDisplayData,
   sortDataChronologically,
 } from "@/lib/config/HomeSheetConfig";
-
-import {
-  fetchPortfolioData as fetchAMPData,
-} from "@/lib/config/PmsSheetConfig";
-
-import { PMSAnimatedChart } from "../Reusable/Charts/PMSAnimatedChart";
+import { fetchPortfolioData as fetchAMPData } from "@/lib/config/PmsSheetConfig";
+import { AMP } from "../Reusable/Charts/AMP"; 
 
 export default function TrackRecordSection() {
   const [selectedFund, setSelectedFund] = useState(
@@ -58,7 +54,10 @@ export default function TrackRecordSection() {
 
   // Fetch AMP data when that fund is selected
   useEffect(() => {
-    if (selectedFund === "Aurum Multiplier Fund (AMP)" && ampData.length === 0) {
+    if (
+      selectedFund === "Aurum Multiplier Fund (AMP)" &&
+      ampData.length === 0
+    ) {
       const loadAMPData = async () => {
         try {
           setLoading(true);
@@ -98,7 +97,11 @@ export default function TrackRecordSection() {
     }
 
     const maxDisplayPoints = 20;
-    const sampledData = getDisplayData(portfolioData, maxDisplayPoints, 'optimal');
+    const sampledData = getDisplayData(
+      portfolioData,
+      maxDisplayPoints,
+      "optimal"
+    );
 
     const chartData = sampledData.map((row, index) => ({
       month: row.month,
@@ -151,7 +154,7 @@ export default function TrackRecordSection() {
 
       case "Aurum Multiplier Fund (AMP)":
         return (
-          <PMSAnimatedChart
+          <AMP
             data={getChartData()}
             isActive={true}
             maxXAxisPoints={20}
@@ -167,9 +170,7 @@ export default function TrackRecordSection() {
               <p className="text-gray-500 text-lg font-medium mb-2">
                 {selectedFund}
               </p>
-              <p className="text-gray-400 text-sm">
-                Chart data coming soon
-              </p>
+              <p className="text-gray-400 text-sm">Chart data coming soon</p>
             </div>
           </div>
         );
@@ -180,7 +181,11 @@ export default function TrackRecordSection() {
   };
 
   return (
-    <Container disablePaddingBottomMobile disablePaddingTopMobile className="bg-[#F6F9FC] py-12 lg:py-0">
+    <Container
+      disablePaddingBottomMobile
+      disablePaddingTopMobile
+      className="bg-[#F6F9FC] py-12 lg:py-0"
+    >
       <section className="">
         <div className="max-w-7xl mx-auto">
           <div className="mb-3">
@@ -202,15 +207,17 @@ export default function TrackRecordSection() {
                 <div className="lg:max-w-2xl mt-4 ">
                   <h2 className="text-[26px] md:text-5xl font-[400] leading-8 md:leading-[58px] md:block hidden">
                     Focused on Value,
-                    <br className="hidden lg:block"/>{" "}
-                    <span className="text-primary">Powered by Experience</span>
+                    <br className="hidden lg:block" />{" "}
+                    <span className="text-primary">
+                      Powered&#160;by&#160;Experience
+                    </span>
                   </h2>
                 </div>
               </div>
               <p className="text-sm md:text-lg text-secondary leading-6 md:leading-[31px] lg:max-w-lg font-[400] lg:mb-16 md:mb-4">
                 <SlideUpText animationMode="always" delay={0.4}>
                   We have consistently delivered strong, risk
-                  <br className="lg:block hidden"/>
+                  <br className="lg:block hidden" />
                   -adjusted returns across market cycles.
                 </SlideUpText>
               </p>
@@ -226,10 +233,11 @@ export default function TrackRecordSection() {
                   <button
                     key={fund}
                     onClick={() => setSelectedFund(fund)}
-                    className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-lg ${selectedFund === fund
-                      ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
-                      : "opacity-20"
-                      }`}
+                    className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-lg ${
+                      selectedFund === fund
+                        ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
+                        : "opacity-20"
+                    }`}
                   >
                     <span className="font-medium">
                       <SlideUpText animationMode="always" delay={0.2}>
@@ -310,10 +318,11 @@ export default function TrackRecordSection() {
                     <button
                       key={fund}
                       onClick={() => setSelectedFund(fund)}
-                      className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] md:text-lg ${index === 0
-                        ? "bg-[#EFEEF2] text-[#000000] opacity-80"
-                        : "opacity-20"
-                        }`}
+                      className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] md:text-lg ${
+                        index === 0
+                          ? "bg-[#EFEEF2] text-[#000000] opacity-80"
+                          : "opacity-20"
+                      }`}
                     >
                       <span className="font-medium">
                         <SlideUpText animationMode="always" delay={0.2}>

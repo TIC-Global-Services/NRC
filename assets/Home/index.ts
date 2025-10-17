@@ -32,10 +32,15 @@ import ProfileIcon2 from "@/assets/Home/MediaCenter/Icon2Img.png";
 import VideoThum1 from "@/assets/Home/MediaCenter/VideoImg1.png";
 import VideoThum2 from "@/assets/Home/MediaCenter/VideoImg2.png";
 
+// Track record
+import TrackRecord from "@/assets/Home/Trackrecord.png"
+
 
 export {
     // Logo
     NRC_Logo,
+
+    TrackRecord,
 
     // Founder
     FounderImg,
