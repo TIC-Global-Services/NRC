@@ -7,7 +7,7 @@ const FilterBar = ({ activeTab, setActiveTab, searchQuery, setSearchQuery }: any
     const tabs = [
         { id: 'blog', label: 'Blog' },
         { id: 'newspaper', label: 'Newspaper' },
-        { id: 'newspaper2', label: 'Newspaper' }
+        { id: 'press', label: 'Press' }
     ];
 
     const styles = getVariantStyles("default")
