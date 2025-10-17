@@ -6,11 +6,8 @@ const SMEPerformanceCard = () => {
         className="w-full sfPro"
         style={{ fontFamily: "SF Pro Display, sans-serif" }}
       >
-        <div className="max-w-7xl mx-auto bg-white">
-          {/* Header */}
-          <h1 className="md:text-base text-sm leading-[23px] text-secondary py-7 text-center font-medium">
-            Empowering India's small-&-medium enterprises for structured growth
-          </h1>
+        <div className="max-w-7xl mx-auto">
+
 
           {/* Main Card */}
           <div className="bg-gradient-to-br from-gray-100 to-gray-200 md:py-16 py-4 px-4 md:px-14">

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
 import Badge from "../ui/badge";
 import Container from "../Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
@@ -13,8 +12,10 @@ import {
   getDisplayData,
   sortDataChronologically,
 } from "@/lib/config/HomeSheetConfig";
+
 import { fetchPortfolioData as fetchAMPData } from "@/lib/config/PmsSheetConfig";
-import { AMP } from "../Reusable/Charts/AMP";
+
+import { PMSAnimatedChart } from "../Reusable/Charts/PMSAnimatedChart";
 import SMEPerformanceCard from "../Reusable/Charts/SMEPerformanceCard";
 
 export default function TrackRecordSection() {
@@ -27,8 +28,6 @@ export default function TrackRecordSection() {
   const [ampData, setAmpData] = useState<PortfolioRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const chartContainerRef = useRef<HTMLDivElement>(null);
 
   const fundOptions = [
     "Aurum Small Cap Opportunities (ASCO)",
@@ -81,27 +80,6 @@ export default function TrackRecordSection() {
       loadAMPData();
     }
   }, [selectedFund, ampData.length]);
-
-  // GSAP animation when fund changes
-  useEffect(() => {
-    if (chartContainerRef.current) {
-      gsap.fromTo(
-        chartContainerRef.current,
-        {
-          opacity: 0,
-          y: 30,
-          scale: 0.95,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          ease: "power3.out",
-        }
-      );
-    }
-  }, [selectedFund]);
 
   // Get chart data based on selected fund
   const getChartData = () => {
@@ -180,7 +158,7 @@ export default function TrackRecordSection() {
 
       case "Aurum Multiplier Fund (AMP)":
         return (
-          <AMP
+          <PMSAnimatedChart
             data={getChartData()}
             isActive={true}
             maxXAxisPoints={20}
@@ -190,19 +168,16 @@ export default function TrackRecordSection() {
 
       case "Aurum SME Trust":
         return <SMEPerformanceCard />;
+
       case "Aurum Rising India Fund (ARIF)":
         return (
-          <div className="flex items-center justify-center h-[200px] max-w-xl mx-auto md:h-[300px] rounded-lg ">
+          <div className="flex items-center justify-center h-[200px] md:h-[300px] bg-white rounded-lg ">
             <div className="text-center">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-black text-2xl font-semibold mb-2"
-              >
-                ARIF - Capturing India's growth story — rising opportunities,
-                rising returns.
-              </motion.p>
+              <p className="text-secondary text-2xl font-medium mb-2">
+                Capturing India’s growth story — <br /> rising opportunities, rising
+                returns.
+              </p>
+              {/* <p className="text-gray-400 text-sm">Chart data coming soon</p> */}
             </div>
           </div>
         );
@@ -261,43 +236,28 @@ export default function TrackRecordSection() {
 
               {/* desktop only */}
               <div className="space-y-3 lg:block md:hidden">
-                {fundOptions.map((fund, index) => (
-                  <motion.button
+                {fundOptions.map((fund) => (
+                  <button
                     key={fund}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{
-                      opacity: selectedFund === fund ? 1 : 0.2,
-                      x: 0,
-                    }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    whileHover={{ scale: 1.02, opacity: 1 }}
-                    whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedFund(fund)}
-                    className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-lg ${
-                      selectedFund === fund
-                        ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
-                        : ""
-                    }`}
+                    className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-lg ${selectedFund === fund
+                      ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
+                      : "opacity-20"
+                      }`}
                   >
                     <span className="font-medium">
                       <SlideUpText animationMode="always" delay={0.2}>
                         {fund}
                       </SlideUpText>
                     </span>
-                  </motion.button>
+                  </button>
                 ))}
               </div>
 
               {/* tablet only */}
               <div className="space-y-3 md:block lg:hidden">
                 {selectedFund && (
-                  <motion.div
-                    key={selectedFund}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm"
-                  >
+                  <div className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm">
                     <span className="font-medium w-full flex justify-center">
                       <SlideUpText
                         animationMode="always"
@@ -307,7 +267,7 @@ export default function TrackRecordSection() {
                         {selectedFund}
                       </SlideUpText>
                     </span>
-                  </motion.div>
+                  </div>
                 )}
               </div>
             </div>
@@ -327,13 +287,7 @@ export default function TrackRecordSection() {
                 </SlideUpText>
               </h3>
               {selectedFund && (
-                <motion.div
-                  key={selectedFund}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm"
-                >
+                <div className="w-full px-4 py-3 rounded-lg leading-[33px] md:text-lg bg-[#F0F2F4] text-[#000000] border border-[#A3A6AA] shadow-sm">
                   <span className="font-medium w-full flex justify-center">
                     <SlideUpText
                       animationMode="always"
@@ -343,36 +297,51 @@ export default function TrackRecordSection() {
                       {selectedFund}
                     </SlideUpText>
                   </span>
-                </motion.div>
+                </div>
               )}
             </div>
 
             {/* Chart - dynamically renders based on selection */}
             <div className="mt-4 md:mt-12 mb-12 md:mb-0">
-              <p className="text-secondary font-medium md:mb-3.5 mb-2 md:text-center md:text-lg md:leading-[23px] text-xs leading-[18px] text-center">
-                <SlideUpText animationMode="always" delay={0.7}>
-                  Performance-related information is not verified by SEBI; as
-                  prescribed,
-                  <br className="md:block hidden" /> individual portfolio
-                  performance under the Equity strategy may vary.
-                </SlideUpText>
-              </p>
+              <div className="text-secondary font-medium md:mb-3.5 mb-2 md:text-center md:text-lg md:leading-[23px] text-xs leading-[18px] text-center">
+                <AnimatePresence mode="wait">
+                  {selectedFund === "Aurum SME Trust" && (
+                    <motion.div
+                      key="sme-text"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
+                      <SlideUpText animationMode="always" delay={0.7}>
+                        Empowering India's small-&-medium enterprises for
+                        structured growth
+                      </SlideUpText>
+                    </motion.div>
+                  )}
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={selectedFund}
-                  ref={chartContainerRef}
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -30, scale: 0.95 }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.43, 0.13, 0.23, 0.96],
-                  }}
-                >
-                  {renderChart()}
-                </motion.div>
-              </AnimatePresence>
+                  {selectedFund !== "Aurum SME Trust" &&
+                    selectedFund !== "Aurum Rising India Fund (ARIF)" && (
+                      <motion.div
+                        key="sebi-text"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                      >
+                        <SlideUpText animationMode="always" delay={0.7}>
+                          Performance-related information is not verified by
+                          SEBI; as prescribed,
+                          <br className="md:block hidden" /> individual
+                          portfolio performance under the Equity strategy may
+                          vary.
+                        </SlideUpText>
+                      </motion.div>
+                    )}
+                </AnimatePresence>
+              </div>
+
+              {renderChart()}
             </div>
 
             {/* Mobile – only inactive options, clickable */}
@@ -381,29 +350,20 @@ export default function TrackRecordSection() {
                 {fundOptions
                   .filter((fund) => fund !== selectedFund)
                   .map((fund, index) => (
-                    <motion.button
+                    <button
                       key={fund}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{
-                        opacity: index === 0 ? 0.8 : 0.2,
-                        y: 0,
-                      }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02, opacity: 1 }}
-                      whileTap={{ scale: 0.98 }}
                       onClick={() => setSelectedFund(fund)}
-                      className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] md:text-lg ${
-                        index === 0
-                          ? "bg-[#EFEEF2] text-[#000000] opacity-80"
-                          : "opacity-20"
-                      }`}
+                      className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] md:text-lg ${index === 0
+                        ? "bg-[#EFEEF2] text-[#000000] opacity-80"
+                        : "opacity-20"
+                        }`}
                     >
                       <span className="font-medium">
                         <SlideUpText animationMode="always" delay={0.2}>
                           {fund}
                         </SlideUpText>
                       </span>
-                    </motion.button>
+                    </button>
                   ))}
               </div>
             </div>
