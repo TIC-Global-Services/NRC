@@ -4,7 +4,6 @@ import type React from "react";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import AnimatedButton from "../ui/animatedButton";
-import { useHeroScroll } from "@/context/HeroScrollContext";
 
 interface HeroProps {
   isContact?: boolean;
@@ -25,20 +24,20 @@ interface HeroProps {
 
 // IndexedDB Cache Manager
 class FrameCacheManager {
-  private dbName = 'heroAnimationCache_v1';
-  private storeName = 'frames';
+  private dbName = "heroAnimationCache_v1";
+  private storeName = "frames";
   private db: IDBDatabase | null = null;
 
   async init(): Promise<void> {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, 1);
-      
+
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
         this.db = request.result;
         resolve();
       };
-      
+
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
         if (!db.objectStoreNames.contains(this.storeName)) {
@@ -50,12 +49,12 @@ class FrameCacheManager {
 
   async getFrame(index: number): Promise<Blob | null> {
     if (!this.db) return null;
-    
+
     return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], 'readonly');
+      const transaction = this.db!.transaction([this.storeName], "readonly");
       const store = transaction.objectStore(this.storeName);
       const request = store.get(index);
-      
+
       request.onsuccess = () => resolve(request.result || null);
       request.onerror = () => resolve(null);
     });
@@ -63,12 +62,12 @@ class FrameCacheManager {
 
   async setFrame(index: number, blob: Blob): Promise<void> {
     if (!this.db) return;
-    
+
     return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], 'readwrite');
+      const transaction = this.db!.transaction([this.storeName], "readwrite");
       const store = transaction.objectStore(this.storeName);
       store.put(blob, index);
-      
+
       transaction.oncomplete = () => resolve();
       transaction.onerror = () => resolve();
     });
@@ -76,12 +75,12 @@ class FrameCacheManager {
 
   async clearCache(): Promise<void> {
     if (!this.db) return;
-    
+
     return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], 'readwrite');
+      const transaction = this.db!.transaction([this.storeName], "readwrite");
       const store = transaction.objectStore(this.storeName);
       store.clear();
-      
+
       transaction.oncomplete = () => resolve();
       transaction.onerror = () => resolve();
     });
@@ -107,6 +106,7 @@ const Hero: React.FC<HeroProps> = ({
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -122,26 +122,6 @@ const Hero: React.FC<HeroProps> = ({
   const totalFrames: number = 249;
   const frameRate: number = 30;
   const frameDelay: number = 1000 / frameRate;
-  
-  const { setHeroScrolled } = useHeroScroll();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-
-      const rect = sectionRef.current.getBoundingClientRect();
-
-      // When rect.bottom < 0 → hero is scrolled past → white navbar
-      // When rect.bottom > 0 → hero is visible → glass navbar
-      setHeroScrolled(rect.bottom < 0);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Check initial state
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [setHeroScrolled]);
-
 
   // Aggressive priority loading - load every 3rd frame initially (83 frames)
   const priorityFrames = Array.from({ length: 83 }, (_, i) => i * 3);
@@ -153,7 +133,7 @@ const Hero: React.FC<HeroProps> = ({
     const context = contextRef.current;
     const currentImage = framesRef.current[frameIndex];
 
-    if (!canvas || !context || !currentImage) return;
+    if (!canvas || !context || !currentImage || !currentImage.complete) return;
 
     isRenderingRef.current = true;
 
@@ -233,7 +213,7 @@ const Hero: React.FC<HeroProps> = ({
   );
 
   useEffect(() => {
-    if (!isPlaying) {
+    if (!isPlaying || !isInitialized) {
       isAnimatingRef.current = false;
       return;
     }
@@ -245,20 +225,20 @@ const Hero: React.FC<HeroProps> = ({
     return () => {
       isAnimatingRef.current = false;
     };
-  }, [isPlaying, animateFrames]);
+  }, [isPlaying, isInitialized, animateFrames]);
 
-  // Ultra-optimized loading with immediate start
+  // Ultra-optimized loading with proper initialization
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const initializeAndLoad = async () => {
       try {
-        const context = canvas.getContext("2d", { 
+        const context = canvas.getContext("2d", {
           alpha: true,
-          desynchronized: true // Better performance
+          desynchronized: true,
         });
-        
+
         if (!context) {
           setError("Canvas context not supported");
           return;
@@ -273,7 +253,10 @@ const Hero: React.FC<HeroProps> = ({
         cacheManagerRef.current = cacheManager;
 
         // Ultra-fast image loader with cache
-        const loadImage = async (index: number): Promise<void> => {
+        const loadImage = async (
+          index: number,
+          isPriority: boolean = false
+        ): Promise<void> => {
           if (loadingQueueRef.current.has(index)) return;
           loadingQueueRef.current.add(index);
 
@@ -283,36 +266,29 @@ const Hero: React.FC<HeroProps> = ({
           try {
             // Try cache first
             let blob = await cacheManager.getFrame(index);
-            
+
             if (!blob) {
               // Fetch with priority hint
               const response = await fetch(framePath, {
-                priority: priorityFrames.includes(index) ? 'high' : 'low',
-                cache: 'force-cache'
+                priority: isPriority ? "high" : "low",
+                cache: "force-cache",
               } as any);
-              
-              if (!response.ok) throw new Error('Failed to fetch');
+
+              if (!response.ok) throw new Error("Failed to fetch");
               blob = await response.blob();
-              
+
               // Cache asynchronously (don't wait)
               cacheManager.setFrame(index, blob);
             }
-            
+
             // Create image from blob
             const img = new Image();
             const url = URL.createObjectURL(blob);
-            
+
             await new Promise<void>((resolve, reject) => {
               img.onload = () => {
                 framesRef.current[index] = img;
                 URL.revokeObjectURL(url);
-                
-                // Start playing as soon as first frame loads
-                if (!isPlaying && index === 0) {
-                  render(0);
-                  setIsPlaying(true);
-                }
-                
                 resolve();
               };
               img.onerror = () => {
@@ -328,35 +304,44 @@ const Hero: React.FC<HeroProps> = ({
           }
         };
 
-        // PHASE 1: Load first frame immediately for instant display
-        await loadImage(0);
+        // PHASE 1: Load first frame immediately and render it
+        await loadImage(0, true);
+
+        // Critical: Render first frame and mark as initialized
+        if (framesRef.current[0]) {
+          render(0);
+          setIsInitialized(true);
+          // Start playing after first frame is rendered
+          setIsPlaying(true);
+        }
 
         // PHASE 2: Load priority frames with high concurrency
-        const priorityBatchSize = 15; // High concurrency for speed
+        const priorityBatchSize = 15;
         const loadPriorityFrames = async () => {
           for (let i = 0; i < priorityFrames.length; i += priorityBatchSize) {
             const batch = priorityFrames.slice(i, i + priorityBatchSize);
-            await Promise.allSettled(batch.map(idx => loadImage(idx)));
+            await Promise.allSettled(batch.map((idx) => loadImage(idx, true)));
           }
         };
 
         // PHASE 3: Load remaining frames in background
         const loadRemainingFrames = async () => {
-          const remainingFrames = Array.from({ length: totalFrames }, (_, i) => i)
-            .filter(i => !priorityFrames.includes(i) && i !== 0);
+          const remainingFrames = Array.from(
+            { length: totalFrames },
+            (_, i) => i
+          ).filter((i) => !priorityFrames.includes(i) && i !== 0);
 
           const batchSize = 20;
           for (let i = 0; i < remainingFrames.length; i += batchSize) {
             const batch = remainingFrames.slice(i, i + batchSize);
-            await Promise.allSettled(batch.map(idx => loadImage(idx)));
+            await Promise.allSettled(batch.map((idx) => loadImage(idx, false)));
             // Tiny delay to prevent blocking
-            await new Promise(resolve => setTimeout(resolve, 10));
+            await new Promise((resolve) => setTimeout(resolve, 10));
           }
         };
 
         // Run priority and remaining loads in parallel
         Promise.all([loadPriorityFrames(), loadRemainingFrames()]);
-
       } catch (err) {
         console.error("Initialization error:", err);
         setError("Failed to initialize animation");
@@ -371,12 +356,12 @@ const Hero: React.FC<HeroProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [render, isPlaying]);
+  }, [render]);
 
   // Handle window resize
   useEffect(() => {
     let resizeTimeout: NodeJS.Timeout;
-    
+
     const handleResize = (): void => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
@@ -398,7 +383,7 @@ const Hero: React.FC<HeroProps> = ({
     const handleVisibilityChange = () => {
       if (document.hidden) {
         isAnimatingRef.current = false;
-      } else if (isPlaying) {
+      } else if (isPlaying && isInitialized) {
         isAnimatingRef.current = true;
         lastFrameTimeRef.current = performance.now();
         requestAnimationFrame(animateFrames);
@@ -408,7 +393,7 @@ const Hero: React.FC<HeroProps> = ({
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [isPlaying, animateFrames]);
+  }, [isPlaying, isInitialized, animateFrames]);
 
   if (error) {
     return (
@@ -440,7 +425,8 @@ const Hero: React.FC<HeroProps> = ({
             style={{
               maxWidth: "100vw",
               display: "block",
-              transition: "opacity 0.5s ease-in-out",
+              opacity: isInitialized ? 1 : 0,
+              transition: "opacity 0.3s ease-in-out",
             }}
           />
         </div>
@@ -450,24 +436,23 @@ const Hero: React.FC<HeroProps> = ({
             isContact && "md:mt-28"
           } justify-center text-center px-4 z-10 gothicFont`}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: isInitialized ? 1 : 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {/* Main Heading with line mask reveal */}
           <div className="text-3xl md:text-5xl lg:text-6xl font-light mb-8 overflow-hidden gothicFont">
             <motion.div
               className="flex flex-col -gap-5"
-              initial={{ opacity: 0 }} // Separate entrance opacity
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isInitialized ? 1 : 0 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
             >
               <motion.span
                 className="text-black inline-block font-[400]"
                 initial={{ y: "100%" }}
-                animate={{ y: "0%" }}
+                animate={{ y: isInitialized ? "0%" : "100%" }}
                 transition={{
                   duration: 0.6,
-                  delay: 0.3,
+                  delay: 0.4,
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
               >
@@ -478,29 +463,32 @@ const Hero: React.FC<HeroProps> = ({
                 <></>
               ) : (
                 <motion.span
-                  className=" font-normal inline-block"
+                  className="font-normal inline-block"
                   initial={{ y: "100%" }}
-                  animate={{ y: "0%" }}
+                  animate={{ y: isInitialized ? "0%" : "100%" }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.4,
+                    delay: 0.5,
                     ease: [0.25, 0.1, 0.25, 1],
                   }}
                 >
-                    {title2 && title2}
+                  {title2 && title2}
                   <span className="text-[#8B5CF6]">{title2Color}</span>
                 </motion.span>
               )}
 
-              {/* Desktop - Subheading with line reveals */}
+              {/* Desktop - Subheading */}
               <div className="text-sm md:text-lg lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:block hidden">
                 <motion.div
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
+                  animate={{
+                    y: isInitialized ? "0%" : "100%",
+                    opacity: isInitialized ? 1 : 0,
+                  }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.5,
+                    delay: 0.6,
                     ease: [0.25, 0.1, 0.25, 1],
                   }}
                 >
@@ -512,15 +500,18 @@ const Hero: React.FC<HeroProps> = ({
                 </motion.div>
               </div>
 
-              {/* mobile desc */}
-              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden ">
+              {/* Mobile desc */}
+              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden">
                 <motion.div
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
+                  animate={{
+                    y: isInitialized ? "0%" : "100%",
+                    opacity: isInitialized ? 1 : 0,
+                  }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.5,
+                    delay: 0.6,
                     ease: [0.25, 0.1, 0.25, 1],
                   }}
                 >
@@ -534,7 +525,10 @@ const Hero: React.FC<HeroProps> = ({
 
               {isCTA && (
                 <div className="flex flex-row gap-4 justify-center items-center">
-                  <AnimatedButton isBtnScale={false} label={CTAOne ? CTAOne : ""} />
+                  <AnimatedButton
+                    isBtnScale={false}
+                    label={CTAOne ? CTAOne : ""}
+                  />
 
                   <AnimatedButton
                     isBtnScale={false}

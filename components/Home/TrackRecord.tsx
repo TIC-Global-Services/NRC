@@ -12,9 +12,7 @@ import {
   getDisplayData,
   sortDataChronologically,
 } from "@/lib/config/HomeSheetConfig";
-
 import { fetchPortfolioData as fetchAMPData } from "@/lib/config/PmsSheetConfig";
-
 import { PMSAnimatedChart } from "../Reusable/Charts/PMSAnimatedChart";
 import SMEPerformanceCard from "../Reusable/Charts/SMEPerformanceCard";
 
@@ -52,7 +50,6 @@ export default function TrackRecordSection() {
         setLoading(false);
       }
     };
-
     loadASCOData();
   }, []);
 
@@ -177,7 +174,6 @@ export default function TrackRecordSection() {
                 Capturing India’s growth story — <br /> rising opportunities, rising
                 returns.
               </p>
-              {/* <p className="text-gray-400 text-sm">Chart data coming soon</p> */}
             </div>
           </div>
         );
