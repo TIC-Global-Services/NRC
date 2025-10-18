@@ -3,7 +3,7 @@ import Image from "next/image";
 // NewspaperCard Component (similar styling to BlogCard)
 const NewspaperCard = ({ image, date, title, description }: any) => {
     return (
-      <div className="rounded-[12px] h-[392px] overflow-hidden duration-300 cursor-pointer grid grid-rows-[65%_35%]">
+      <div className="rounded-[12px] h-[392px] duration-300 cursor-pointer grid grid-rows-[65%_35%]">
         <div className="relative w-full h-full mb-2">
           <Image
             src={image}
