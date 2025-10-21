@@ -55,7 +55,7 @@ const WhoWeAre = () => {
               end: `+=${scrollDistance}`,
               pin: contentRef.current,
               pinSpacing: false,
-              scrub: true, // Use true instead of 0.1 for smoother performance
+              scrub: 3, // Use true instead of 0.1 for smoother performance
               anticipatePin: 1,
               invalidateOnRefresh: true,
               fastScrollEnd: true,

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import SlideUpText from "./SlideUpText";
+import { motion, Variants } from "framer-motion";
 
 type Alignment = "left" | "center" | "right";
 
@@ -63,20 +63,52 @@ const FlexibleHeading: React.FC<FlexibleHeadingProps> = ({
     right: "ml-auto mr-0",
   };
 
+  // Animation variants matching SlideUpText smoothness
+  const titleVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
+  };
+
+  const descriptionVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: 0.4,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
+  };
+
+  const viewportSettings = {
+    once: true,
+    amount: 0.1 as const,
+    margin: "0px 0px -50px 0px",
+  };
+
   // Function to render highlighted title
-  const renderHighlightedTitle = (titleText: string) => {
+  const renderHighlightedTitle = (titleText: string): React.ReactNode => {
     if (Object.keys(highlights).length === 0) {
       // No highlights, just handle <br/> tags
-      return titleText.split('<br/>').map((part, index) => (
+      return titleText.split("<br/>").map((part, index) => (
         <React.Fragment key={`title-part-${index}`}>
           {part}
-          {index < titleText.split('<br/>').length - 1 && <br />}
+          {index < titleText.split("<br/>").length - 1 && <br />}
         </React.Fragment>
       ));
     }
 
     // Split title by <br/> tags first
-    const titleParts = titleText.split('<br/>');
+    const titleParts = titleText.split("<br/>");
 
     return titleParts.map((titlePart, titleIndex) => (
       <React.Fragment key={`title-section-${titleIndex}`}>
@@ -113,7 +145,10 @@ const FlexibleHeading: React.FC<FlexibleHeadingProps> = ({
           });
 
           return parts.map((part, index) => (
-            <span key={`highlight-${titleIndex}-${index}`} className={part.className}>
+            <span
+              key={`highlight-${titleIndex}-${index}`}
+              className={part.className}
+            >
               {part.text}
             </span>
           ));
@@ -135,11 +170,11 @@ const FlexibleHeading: React.FC<FlexibleHeadingProps> = ({
   }, [title, mobileTitle, mdTitle, highlights]);
 
   // Memoize the description rendering
-  const renderDescription = (descText: string) => {
-    return descText.split('<br/>').map((part, index) => (
+  const renderDescription = (descText: string): React.ReactNode => {
+    return descText.split("<br/>").map((part, index) => (
       <React.Fragment key={`desc-part-${index}`}>
         {part}
-        {index < descText.split('<br/>').length - 1 && <br />}
+        {index < descText.split("<br/>").length - 1 && <br />}
       </React.Fragment>
     ));
   };
@@ -154,80 +189,90 @@ const FlexibleHeading: React.FC<FlexibleHeadingProps> = ({
     };
   }, [description, mobileDescription]);
 
-  // Create stable keys for SlideUpText components
-  const titleKey = useMemo(() => `title-${title.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20)}`, [title]);
-  const descriptionKey = useMemo(() => `desc-${description.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20)}`, [description]);
-
   return (
     <div
-      className={`${isMB ? "mb-11" : ""} ${mobileAlignmentClasses[effectiveMobileAlignment]} ${alignmentClasses[alignment]} ${className}`}
+      className={`${isMB ? "mb-11" : ""} ${
+        mobileAlignmentClasses[effectiveMobileAlignment]
+      } ${alignmentClasses[alignment]} ${className}`}
     >
       {/* Desktop Title */}
       {(mdTitle || mobileTitle) && (
-        <h2
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          variants={titleVariants}
           className={`hidden md:block text-[26px] md:text-5xl font-normal mb-3 leading-tight ${titleClassName}`}
         >
-          <SlideUpText animationMode="once" as="span" key={`${titleKey}-desktop`}>
-            {renderTitle.desktop}
-          </SlideUpText>
-        </h2>
+          {renderTitle.desktop}
+        </motion.h2>
       )}
 
       {/* Mobile Title */}
       {mobileTitle && (
-        <h2
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          variants={titleVariants}
           className={`block md:hidden text-[26px] md:text-5xl font-normal mb-3 leading-tight ${titleClassName}`}
         >
-          <SlideUpText animationMode="once" as="span" key={`${titleKey}-mobile`}>
-            {renderTitle.mobile}
-          </SlideUpText>
-        </h2>
+          {renderTitle.mobile}
+        </motion.h2>
       )}
 
       {/* Default Title (when no mobile/md variants) */}
       {!mdTitle && !mobileTitle && (
-        <h2
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          variants={titleVariants}
           className={`text-[26px] md:text-5xl font-normal mb-3 leading-tight ${titleClassName}`}
         >
-          <SlideUpText animationMode="once" as="span" key={titleKey}>
-            {renderTitle.desktop}
-          </SlideUpText>
-        </h2>
+          {renderTitle.desktop}
+        </motion.h2>
       )}
 
       {showDescription && description && (
         <>
           {/* Desktop Description */}
-          {(mobileDescription) && (
-            <div
+          {mobileDescription && (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              variants={descriptionVariants}
               className={`hidden md:block text-sm text-secondary md:text-base font-normal ${maxWidth} ${mobileDescriptionAlignmentClasses[effectiveMobileAlignment]} ${descriptionAlignmentClasses[alignment]} leading-relaxed ${descriptionClassName}`}
             >
-              <SlideUpText animationMode="once" delay={0.4} as="span" key={`${descriptionKey}-desktop`}>
-                {descriptions.desktop}
-              </SlideUpText>
-            </div>
+              {descriptions.desktop}
+            </motion.div>
           )}
 
           {/* Mobile Description */}
           {mobileDescription && (
-            <div
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              variants={descriptionVariants}
               className={`block md:hidden text-sm text-secondary md:text-base font-normal ${maxWidth} ${mobileDescriptionAlignmentClasses[effectiveMobileAlignment]} ${descriptionAlignmentClasses[alignment]} leading-relaxed ${descriptionClassName}`}
             >
-              <SlideUpText animationMode="once" delay={0.4} as="span" key={`${descriptionKey}-mobile`}>
-                {descriptions.mobile}
-              </SlideUpText>
-            </div>
+              {descriptions.mobile}
+            </motion.div>
           )}
 
           {/* Default Description (when no mobile variant) */}
           {!mobileDescription && (
-            <div
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              variants={descriptionVariants}
               className={`text-sm text-secondary md:text-base font-normal ${maxWidth} ${mobileDescriptionAlignmentClasses[effectiveMobileAlignment]} ${descriptionAlignmentClasses[alignment]} leading-relaxed ${descriptionClassName}`}
             >
-              <SlideUpText animationMode="once" delay={0.4} as="span" key={descriptionKey}>
-                {descriptions.desktop}
-              </SlideUpText>
-            </div>
+              {descriptions.desktop}
+            </motion.div>
           )}
         </>
       )}

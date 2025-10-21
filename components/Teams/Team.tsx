@@ -7,6 +7,7 @@ import FounderComponent from "../Home/Founder";
 import SlideUpText from "../ui/SlideUpText";
 import ParallaxWrapper from "../ui/ParallaxSliderWrapper";
 import LeadershipTeam from "./LeadershipTeam";
+import OthersSection from "./Others";
 
 const Team = () => {
   return (
@@ -31,6 +32,7 @@ const Team = () => {
       <LeadershipTeam />
       <AssetManagementTeam />
       <CorporateAdvisoryTeam />
+      <OthersSection/>
       <MediaCentreSection />
     </>
   );

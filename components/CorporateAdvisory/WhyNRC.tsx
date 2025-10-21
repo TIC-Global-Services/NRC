@@ -68,13 +68,15 @@ const WhyNRC = () => {
       });
 
       // Create pin/hold effect for each content item at center
-      const contentItems = rightSide.querySelectorAll('.content-item');
+      const contentItems = rightSide.querySelectorAll(".content-item");
       contentItems.forEach((item, index) => {
+        const isLast = index === contentItems.length - 1;
+
         ScrollTrigger.create({
           trigger: item,
           start: "center center",
-          end: "+=250vh", // Hold for 100vh of scroll
-          pin: true,
+          end: isLast ? "center center" : "+=250vh", // Last item doesn't pin, just centers
+          pin: !isLast, // Don't pin the last item
           pinSpacing: false,
           anticipatePin: 1,
         });
@@ -168,7 +170,6 @@ const WhyNRC = () => {
               />
             </div>
           </div>
-
 
           {/* Right Side - Scrollable Content */}
           <div ref={rightSideRef} className="py-0">

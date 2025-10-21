@@ -23,7 +23,7 @@ const FounderComponent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[0.45fr_0.55fr] items-center ">
             {/* Left side - Image */}
             <motion.div className="relative h-[100%]">
-              <h1 className="text-2xl md:text-5xl leading-8 lg:hidden block text-center mb-5">
+              <h1 className="text-2xl md:text-5xl leading-8 lg:hidden block text-center mb-5 md:mb-8">
                 From The Founder&apos;s Desk
               </h1>
               <div className=" md:rounded-2xl rounded-[8px] overflow-hidden ">

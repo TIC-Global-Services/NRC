@@ -30,8 +30,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, date, title, description }) 
           </div>
         </div>
 
-        <div className="flex flex-col justify-center">
-          <h3 className="lg:text-xl 2xl:text-2xl line-clamp-2">{title}</h3>
+        <div className="flex flex-col justify-center pl-1">
+          <h3 className="lg:text-xl 2xl:text-2xl mb-3 line-clamp-2">{title}</h3>
           <p className="text-secondary lg:text-sm 2xl:text-base leading-relaxed line-clamp-3">
             {description}
           </p>

@@ -33,7 +33,7 @@ const RecentBlogs = () => {
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[19px] lg:h-[392px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[19px] lg:h-[392px]">
           {/* Blog Posts */}
           {blogPosts.slice(0, 2).map((post, i) => (
             <BlogCard
@@ -46,7 +46,7 @@ const RecentBlogs = () => {
           ))}
 
           {/* Explore More Card */}
-          <div className="bg-primary md:block hidden  rounded-2xl p-8 text-white relative overflow-hidden h-full md:h-[292px] lg:h-[392px]">
+          <div className="bg-primary lg:block hidden  rounded-2xl p-8 text-white relative overflow-hidden h-full md:h-[292px] lg:h-[392px]">
             {/* Background decoration */}
             <div className="absolute top-4 right-4 opacity-20">
               <div className="w-20 h-20 rounded-full border border-white/20"></div>
