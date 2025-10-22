@@ -20,6 +20,10 @@ interface HeroProps {
   isCTA?: boolean;
   CTAOne?: string;
   CTATwo?: string;
+  hideCTAOne?: boolean;
+  hideCTATwo?: boolean;
+  CTATwoOnclick?: () => void;
+  CTAOneOnclick?: () => void;
 }
 
 // IndexedDB Cache Manager
@@ -99,9 +103,13 @@ const Hero: React.FC<HeroProps> = ({
   mobDes1,
   mobDes2,
   mobDes3,
-  isCTA,
+  isCTA ,
   CTAOne,
   CTATwo,
+  hideCTAOne ,
+  hideCTATwo,
+  CTAOneOnclick,
+  CTATwoOnclick
 }) => {
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
@@ -525,17 +533,23 @@ const Hero: React.FC<HeroProps> = ({
 
               {isCTA && (
                 <div className="flex flex-row gap-4 justify-center items-center">
-                  <AnimatedButton
-                    isBtnScale={false}
-                    label={CTAOne ? CTAOne : ""}
-                  />
+                  {!hideCTAOne && (
+                    <AnimatedButton
+                      isBtnScale={false}
+                      onClick={CTAOneOnclick}
+                      label={CTAOne ? CTAOne : ""}
+                    />
+                  )}
 
-                  <AnimatedButton
-                    isBtnScale={false}
-                    label={CTATwo ? CTATwo : ""}
-                    variant="outline"
-                    className="border border-[#070708] shadow-[inset_0_4px_4px_rgba(255,255,255,0.3)]"
-                  />
+                  {!hideCTATwo && (
+                    <AnimatedButton
+                      isBtnScale={false}
+                      label={CTATwo ? CTATwo : ""}
+                      onClick={CTATwoOnclick}
+                      variant="outline"
+                      className="border border-[#070708] shadow-[inset_0_4px_4px_rgba(255,255,255,0.3)]"
+                    />
+                  )}
                 </div>
               )}
             </motion.div>

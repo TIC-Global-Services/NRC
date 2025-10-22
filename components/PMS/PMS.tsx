@@ -37,7 +37,8 @@ const PMS = () => {
         mobDes2="our PMS strategies combine private-equity style diligence"
         mobDes3="with public-market opportunity — with Small Caps as our flagship expertise"
         isCTA
-        CTAOne="Request Factsheet"
+        // CTAOne="Request Factsheet"
+        hideCTAOne
         CTATwo="Schedule a Call"
       />
       <Glance />

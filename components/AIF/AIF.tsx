@@ -9,7 +9,7 @@ import PortfolioHighlights from "./PortfolioHighlights";
 
 const AIF = () => {
   return (
-    <div>
+    <div className="bg-[#F6F9FC]">
       <Hero
         title1="Investing in India's "
         title1Color="Growth Story"
@@ -21,18 +21,18 @@ const AIF = () => {
           animationMode="always"
           className="pt-32 md:text-lg font-light text-center max-w-[80%] md:max-w-3xl mx-auto mb-28"
         >
-          As India&apos;s influence in the global economy strengthens, Nine Rivers
-          Capital identifies and supports outstanding Indian founders with global
-          aspirations. Our AIF funds provide access to high-growth potential
-          companies across various sectors, leveraging our extensive experience
-          and rigorous investment process.
+          As India&apos;s influence in the global economy strengthens, Nine
+          Rivers Capital identifies and supports outstanding Indian founders
+          with global aspirations. Our AIF funds provide access to high-growth
+          potential companies across various sectors, leveraging our extensive
+          experience and rigorous investment process.
         </SlideUpText>
       </div>
-      <Expertise/>
+      <Expertise />
       <TwoDistinct />
       <InvestmentStrategy />
       <InvestmentProcess />
-      <PortfolioHighlights/>
+      <PortfolioHighlights />
     </div>
   );
 };

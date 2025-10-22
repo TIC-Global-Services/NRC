@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sfPro.variable} ${centuryGothic.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black transition-colors`}
+        className={`${sfPro.variable} ${centuryGothic.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#F6F9FC] dark:bg-[#F6F9FC] transition-colors`}
       >
         <SiteLayout>{children}</SiteLayout>
       </body>
