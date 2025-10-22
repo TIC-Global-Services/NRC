@@ -11,6 +11,9 @@ import {
   mustafaarif,
   nitinjain,
   pragatikhadse,
+  pratik,
+  roshini,
+  satyajit,
 } from "@/assets/Teams";
 import { StaticImageData } from "next/image";
 import { gsap } from "gsap";
@@ -32,62 +35,29 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Sandhya Kabra",
-    role: "Executive Director & CFO",
+    name: "Roshni",
+    role: "Senior Portfolio Manager",
     description:
-      "Sandhya is a result driven finance professional with over 23 years of industry experience in leading banking and financial services companies covering financial planning and control, MIS, forecasting, capital raising, performance management, ERP implementation, internal process streamlining and more.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
+      "Pragati has over 20 years of public market experience in equity research across multiple sectors in India and Asia. She complements the company’s research capabilities in evaluating investment opportunities in public markets.",
+    imageUrl: roshini,
     linkedinUrl: "https://linkedin.com/in/arjunpatel",
   },
   {
     id: 2,
-    name: "Vinay Khatu",
-    role: "President",
+    name: "Pratik Singhi",
+    role: "Managing Director",
     description:
-      "Vinay has 30 years of transactional expertise with more than 40 successful transactions encompassing PE, domestic and international M&A, and corporate finance for both established and startup businesses.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-    linkedinUrl: "https://linkedin.com/in/vinaykhatu",
+      "Pratik is a finance professional with 25+ years of experience in corporate finance and valuations. He founded Lakshya Consulting, later integrated with NRC’s advisory arm, and has worked with leading firms like Zee Telefilms, BDO, EDS, and ICICI Bank.",
+    imageUrl: pratik,
+    linkedinUrl: "https://linkedin.com/in/meerasingh",
   },
   {
     id: 3,
-    name: "Pragati Khadse",
-    role: "Senior Portfolio Manager",
+    name: "Satyajit Chakraborty",
+    role: "Director",
     description:
-      "Pragati has over 20 years of public market experience in equity research across multiple sectors in India and Asia. She complements the company's research capabilities in evaluating investment opportunities in public markets.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-    linkedinUrl: "https://linkedin.com/in/pragatikhadse",
-  },
-  {
-    id: 4,
-    name: "Rahul Sharma",
-    role: "Executive Director & CFO",
-    description:
-      "Rahul is a seasoned finance professional with over 25 years of experience in investment banking, private equity, and corporate finance. He has successfully led numerous high-profile transactions and strategic initiatives across various industry sectors.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-    linkedinUrl: "https://linkedin.com/in/rahulsharma",
-  },
-  {
-    id: 5,
-    name: "Arjun Patel",
-    role: "President",
-    description:
-      "Arjun brings over 28 years of comprehensive experience in asset management and investment strategies. He has a proven track record of delivering exceptional returns and building long-term value for institutional and retail investors.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
-    linkedinUrl: "https://linkedin.com/in/arjunpatel",
-  },
-  {
-    id: 6,
-    name: "Meera Singh",
-    role: "Senior Portfolio Manager",
-    description:
-      "Meera is an accomplished portfolio manager with over 18 years of experience in equity markets and quantitative analysis. She specializes in emerging market investments and has consistently outperformed benchmark indices.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face",
+      "Satyajit has about 18 years of experience in Investment Banking and Management Consulting. He has advised clients in Technology (Both SaaS and Consumer Internet), Digital Commerce, Fintech, Digital Media and Education sectors on fund raising and M&A transactions.",
+    imageUrl: satyajit,
     linkedinUrl: "https://linkedin.com/in/meerasingh",
   },
 ];

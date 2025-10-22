@@ -11,6 +11,7 @@ import {
   mustafaarif,
   nitinjain,
   pragatikhadse,
+  vallabh,
 } from "@/assets/Teams";
 import { StaticImageData } from "next/image";
 import { gsap } from "gsap";
@@ -56,11 +57,11 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: 4,
-    name: "Kavitha Singh",
+    name: "Vallabh Daga",
     role: "Executive Director & CFO",
     description:
-      "Sandhya is a result driven finance professional with over 23 years of industry experience in leading banking and financial services companies covering financial planning and control, MIS, forecasting, capital raising, performance management, ERP implementation, internal process streamlining and more.",
-    imageUrl: kavithasingh,
+      "Vallabh brings diverse experience from the technology and ecommerce sectors to his role as a Research Analyst at Nine Rivers Capital. With a strong background in project management, sales support, and business optimization, he has developed a keen ability to analyze complex data and identify opportunities for growth.",
+    imageUrl: vallabh,
     linkedinUrl: "https://linkedin.com/in/rahulsharma",
   },
   {

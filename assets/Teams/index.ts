@@ -6,6 +6,10 @@ import nitinjain from "@/assets/Teams/nitinjain.png"
 import sandhyakabra from "@/assets/Teams/sandhyakabra.png"
 import pragatikhadse from "@/assets/Teams/pragatikhadse.png"
 import founderImg from "@/assets/Teams/founderImg.png"
+import vallabh from "@/assets/Teams/vallabh.png"
+import satyajit from "@/assets/Teams/satyajit.png"
+import pratik from "@/assets/Teams/pratik.png";
+import roshini from "@/assets/Teams/roshini.png";
 
 export {
     // leadership
@@ -19,4 +23,13 @@ export {
     mustafaarif,
     nitinjain,
     pragatikhadse,
+
+    // advisory team
+    vallabh,
+    satyajit,
+    pratik,
+
+    // others
+    roshini,
+
 }
