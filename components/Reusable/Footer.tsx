@@ -33,7 +33,7 @@ const Footer = () => {
           variants={containerVariants}
         >
           <div className="mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8 mb-8 md:mb-12"> 
+            <div className="grid grid-cols-1 md:grid-cols-2 justify-end lg:grid-cols-4 gap-5 md:gap-8 mb-8 md:mb-12"> 
               {/* Company Section */}
               <motion.div variants={itemVariants} className="space-y-4">
                 <h3 className="md:text-xl text-lg font-medium mb-3">Company</h3> {/* Increased margin */}
@@ -98,7 +98,7 @@ const Footer = () => {
               </motion.div>
 
               {/* Connect Section */}
-              <motion.div variants={itemVariants} className="space-y-4">
+              <motion.div variants={itemVariants} className="space-y-4 flex flex-col items-end justify-start">
                 <h3 className="md:text-xl text-lg font-medium mb-3">Connect with us</h3>
                 <div className="flex space-x-4"> {/* Increased spacing */}
                   <motion.div
