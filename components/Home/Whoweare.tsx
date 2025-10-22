@@ -6,10 +6,20 @@ import Image from "next/image";
 import { PaperFoldTitle } from "../Reusable/FramerMotion/TitleReveal";
 import SlideUpText from "../ui/SlideUpText";
 import CustomDottedBorder from "../ui/CustomDottedBorder";
+import { useRouter } from "next/navigation";
 
 export default function WealthCreationSection() {
+  const router = useRouter();
+  const RedirectToAbout = () => {
+    router.push("/about");
+  }
+
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile className="pt-16">
+    <Container
+      disablePaddingTopMobile
+      disablePaddingBottomMobile
+      className="pt-16"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1fr] gap-y-5 md:gap-20 w-full min-h-screen">
         {/* Left Side Content */}
         <div className="flex-1 flex flex-col justify-center lg:py-16 ">
@@ -39,7 +49,10 @@ export default function WealthCreationSection() {
               </p>
             </div>
 
-            <AnimatedButton label="Discover Nine Rivers" />
+            <AnimatedButton
+              onClick={RedirectToAbout}
+              label="Discover Nine Rivers"
+            />
           </PaperFoldTitle>
         </div>
 
@@ -82,7 +95,6 @@ export default function WealthCreationSection() {
                   <p>Founder-led with skin in the game</p>
                 </div>
               </CustomDottedBorder>
-
 
               {/* mobile */}
               <CustomDottedBorder

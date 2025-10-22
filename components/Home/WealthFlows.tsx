@@ -1,8 +1,13 @@
 import Image from "next/image";
 import AnimatedButton from "../ui/animatedButton";
 import SlideUpText from "../ui/SlideUpText";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const router = useRouter();
+  const RedirectToContact = () => {
+    router.push("/contact")
+  }
   return (
     <section className="relative min-h-[80vh] md:min-h-[70vh] lg:min-h-[100vh] flex items-start pt-40 justify-center overflow-hidden">
       {/* Background Image */}
@@ -32,13 +37,13 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-row gap-4 justify-center items-center">
-          <AnimatedButton className="" label="Schedule a Call" />
+          <AnimatedButton onClick={RedirectToContact} label="Schedule a Call" />
 
-          <AnimatedButton
+          {/* <AnimatedButton
             label="Download Brochure"
             variant="outline"
             className="border border-[#070708] shadow-[inset_0_4px_4px_rgba(255,255,255,0.3)]"
-          />
+          /> */}
         </div>
       </div>
     </section>

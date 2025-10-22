@@ -6,11 +6,9 @@ const SMEPerformanceCard = () => {
         className="w-full sfPro"
         style={{ fontFamily: "SF Pro Display, sans-serif" }}
       >
-        <div className="max-w-7xl mx-auto">
-
-
+        <div className="max-w-7xl mx-auto bg-white rounded-lg">
           {/* Main Card */}
-          <div className="bg-gradient-to-br from-gray-100 to-gray-200 md:py-16 py-4 px-4 md:px-14">
+          <div className=" md:py-16 py-4 px-4 md:px-14">
             {/* Subtitle */}
             <p className="text-primary md:text-sm text-xs leading-[19px] mb-5">
               *Fund Vintage March 2023. Gross Performance excluding Carried
@@ -21,7 +19,9 @@ const SMEPerformanceCard = () => {
             <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8">
               {/* MOIC Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
-                <div className="md:text-2xl text-xl md:leading-[19px] font-bold">1.62x</div>
+                <div className="md:text-2xl text-xl md:leading-[19px] font-bold">
+                  1.62x
+                </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
                   MOIC*
                 </div>
@@ -32,7 +32,9 @@ const SMEPerformanceCard = () => {
 
               {/* TVPI Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
-                <div className="md:text-2xl text-xl md:leading-[19px] font-bold">1.62x</div>
+                <div className="md:text-2xl text-xl md:leading-[19px] font-bold">
+                  1.62x
+                </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
                   MOIC*
                 </div>
@@ -43,7 +45,9 @@ const SMEPerformanceCard = () => {
 
               {/* XIRR Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
-                <div className="md:text-2xl text-xl  md:leading-[19px] font-bold">1.62x</div>
+                <div className="md:text-2xl text-xl  md:leading-[19px] font-bold">
+                  1.62x
+                </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
                   MOIC*
                 </div>

@@ -44,9 +44,9 @@ export default function PhilosophySection() {
               </div>
 
               {/* Desktop Button */}
-              <div className="md:block hidden">
+              {/* <div className="md:block hidden">
                 <AnimatedButton label="Learn More" className="mt-6" />
-              </div>
+              </div> */}
             </div>
 
             {/* Right Icons Grid */}
@@ -118,7 +118,7 @@ export default function PhilosophySection() {
           </div>
 
           {/* Desktop Button */}
-          <AnimatedButton label="Learn More" className="mt-6 md:hidden block" />
+          {/* <AnimatedButton label="Learn More" className="mt-6 md:hidden block" /> */}
         </div>
       </section>
     </Container>

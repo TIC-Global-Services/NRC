@@ -63,7 +63,7 @@ const AnimatedButton = ({ isBtnScale = true, label, onClick, delay = 0.3, classN
         onClick={onClick}
         className={`${styles.button} cursor-pointer px-4 py-2 md:px-5 md:py-2 rounded-full md:text-base font-[400] flex items-center gap-2 md:gap-2 text-sm transition-colors duration-300 ${className}`}
         whileHover={{
-          scale: isBtnScale ? 1.04 : "1",
+          y: isBtnScale ? -5 : 0,
         }}
         whileTap={{ scale: 0.95 }}
       >

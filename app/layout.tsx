@@ -58,7 +58,7 @@ export const centuryGothic = localFont({
   fallback: ["Arial", "sans-serif"],
 });
 
-// ✅ Metadata with dark/light mode icons
+// Metadata with dark/light mode icons
 export const metadata: Metadata = {
   title: "NRC",
   description: "NRC",
