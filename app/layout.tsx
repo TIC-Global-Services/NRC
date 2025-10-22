@@ -58,21 +58,22 @@ export const centuryGothic = localFont({
   fallback: ["Arial", "sans-serif"],
 });
 
-// Metadata
+// ✅ Metadata with dark/light mode icons
 export const metadata: Metadata = {
   title: "NRC",
   description: "NRC",
   icons: {
     icon: [
-      { url: "/NRC_Logo.png", type: "image/png" },
-      { url: "/NRC_Logo.ico", type: "image/x-icon" },
+      { url: "/NRC_Logo_light.ico", media: "(prefers-color-scheme: light)" },
+      { url: "/NRC_Logo_dark.ico", media: "(prefers-color-scheme: dark)" },
     ],
-    shortcut: "/NRC_Logo.png",
-    apple: "/NRC_Logo.png",
+    apple: [
+      { url: "/NRC_Logo_light.ico", media: "(prefers-color-scheme: light)" },
+      { url: "/NRC_Logo_dark.ico", media: "(prefers-color-scheme: dark)" },
+    ],
   },
 };
 
-// Root Layout
 export default function RootLayout({
   children,
 }: {
@@ -81,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sfPro.variable} ${centuryGothic.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+        className={`${sfPro.variable} ${centuryGothic.variable} ${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black transition-colors`}
       >
         <SiteLayout>{children}</SiteLayout>
       </body>
