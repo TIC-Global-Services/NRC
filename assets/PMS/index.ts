@@ -20,6 +20,7 @@ import StrategiesThree from "@/assets/PMS/StrategiesThree.png"
 import PartnershipImg1 from "@/assets/PMS/Partnership/PartnershipImg1.png"
 import PartnershipImg2 from "@/assets/PMS/Partnership/PartnershipImg2.png"
 import PartnershipImg3 from "@/assets/PMS/Partnership/PartnershipImg3.png"
+import PartnershipImg4 from "@/assets/PMS/Partnership/PartnershipImg4.png"
 
 
 // FamilyOffices
@@ -57,6 +58,7 @@ export {
     PartnershipImg1,
     PartnershipImg2,
     PartnershipImg3,
+    PartnershipImg4,
 
     FamilyOfficeImg1,
     FamilyOfficeImg2,

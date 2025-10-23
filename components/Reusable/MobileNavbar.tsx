@@ -53,12 +53,18 @@ const MobileNavbarDemo = () => {
     window.location.href = subItem.link;
   };
 
+  const handleLoginRoute = () => {
+    window.open("https://faconnect.kotak.com", "_blank");
+  };
+
+
   return (
     <div className="relative z-[999]">
       {/* Fixed Header - No initial animation, immediate positioning */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 lg:hidden block  transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 lg:hidden block  transition-opacity duration-300 ${
+          isLoaded ? "opacity-100" : "opacity-0"
+        }`}
       >
         <div className="flex items-center justify-between px-6 py-4">
           {/* Logo - Static positioning */}
@@ -71,6 +77,7 @@ const MobileNavbarDemo = () => {
           {/* Login Button & Menu Toggle - Static positioning */}
           <div className="flex items-center gap-3">
             <AnimatedButton
+              onClick={handleLoginRoute}
               label="Log In"
               variant="purple"
               className="px-4 py-2"
@@ -144,10 +151,11 @@ const MobileNavbarDemo = () => {
                       onClick={() => handleNavClick(item)}
                     >
                       <span
-                        className={`text-2xl leading-[34px] transition-colors duration-200 ${activeItem === item.name
+                        className={`text-2xl leading-[34px] transition-colors duration-200 ${
+                          activeItem === item.name
                             ? "text-black "
                             : "text-gray-600 "
-                          }`}
+                        }`}
                       >
                         {item.name}
                       </span>

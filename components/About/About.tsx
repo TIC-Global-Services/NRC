@@ -6,6 +6,7 @@ import NineRivers from './NineRivers'
 import WealthFlows from './WealthFlows'
 import OurValue from './OurValue'
 import { useRouter } from 'next/navigation'
+import RecentBlogs from '../CorporateAdvisory/RecentBlogs'
 
 const About = () => {
 
@@ -33,6 +34,7 @@ const About = () => {
         <NineRivers />
         <OurValue />
         <WealthFlows />
+        <RecentBlogs />
       </div>
     );
 }

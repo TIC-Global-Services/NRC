@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "../Reusable/Container";
-import { AdvisoryBouquetImg } from "@/assets/CorporateAdvisory";
+import { AdvisoryBouquetImg, AdvisoryBouquetImgThree, AdvisoryBouquetImgTwo } from "@/assets/CorporateAdvisory";
 import Image from "next/image";
 import FlexibleHeading from "../ui/FlexibleHeading";
 
@@ -23,7 +23,7 @@ const AdvisoryBouquet = () => {
       number: "2",
       description:
         "Our M&A advisory services help businesses navigate complex transactions, from strategic acquisitions to comprehensive merger processes. We provide end-to-end support including valuation, due diligence, negotiation, and deal structuring to maximize value for all stakeholders.",
-      image: AdvisoryBouquetImg,
+      image: AdvisoryBouquetImgTwo,
     },
     {
       id: 2,
@@ -31,7 +31,7 @@ const AdvisoryBouquet = () => {
       number: "3",
       description:
         "We provide comprehensive valuation services for various corporate purposes including financial reporting, tax compliance, litigation support, and strategic planning. Our experienced team delivers accurate and defensible valuations across industries and asset classes.",
-      image: AdvisoryBouquetImg,
+      image: AdvisoryBouquetImgThree,
     },
   ];
 

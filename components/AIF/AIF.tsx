@@ -6,6 +6,7 @@ import TwoDistinct from "./TwoDistinct";
 import InvestmentStrategy from "./InvestmentStrategy";
 import InvestmentProcess from "./InvestmentProcess";
 import PortfolioHighlights from "./PortfolioHighlights";
+import RecentBlogs from "../CorporateAdvisory/RecentBlogs";
 
 const AIF = () => {
   return (
@@ -33,6 +34,7 @@ const AIF = () => {
       <InvestmentStrategy />
       <InvestmentProcess />
       <PortfolioHighlights />
+      <RecentBlogs/>
     </div>
   );
 };

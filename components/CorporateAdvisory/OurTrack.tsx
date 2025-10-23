@@ -83,7 +83,6 @@ const OurTrack = () => {
         TechImgFour,
         // TechImgFive,
         TechImgSix,
-
       ],
       rightLogs: [
         TechImgSeven,
@@ -138,7 +137,7 @@ const OurTrack = () => {
     {
       id: 4,
       label: "Industrial",
-      desc: "Industrial automation and IoT solutions transforming manufacturing and operations.",
+      desc: "Auto Ancillary, Engineering Goods, Industrial Automation, Industrial Ancillaries, Specialty Chemicals.",
       leftLogs: [
         IndustrialImgOne,
         IndustrialImgTwo,

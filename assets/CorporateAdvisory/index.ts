@@ -4,7 +4,11 @@ import WeOfferImg3 from "../../assets/CorporateAdvisory/WeOfferImg3.png"
 import RecentBlogImg1 from "../../assets/CorporateAdvisory/RecentBlogImg1.png"
 import RecentBlogImg2 from "../../assets/CorporateAdvisory/RecentBlogImg2.png"
 import WhyNRCImg from "../../assets/CorporateAdvisory/WhyNRCImg.png";
+
+
 import AdvisoryBouquetImg from "../../assets/CorporateAdvisory/AdvisoryBouquetImg.png"
+import AdvisoryBouquetImgTwo from "../../assets/CorporateAdvisory/AdvisoryBouquetImg2.png"
+import AdvisoryBouquetImgThree from "../../assets/CorporateAdvisory/AdvisoryBouquetImg3.png"
 
 // TracKRecord
 import TrackRecordLogo1 from "../../assets/CorporateAdvisory/TrackRecord/Logo1.png";
@@ -73,7 +77,10 @@ export {
     RecentBlogImg1,
     RecentBlogImg2,
     WhyNRCImg,
+
     AdvisoryBouquetImg,
+    AdvisoryBouquetImgTwo,
+    AdvisoryBouquetImgThree,
 
     TrackRecordLogo1,
     TrackRecordLogo2,

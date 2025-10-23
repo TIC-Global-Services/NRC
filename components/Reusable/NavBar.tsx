@@ -198,6 +198,10 @@ const Navbar: React.FC<NavbarProps> = ({ visibility = true, isHomePage = false }
   const lastScrollYRef = useRef(0);
   const ticking = useRef(false);
 
+const handleLoginRoute = () => {
+  window.open("https://faconnect.kotak.com", "_blank");
+};
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -397,6 +401,7 @@ const Navbar: React.FC<NavbarProps> = ({ visibility = true, isHomePage = false }
             }}
           >
             <AnimatedButton
+              onClick={handleLoginRoute}
               label="Log In"
               variant="purple"
               className="[@media(min-width:1000px)]:px-4 [@media(min-width:1000px)]:py-1.5 [@media(min-width:1200px)]:px-5 [@media(min-width:1200px)]:py-2"

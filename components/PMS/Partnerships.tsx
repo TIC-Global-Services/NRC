@@ -5,6 +5,8 @@ import Container from "../Reusable/Container";
 import {
   PartnershipImg1,
   PartnershipImg2,
+  PartnershipImg3,
+  PartnershipImg4,
   // PartnershipImg3,
 } from "@/assets/PMS";
 import Image from "next/image";
@@ -60,13 +62,13 @@ const Partnerships = () => {
       description: "PE-style diligence before every investment",
     },
     {
-      image: PartnershipImg1,
+      image: PartnershipImg3,
       alt: "Risk",
       title: "Risk",
       description: "Liquidity, governance, and downside frameworks",
     },
     {
-      image: PartnershipImg2,
+      image: PartnershipImg4,
       alt: "Alignment",
       title: "Alignment",
       description: "Skin in the game, alongside clients",
