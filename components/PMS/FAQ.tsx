@@ -11,34 +11,69 @@ const FAQ = () => {
   const faqData = [
     {
       id: 1,
-      question: "What is Portfolio Management Services (PMS)?",
-      answer:
-        "Portfolio Management Services (PMS) is a professional investment service where experienced portfolio managers create and manage a customized portfolio of stocks, bonds, or other assets on your behalf. The goal is to maximize returns while aligning investments with your financial goals, risk appetite, and market conditions.",
+      question: "What types of Portfolio Management Services (PMS) does Nine Rivers Capital offer?",
+      answer: "Nine Rivers Capital offers Discretionary Portfolio Management Services, wherein investment decisions are made by our portfolio managers in line with the defined strategy objectives and SEBI regulations."
     },
     {
       id: 2,
-      question: "What is Portfolio Management Services (PMS)?",
-      answer:
-        "Portfolio Management Services (PMS) is a professional investment service where experienced portfolio managers create and manage a customized portfolio of stocks, bonds, or other assets on your behalf. The goal is to maximize returns while aligning investments with your financial goals, risk appetite, and market conditions.",
+      question: "Who can invest in a PMS?",
+      answer: "PMS is open to Resident Individuals, NRIs, HUFs, Partnership Firms, Body Corporates and Trusts that meet SEBI's eligibility and KYC norms. Investors must fulfill the minimum investment threshold as prescribed by SEBI."
     },
     {
       id: 3,
-      question: "What is Portfolio Management Services (PMS)?",
-      answer:
-        "Portfolio Management Services (PMS) is a professional investment service where experienced portfolio managers create and manage a customized portfolio of stocks, bonds, or other assets on your behalf. The goal is to maximize returns while aligning investments with your financial goals, risk appetite, and market conditions.",
+      question: "What is the minimum investment amount for Nine Rivers' PMS strategies?",
+      answer: "Aurum Small Cap Opportunities: ₹1 Crore | Aurum Multiplier Fund: ₹50 Lakh. These thresholds comply with SEBI's regulatory requirements and reflect the strategic intent of each portfolio."
     },
     {
       id: 4,
-      question: "What is Portfolio Management Services (PMS)?",
-      answer:
-        "Portfolio Management Services (PMS) is a professional investment service where experienced portfolio managers create and manage a customized portfolio of stocks, bonds, or other assets on your behalf. The goal is to maximize returns while aligning investments with your financial goals, risk appetite, and market conditions.",
+      question: "Are your PMS offerings approved and regulated by SEBI?",
+      answer: "Yes. Nine Rivers Capital's PMS is registered with SEBI as a Portfolio Manager under SEBI (Portfolio Managers) Regulations, 2020, and operates under full regulatory supervision and disclosure norms."
     },
     {
       id: 5,
-      question: "What is Portfolio Management Services (PMS)?",
-      answer:
-        "Portfolio Management Services (PMS) is a professional investment service where experienced portfolio managers create and manage a customized portfolio of stocks, bonds, or other assets on your behalf. The goal is to maximize returns while aligning investments with your financial goals, risk appetite, and market conditions.",
+      question: "What strategies are offered under your PMS platform?",
+      answer: "We currently offer two distinct equity-focused strategies: Aurum Multiplier Fund – a flexi-cap strategy focused on identifying scalable and high-quality businesses across market caps, and Aurum Small Cap Opportunities – targets high-conviction small-cap opportunities with sustainable earnings growth potential. Each strategy is designed with differentiated stock selection frameworks, risk parameters, and time horizons to deliver long-term compounding."
     },
+    {
+      id: 6,
+      question: "What is the average holding period and portfolio churn in your PMS strategies?",
+      answer: "Our investment philosophy emphasizes a long-term orientation, with an average holding period of approximately five years. Portfolio churn is moderate, reflecting our conviction-driven, buy-and-hold approach aimed at compounding capital over time."
+    },
+    {
+      id: 7,
+      question: "What is the level of risk associated with PMS investments?",
+      answer: "PMS investments involve market risk, liquidity risk, and concentration risk. While our approach focuses on quality and risk management, capital values may fluctuate in line with market movements. Investors should assess their risk tolerance and investment horizon before investing."
+    },
+    {
+      id: 8,
+      question: "How are fees structured for PMS investors?",
+      answer: "Our PMS fee structure comprises a management fee and a performance-linked component, aligned with SEBI's disclosure norms. Fee structures may vary based on the investment strategy and investor class, and are clearly detailed in the PMS Disclosure Document."
+    },
+    {
+      id: 9,
+      question: "What is the onboarding process for PMS investors?",
+      answer: "Investors can onboard through Nine Rivers Capital directly (Direct Route) or via empanelled distributors. The process is currently partly physical but transitioning to a fully digital KYC and documentation experience in line with SEBI guidelines."
+    },
+    {
+      id: 10,
+      question: "Can Non-Resident Indians (NRIs) invest in Nine Rivers' PMS?",
+      answer: "Yes, NRIs can invest through both NRE (Repatriable) and NRO (Non-Repatriable) accounts, subject to applicable RBI and SEBI regulations."
+    },
+    {
+      id: 11,
+      question: "What disclosures and documents are available for PMS investors?",
+      answer: "All statutory documents — including the PMS Disclosure Document, audited financials, and strategy factsheets — are available under the "
+    },
+    {
+      id: 12,
+      question: "What types of reports are provided to PMS clients and how can they be accessed?",
+      answer: "Investors receive quarterly portfolio statements, transaction reports, performance summaries, and tax packs. In addition, clients have access to a secure online portal that provides portfolio visibility."
+    },
+    {
+      id: 13,
+      question: "How can investors access PMS disclosures and updates on the website?",
+      answer: "All PMS-related disclosures, regulatory filings, and performance updates can be accessed under the "
+    }
   ];
 
   const toggleFAQ = (index: any) => {
