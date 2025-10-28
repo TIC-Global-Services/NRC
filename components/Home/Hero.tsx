@@ -1,117 +1,69 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { gsap } from "@/lib/gsap/gsapSetup";
 import { ScrollManager } from "@/lib/gsap/scrollManager";
 import AnimatedButton from "../ui/animatedButton";
 import { useHeroScroll } from "@/context/HeroScrollContext";
 import { useRouter } from "next/navigation";
 
-// IndexedDB Cache Manager
-class FrameCacheManager {
-  private dbName = "mountainAnimationCache_v1";
-  private storeName = "frames";
-  private db: IDBDatabase | null = null;
-
-  async init(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(this.dbName, 1);
-
-      request.onerror = () => reject(request.error);
-      request.onsuccess = () => {
-        this.db = request.result;
-        resolve();
-      };
-
-      request.onupgradeneeded = (event) => {
-        const db = (event.target as IDBOpenDBRequest).result;
-        if (!db.objectStoreNames.contains(this.storeName)) {
-          db.createObjectStore(this.storeName);
-        }
-      };
-    });
-  }
-
-  async getFrame(index: number): Promise<Blob | null> {
-    if (!this.db) return null;
-
-    return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], "readonly");
-      const store = transaction.objectStore(this.storeName);
-      const request = store.get(index);
-
-      request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => resolve(null);
-    });
-  }
-
-  async setFrame(index: number, blob: Blob): Promise<void> {
-    if (!this.db) return;
-
-    return new Promise((resolve) => {
-      const transaction = this.db!.transaction([this.storeName], "readwrite");
-      const store = transaction.objectStore(this.storeName);
-      store.put(blob, index);
-
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () => resolve();
-    });
-  }
-}
-
 const Hero = () => {
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const buttonWrapperRef = useRef<HTMLDivElement | null>(null);
+
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const imgSeqRef = useRef({ frame: 0 });
-  const cacheManagerRef = useRef<FrameCacheManager | null>(null);
   const loadingQueueRef = useRef<Set<number>>(new Set());
+  const objectUrlsRef = useRef<Set<string>>(new Set());
+  const mountedRef = useRef<boolean>(true);
+
   const animationFrameRef = useRef<number | null>(null);
   const isIdleAnimatingRef = useRef<boolean>(false);
   const idleFrameRef = useRef<number>(0);
   const lastIdleTimeRef = useRef<number>(0);
-  const buttonWrapperRef = useRef<HTMLDivElement | null>(null);
+  const idleDirectionRef = useRef<"forward" | "backward">("forward");
+
+  const gsapContextRef = useRef<gsap.Context | null>(null);
 
   const totalFrames = 320;
   const idleFrameCount = 40;
   const idleFrameRate = 15;
   const idleFrameDelay = 1000 / idleFrameRate;
-  const idleDirectionRef = useRef<"forward" | "backward">("forward");
 
   const router = useRouter();
   const { setHeroScrolled, setHeroContentRevealed } = useHeroScroll();
 
-  // Track when hero section is scrolled past
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-
-      const rect = sectionRef.current.getBoundingClientRect();
-      const heroBottom = rect.bottom;
-
-      setHeroScrolled(heroBottom < 0);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [setHeroScrolled]);
-
   const currentFrame = (index: number) =>
     `/NRC_mountains/${(index + 1).toString().padStart(4, "0")}.png`;
 
-  const priorityFrames = Array.from({ length: 64 }, (_, i) => i * 5);
+  const priorityFrames = useRef(Array.from({ length: 64 }, (_, i) => i * 5));
 
+  // Cleanup object URLs
+  const cleanupObjectUrls = useCallback(() => {
+    objectUrlsRef.current.forEach((url) => {
+      try {
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        // Ignore errors
+      }
+    });
+    objectUrlsRef.current.clear();
+  }, []);
+
+  // Render function
   const render = useCallback((frameIndex: number) => {
-    const img = imagesRef.current[frameIndex];
-    if (!img || !img.complete) return;
+    if (!mountedRef.current) return;
 
+    const img = imagesRef.current[frameIndex];
     const canvas = canvasRef.current;
     const context = contextRef.current;
-    if (!canvas || !context) return;
+
+    if (!img || !img.complete || !canvas || !context) return;
 
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
@@ -121,7 +73,6 @@ const Hero = () => {
     if (imgWidth === 0 || imgHeight === 0) return;
 
     const scale = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
-
     const x = canvasWidth / 2 - (imgWidth / 2) * scale;
     const y = canvasHeight / 2 - (imgHeight / 2) * scale;
 
@@ -139,9 +90,10 @@ const Hero = () => {
     );
   }, []);
 
+  // Idle animation
   const animateIdle = useCallback(
     (timestamp: number) => {
-      if (!isIdleAnimatingRef.current) return;
+      if (!isIdleAnimatingRef.current || !mountedRef.current) return;
 
       if (timestamp - lastIdleTimeRef.current >= idleFrameDelay) {
         if (idleDirectionRef.current === "forward") {
@@ -163,7 +115,7 @@ const Hero = () => {
         lastIdleTimeRef.current = timestamp;
       }
 
-      if (isIdleAnimatingRef.current) {
+      if (isIdleAnimatingRef.current && mountedRef.current) {
         animationFrameRef.current = requestAnimationFrame(animateIdle);
       }
     },
@@ -171,7 +123,7 @@ const Hero = () => {
   );
 
   const startIdleAnimation = useCallback(() => {
-    if (isIdleAnimatingRef.current) return;
+    if (isIdleAnimatingRef.current || !mountedRef.current) return;
 
     const currentFrame = idleFrameRef.current;
     if (currentFrame >= idleFrameCount - 1) {
@@ -193,8 +145,10 @@ const Hero = () => {
     }
   }, []);
 
+  // GSAP animations setup
   const setupGSAPAnimations = useCallback(() => {
-    // ✅ Use gsap.context for automatic cleanup
+    if (!mountedRef.current) return null;
+
     const ctx = gsap.context(() => {
       // Initial setup
       gsap.set(".title-line", { y: "0%" });
@@ -205,7 +159,7 @@ const Hero = () => {
         buttonWrapperRef.current.style.visibility = "visible";
       }
 
-      // Animation for description and button with content reveal tracking
+      // Description and button animation
       gsap.to(".description-line, .button-line", {
         y: "0%",
         duration: 1,
@@ -217,10 +171,8 @@ const Hero = () => {
           end: "+=1800",
           scrub: 1,
           onUpdate: (self) => {
-            if (self.progress >= 0.95) {
-              setHeroContentRevealed(true);
-            } else {
-              setHeroContentRevealed(false);
+            if (mountedRef.current) {
+              setHeroContentRevealed(self.progress >= 0.95);
             }
           },
         },
@@ -237,8 +189,10 @@ const Hero = () => {
           end: "+=3000",
           scrub: 1,
           pin: true,
-          pinSpacing: true, // ✅ Added for proper spacing
+          pinSpacing: true,
           onUpdate: (self) => {
+            if (!mountedRef.current) return;
+
             const currentFrameNum = Math.round(imgSeqRef.current.frame);
 
             if (currentFrameNum >= idleFrameCount) {
@@ -256,55 +210,25 @@ const Hero = () => {
               stopIdleAnimation();
             }
           },
+          onLeaveBack: () => {
+            if (mountedRef.current) {
+              idleFrameRef.current = 0;
+              startIdleAnimation();
+              setHeroContentRevealed(false);
+            }
+          },
         },
         onUpdate: () => {
+          if (!mountedRef.current) return;
           const frameIndex = Math.round(imgSeqRef.current.frame);
           if (imagesRef.current[frameIndex]) {
             render(frameIndex);
           }
         },
       });
+    }, sectionRef);
 
-      // Additional ScrollTrigger for idle animation control
-      gsap.context(() => {
-        gsap.to(
-          {},
-          {
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "+=3000",
-              onUpdate: (self) => {
-                const currentFrameNum = Math.round(imgSeqRef.current.frame);
-
-                if (
-                  self.getVelocity() === 0 &&
-                  currentFrameNum < idleFrameCount &&
-                  !isIdleAnimatingRef.current
-                ) {
-                  idleFrameRef.current = currentFrameNum;
-                  startIdleAnimation();
-                }
-              },
-              onEnter: () => {
-                const currentFrameNum = Math.round(imgSeqRef.current.frame);
-                if (currentFrameNum < idleFrameCount) {
-                  idleFrameRef.current = currentFrameNum;
-                  startIdleAnimation();
-                }
-              },
-              onLeaveBack: () => {
-                idleFrameRef.current = 0;
-                startIdleAnimation();
-                setHeroContentRevealed(false);
-              },
-            },
-          }
-        );
-      });
-    }, sectionRef); // ✅ Scope context to section
-
-    return ctx; // Return context for cleanup
+    return ctx;
   }, [
     render,
     startIdleAnimation,
@@ -314,14 +238,33 @@ const Hero = () => {
     totalFrames,
   ]);
 
+  // Track hero scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || !mountedRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      setHeroScrolled(rect.bottom < 0);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [setHeroScrolled]);
+
+  // Main initialization
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    mountedRef.current = true;
+
     const context = canvas.getContext("2d", {
       alpha: false,
       desynchronized: true,
+      willReadFrequently: false,
     });
+
     if (!context) return;
 
     contextRef.current = context;
@@ -330,100 +273,121 @@ const Hero = () => {
     canvas.width = 1920;
     canvas.height = 1080;
 
-    let gsapContext: gsap.Context | null = null;
-
     const initializeAndLoad = async () => {
       try {
-        const cacheManager = new FrameCacheManager();
-        await cacheManager.init();
-        cacheManagerRef.current = cacheManager;
-
         const loadImage = async (
           index: number,
           isPriority: boolean = false
         ): Promise<void> => {
-          if (loadingQueueRef.current.has(index)) return;
-          loadingQueueRef.current.add(index);
+          if (!mountedRef.current || loadingQueueRef.current.has(index)) return;
 
+          loadingQueueRef.current.add(index);
           const framePath = currentFrame(index);
 
           try {
-            let blob = await cacheManager.getFrame(index);
+            const response = await fetch(framePath, {
+              priority: isPriority ? "high" : "low",
+              cache: "force-cache",
+            } as any);
 
-            if (!blob) {
-              const response = await fetch(framePath, {
-                priority: isPriority ? "high" : "low",
-                cache: "force-cache",
-              } as any);
-
-              if (!response.ok) throw new Error("Failed to fetch");
-              blob = await response.blob();
-
-              cacheManager.setFrame(index, blob);
+            if (!response.ok || !mountedRef.current) {
+              throw new Error("Failed to fetch or component unmounted");
             }
+
+            const blob = await response.blob();
+            if (!mountedRef.current) return;
 
             const img = new Image();
             const url = URL.createObjectURL(blob);
+            objectUrlsRef.current.add(url);
 
             await new Promise<void>((resolve, reject) => {
               img.onload = () => {
-                imagesRef.current[index] = img;
-                URL.revokeObjectURL(url);
+                if (mountedRef.current) {
+                  imagesRef.current[index] = img;
+                }
                 resolve();
               };
-              img.onerror = () => {
-                URL.revokeObjectURL(url);
-                reject();
-              };
+              img.onerror = reject;
               img.src = url;
             });
           } catch (err) {
-            console.error(`Frame ${index} failed:`, err);
+            if (mountedRef.current) {
+              console.error(`Frame ${index} failed:`, err);
+            }
           } finally {
             loadingQueueRef.current.delete(index);
           }
         };
 
+        // PHASE 1: Load first frame
         await loadImage(0, true);
+
+        if (!mountedRef.current) return;
 
         if (imagesRef.current[0]) {
           render(0);
-          gsapContext = setupGSAPAnimations(); // ✅ Store context
+          setIsInitialized(true);
+          gsapContextRef.current = setupGSAPAnimations();
         }
 
+        // PHASE 2: Load idle frames
         const remainingIdleFrames = Array.from(
           { length: idleFrameCount - 1 },
           (_, i) => i + 1
         );
-        await Promise.all(
+
+        await Promise.allSettled(
           remainingIdleFrames.map((idx) => loadImage(idx, true))
         );
 
-        startIdleAnimation();
+        if (mountedRef.current) {
+          startIdleAnimation();
+        }
 
+        // PHASE 3: Load priority frames in batches
         const loadPriorityFrames = async () => {
           const batchSize = 15;
-          for (let i = 0; i < priorityFrames.length; i += batchSize) {
-            const batch = priorityFrames.slice(i, i + batchSize);
+          for (
+            let i = 0;
+            i < priorityFrames.current.length && mountedRef.current;
+            i += batchSize
+          ) {
+            const batch = priorityFrames.current.slice(i, i + batchSize);
             await Promise.allSettled(batch.map((idx) => loadImage(idx, true)));
+            if (mountedRef.current) {
+              await new Promise((resolve) => setTimeout(resolve, 5));
+            }
           }
         };
 
+        // PHASE 4: Load remaining frames
         const loadRemainingFrames = async () => {
           const remainingFrames = Array.from(
             { length: totalFrames },
             (_, i) => i
-          ).filter((i) => i >= idleFrameCount && !priorityFrames.includes(i));
+          ).filter(
+            (i) => i >= idleFrameCount && !priorityFrames.current.includes(i)
+          );
 
           const batchSize = 20;
-          for (let i = 0; i < remainingFrames.length; i += batchSize) {
+          for (
+            let i = 0;
+            i < remainingFrames.length && mountedRef.current;
+            i += batchSize
+          ) {
             const batch = remainingFrames.slice(i, i + batchSize);
             await Promise.allSettled(batch.map((idx) => loadImage(idx, false)));
-            await new Promise((resolve) => setTimeout(resolve, 10));
+            if (mountedRef.current) {
+              await new Promise((resolve) => setTimeout(resolve, 20));
+            }
           }
         };
 
-        Promise.all([loadPriorityFrames(), loadRemainingFrames()]);
+        await loadPriorityFrames();
+        if (mountedRef.current) {
+          loadRemainingFrames();
+        }
       } catch (err) {
         console.error("Initialization error:", err);
       }
@@ -432,23 +396,31 @@ const Hero = () => {
     initializeAndLoad();
 
     return () => {
+      mountedRef.current = false;
+
       stopIdleAnimation();
 
-      // ✅ Use centralized ScrollManager for cleanup
-      ScrollManager.killAll();
-
-      // ✅ Revert GSAP context
-      if (gsapContext) {
-        gsapContext.revert();
+      if (gsapContextRef.current) {
+        gsapContextRef.current.revert();
+        gsapContextRef.current = null;
       }
 
+      ScrollManager.killAll();
+
+      cleanupObjectUrls();
+
+      imagesRef.current = [];
+      loadingQueueRef.current.clear();
+
       setHeroContentRevealed(false);
+      setIsInitialized(false);
     };
   }, [
     render,
+    setupGSAPAnimations,
     startIdleAnimation,
     stopIdleAnimation,
-    setupGSAPAnimations,
+    cleanupObjectUrls,
     setHeroContentRevealed,
     idleFrameCount,
     totalFrames,
@@ -465,6 +437,10 @@ const Hero = () => {
           width={1920}
           height={1080}
           className="absolute inset-0 w-full h-screen object-cover z-10"
+          style={{
+            opacity: isInitialized ? 1 : 0,
+            transition: "opacity 0.3s ease-in-out",
+          }}
         />
 
         <div
@@ -475,7 +451,6 @@ const Hero = () => {
           <div className="text-3xl md:text-[50px] lg:text-6xl font-light mb-2 md:mb-2 overflow-hidden gothicFont">
             <div className="flex lg:flex-row flex-col overflow-hidden">
               <span className="text-black inline-block font-[400] title-line leading-[120%]">
-                {" "}
                 Investing For Long Term&#160;
               </span>
               <span className="text-[#8B5CF6] font-normal inline-block title-line leading-[120%]">
@@ -505,7 +480,7 @@ const Hero = () => {
                 isBtnScale={false}
                 label="Explore Our PMS"
                 delay={0.5}
-                onClick={()=>router.push("/pms")}
+                onClick={() => router.push("/pms")}
               />
             </div>
           </div>
