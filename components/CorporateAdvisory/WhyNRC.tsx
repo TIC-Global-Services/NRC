@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Container from "../Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
 import MobileWhyNRC from "./MobileWhyNRC";
+import FlexibleHeading from "../ui/FlexibleHeading";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -155,11 +156,11 @@ const WhyNRC = () => {
             className="sticky top-0 h-screen flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-start justify-start">
-              <SlideUpText animationMode="always" className="mb-6">
-                <h1 className="text-[44px] leading-[58px] font-[400] text-left">
-                  Why <span className="text-primary">NRC?</span>
-                </h1>
-              </SlideUpText>
+              <FlexibleHeading
+                title="Why NRC?"
+                highlights={{ "NRC?": "text-primary" }}
+                isMB={false}
+              />
 
               <Image
                 src={WhyNRCImg}

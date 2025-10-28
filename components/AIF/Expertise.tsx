@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
 import { EllipsisVertical } from "lucide-react";
 
 import Container from "../Reusable/Container";
@@ -119,9 +120,18 @@ const MobileCustomCard = ({
 };
 
 const Expertise = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+
+  // Separate indices for each viewport
+  const [desktopIndex, setDesktopIndex] = useState(0);
+  const [tabletIndex, setTabletIndex] = useState(0);
+  const [mobileIndex, setMobileIndex] = useState(0);
+
+  // Refs for GSAP animations
+  const desktopSliderRef = useRef<HTMLDivElement>(null);
+  const tabletSliderRef = useRef<HTMLDivElement>(null);
+  const mobileSliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -173,16 +183,100 @@ const Expertise = () => {
     },
   ];
 
-  // Calculate cards per screen based on viewport
-  const cardsPerScreen = isMobile ? 1 : isTablet ? 2 : 3;
-  const totalSlides = cardData.length - cardsPerScreen + 1;
+  // Desktop navigation (3 cards at a time)
+  const goToPreviousDesktop = () => {
+    if (desktopIndex > 0) {
+      const newIndex = desktopIndex - 1;
+      setDesktopIndex(newIndex);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      if (desktopSliderRef.current) {
+        gsap.to(desktopSliderRef.current, {
+          x: `-${newIndex * (100 / 3)}%`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  const goToNextDesktop = () => {
+    if (desktopIndex < cardData.length - 3) {
+      const newIndex = desktopIndex + 1;
+      setDesktopIndex(newIndex);
+
+      if (desktopSliderRef.current) {
+        gsap.to(desktopSliderRef.current, {
+          x: `-${newIndex * (100 / 3)}%`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
+  // Tablet navigation (2 cards at a time)
+  const goToPreviousTablet = () => {
+    if (tabletIndex > 0) {
+      const newIndex = tabletIndex - 1;
+      setTabletIndex(newIndex);
+
+      if (tabletSliderRef.current) {
+        gsap.to(tabletSliderRef.current, {
+          x: `-${newIndex * (100 / 2)}%`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
+  const goToNextTablet = () => {
+    if (tabletIndex < cardData.length - 2) {
+      const newIndex = tabletIndex + 1;
+      setTabletIndex(newIndex);
+
+      if (tabletSliderRef.current) {
+        gsap.to(tabletSliderRef.current, {
+          x: `-${newIndex * (100 / 2)}%`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
+  // Mobile navigation (1 card at a time)
+  const goToPreviousMobile = () => {
+    if (mobileIndex > 0) {
+      const newIndex = mobileIndex - 1;
+      setMobileIndex(newIndex);
+
+      if (mobileSliderRef.current) {
+        const cardWidth = 90; // 90vw per card
+        const gapWidth = 4; // 16px (1rem) in vw equivalent
+        gsap.to(mobileSliderRef.current, {
+          x: `-${newIndex * cardWidth}vw`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
+  const goToNextMobile = () => {
+    if (mobileIndex < cardData.length - 1) {
+      const newIndex = mobileIndex + 1;
+      setMobileIndex(newIndex);
+
+      if (mobileSliderRef.current) {
+        const cardWidth = 90; // 90vw per card
+        gsap.to(mobileSliderRef.current, {
+          x: `-${newIndex * cardWidth}vw`,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    }
   };
 
   const handleCardClick = (card: any) => {
@@ -208,8 +302,8 @@ const Expertise = () => {
           <div className="md:block hidden">
             <div className="flex space-x-2">
               <button
-                onClick={prevSlide}
-                disabled={currentSlide === 0}
+                onClick={isTablet ? goToPreviousTablet : goToPreviousDesktop}
+                disabled={isTablet ? tabletIndex === 0 : desktopIndex === 0}
                 className="md:w-16 md:h-16 w-14 h-12 bg-[#EFEFF5] rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg
@@ -238,8 +332,12 @@ const Expertise = () => {
                 </svg>
               </button>
               <button
-                onClick={nextSlide}
-                disabled={currentSlide === totalSlides - 1}
+                onClick={isTablet ? goToNextTablet : goToNextDesktop}
+                disabled={
+                  isTablet
+                    ? tabletIndex >= cardData.length - 2
+                    : desktopIndex >= cardData.length - 3
+                }
                 className="md:w-16 w-14 md:h-16 h-12 bg-[#EFEFF5] rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg
@@ -273,77 +371,61 @@ const Expertise = () => {
 
         {/* Desktop Cards - 3 at a time */}
         <div className="relative overflow-hidden hidden lg:block">
-          <div className="flex justify-center">
-            <div
-              className="flex transition-transform duration-500 ease-in-out gap-5"
-              style={{
-                transform: `translateX(-${currentSlide * (100 / 3 + 1.67)}%)`,
-              }}
-            >
-              {cardData.map((card) => (
-                <div
-                  key={card.id}
-                  className="flex-shrink-0"
-                  style={{ width: "calc(33.333% - 13.33px)" }}
-                >
-                  <DeskCustomCard
-                    title={card.title}
-                    cardIndex={card.id}
-                    description={card.description}
-                    imageUrl={card.imageUrl}
-                    onClick={() => handleCardClick(card)}
-                  />
-                </div>
-              ))}
-            </div>
+          <div
+            ref={desktopSliderRef}
+            className="grid grid-cols-5 gap-5"
+            style={{ width: `${(cardData.length / 3) * 100}%` }}
+          >
+            {cardData.map((card) => (
+              <div key={card.id}>
+                <DeskCustomCard
+                  title={card.title}
+                  cardIndex={card.id}
+                  description={card.description}
+                  imageUrl={card.imageUrl}
+                  onClick={() => handleCardClick(card)}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Tablet Cards - 2 at a time */}
-        <div className="relative overflow-visible hidden md:block lg:hidden">
-          <div className="overflow-hidden px-4">
-            <div
-              className="flex transition-transform duration-500 ease-in-out gap-5"
-              style={{
-                transform: `translateX(-${currentSlide * 50 + 2.3}%)`,
-              }}
-            >
-              {cardData.map((card) => (
-                <div
-                  key={card.id}
-                  className="flex-shrink-0"
-                  style={{ width: "calc(50% - 10px)" }}
-                >
-                  <DeskCustomCard
-                    title={card.title}
-                    cardIndex={card.id}
-                    description={card.description}
-                    imageUrl={card.imageUrl}
-                    onClick={() => handleCardClick(card)}
-                  />
-                </div>
-              ))}
-            </div>
+        <div className="relative overflow-hidden hidden md:block lg:hidden">
+          <div
+            ref={tabletSliderRef}
+            className="grid grid-cols-5 gap-5"
+            style={{ width: `${(cardData.length / 2) * 100}%` }}
+          >
+            {cardData.map((card) => (
+              <div key={card.id}>
+                <DeskCustomCard
+                  title={card.title}
+                  cardIndex={card.id}
+                  description={card.description}
+                  imageUrl={card.imageUrl}
+                  onClick={() => handleCardClick(card)}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Mobile Carousel */}
         <div className="relative overflow-hidden md:hidden mt-7 md:mt-0">
-          <div className="flex justify-center">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(calc(-${currentSlide * 90}vw - ${
-                  currentSlide * 16
-                }px + 5vw))`,
-              }}
-            >
-              {cardData.map((card) => (
-                <div
-                  key={card.id}
-                  className="flex-shrink-0 pr-4"
-                  style={{ width: "90vw" }}
-                >
+          <div
+            ref={mobileSliderRef}
+            className="flex"
+            style={{
+              width: `${cardData.length * 90}vw`,
+            }}
+          >
+            {cardData.map((card) => (
+              <div
+                key={card.id}
+                className="w-[90vw] flex-shrink-0 flex items-center justify-start pr-4"
+              >
+                <div className="w-full h-full">
                   <MobileCustomCard
                     title={card.title}
                     description={card.description}
@@ -351,17 +433,17 @@ const Expertise = () => {
                     onClick={() => handleCardClick(card)}
                   />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="md:hidden flex justify-end mt-6">
           <div className="flex space-x-2">
             <button
-              onClick={prevSlide}
-              disabled={currentSlide === 0}
-              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5] "
+              onClick={goToPreviousMobile}
+              disabled={mobileIndex === 0}
+              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5]"
             >
               <svg
                 width="30"
@@ -374,16 +456,16 @@ const Expertise = () => {
                 <path
                   d="M13.5208 18.0754L10.1875 14.742M10.1875 14.742L13.5208 11.4087M10.1875 14.742H20.1875"
                   stroke="black"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>
             <button
-              onClick={nextSlide}
-              disabled={currentSlide === totalSlides - 1}
-              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5] "
+              onClick={goToNextMobile}
+              disabled={mobileIndex >= cardData.length - 1}
+              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5]"
             >
               <svg
                 width="30"
@@ -396,9 +478,9 @@ const Expertise = () => {
                 <path
                   d="M16.8542 18.0754L20.1875 14.742M20.1875 14.742L16.8542 11.4087M20.1875 14.742H10.1875"
                   stroke="black"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>

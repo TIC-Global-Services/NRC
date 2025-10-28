@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Container from "../Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
+import FlexibleHeading from "../ui/FlexibleHeading";
 
 const MediaCentreSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -40,11 +41,18 @@ const MediaCentreSection = () => {
       <div className="mx-auto">
         {/* Header */}
         <div className="flex md:justify-between justify-center items-center mb-6">
-          <SlideUpText animationMode="once">
+          <FlexibleHeading
+            title="Media Centre"
+            highlights={{ Centre: "text-primary" }}
+            isMB={false}
+            // className="xl:mb-14 lg:mb-4"
+          />
+
+          {/* <SlideUpText animationMode="once">
             <h2 className="text-[26px] text-center md:text-left leading-8 md:leading-[58px] md:text-5xl font-normal text-gray-900">
               Media <span className="text-primary">Centre</span>
             </h2>
-          </SlideUpText>
+          </SlideUpText> */}
 
           {/* Desktop Arrows */}
           <div className="hidden md:flex space-x-3">

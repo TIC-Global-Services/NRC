@@ -32,7 +32,7 @@ const PartnershipCard: React.FC<PartnershipCardProps> = ({
                 <p className="md:text-lg text-sm leading-4 font-normal md:leading-[31px] max-w-xs md:max-w-xl">{description}</p>
             </div>
             <div>
-                <Image src={image} alt={alt} className="w-full rounded-xl h-full object-cover" />
+                <Image src={image} alt={alt} className="w-full rounded-xl h-full object-cover object-top" />
             </div>
         </div>
     );
