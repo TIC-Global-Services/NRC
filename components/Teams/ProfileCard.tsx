@@ -9,6 +9,8 @@ interface ProfileCardProps {
   imageUrl: string | StaticImageData;
   linkedinUrl?: string;
   isAdvisory?: boolean;
+  highlightWords?: string[]; 
+  highlightColor?: string;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -18,12 +20,17 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   imageUrl,
   linkedinUrl,
   isAdvisory,
+  highlightWords = [],
+  highlightColor = "text-primary",
 }) => {
+
+  const nameParts = name.split(" ");
+
   return (
     <div
       className={`max-w-md mx-auto ${
         isAdvisory && "shadow"
-      } relative bg-white  rounded-xl overflow-hidden z-20`}
+      } relative bg-white rounded-xl overflow-hidden z-20`}
     >
       {/* Header Image Section */}
       <div className="relative -mb-5 h-80 z-30">
@@ -34,8 +41,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           height={450}
           className="w-full h-full object-cover"
         />
-
-        {/* Role Badge */}
         <div className="absolute top-6 right-6">
           <span className="bg-white px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
             {role}
@@ -44,37 +49,42 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       </div>
 
       {/* Content Section */}
-      <div className="p-5 rounded-xl h-[280px] relative z-40   bg-white -mt-5">
+      <div className="p-5 rounded-xl h-[260px] md:h-[280px] relative z-40 bg-white -mt-5">
         {/* Name */}
-        <div>
-          <h2 className="text-3xl font-light text-gray-900 mb-2 sfPro">
-            <span className="text-black">{name.split(" ")[0]} </span>
-            <span className="text-primary">{name.split(" ")[1]}</span>
-          </h2>
-        </div>
+        <h2 className="md:text-3xl text-[20px] leading-[25px] md:leading-[33px] font-light text-gray-900 mb-2 sfPro">
+          {nameParts.map((word, idx) => (
+            <span
+              key={idx}
+              className={
+                highlightWords.includes(word) ? highlightColor : "text-black"
+              }
+            >
+              {word}
+              {idx < nameParts.length - 1 ? " " : ""}
+            </span>
+          ))}
+        </h2>
 
         {/* Description */}
         <div className="pr-3">
-          <p className="text-secondary text-base leading-[24px] w-[96%]">
+          <p className="text-secondary text-xs leading-[18px] md:text-base md:leading-[24px] w-[96%]">
             {description}
           </p>
         </div>
 
         {/* LinkedIn Icon */}
-        <div>
-          {linkedinUrl && (
-            <div className="absolute bottom-6 right-6">
-              <a
-                href={linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-[#ECECEF] transition-colors"
-              >
-                <FaLinkedin />
-              </a>
-            </div>
-          )}
-        </div>
+        {linkedinUrl && (
+          <div className="absolute bottom-6 right-6">
+            <a
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-[#ECECEF] transition-colors"
+            >
+              <FaLinkedin />
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

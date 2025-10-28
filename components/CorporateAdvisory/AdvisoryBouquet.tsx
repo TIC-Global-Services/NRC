@@ -56,7 +56,7 @@ const AdvisoryBouquet = () => {
           />
 
           {/* Cards Container */}
-          <div className="flex flex-col gap-4 lg:flex-row md:gap-6 min-h-[90vh] md:min-h-[70vh] lg:h-[90vh]">
+          <div className="flex flex-col gap-4 lg:flex-row md:gap-6 min-h-[90vh] md:min-h-[70vh] lg:h-[583px]">
             {cards.map((card, index) => (
               <motion.div
                 key={card.id}
@@ -228,7 +228,7 @@ const AdvisoryBouquet = () => {
                           <Image
                             src={card.image}
                             alt={`${card.title}`}
-                            className="w-full h-full rounded-[10px] object-cover 2xl:w-[586px] 2xl:h-[181px]  lg:h-[150px]"
+                            className="w-full h-full rounded-[10px] object-cover 2xl:w-[100%] 2xl:h-[80%]  lg:h-[80%]"
                             width={586}
                             height={181}
                           />

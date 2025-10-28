@@ -19,9 +19,10 @@ interface TeamMember {
   description: string;
   imageUrl: string | StaticImageData;
   linkedinUrl?: string;
+  highlightWords?: string[];
 }
 
-// Demo Data
+
 const teamMembers: TeamMember[] = [
   {
     id: 1,
@@ -31,6 +32,7 @@ const teamMembers: TeamMember[] = [
       "As the founder, I bring a passion for identifying undervalued small cap companies with strong fundamentals and compelling growth prospects. During my private equity career, prior to founding NRC, I witnessed firsthand the transformative power of several SMEs headed by dynamic entrepreneurs and it is this conviction that drives our investment philosophy.",
     imageUrl: founderImg,
     linkedinUrl: "https://linkedin.com/in/arjunpatel",
+    highlightWords: ["Daga"],
   },
   {
     id: 2,
@@ -40,6 +42,7 @@ const teamMembers: TeamMember[] = [
       "Sandhya is a result driven finance professional with over 23 years of industry experience in leading banking and financial services companies covering financial planning and control, MIS, forecasting, capital raising, performance management, ERP implementation, internal process streamlining and more.",
     imageUrl: sandhyakabra,
     linkedinUrl: "https://linkedin.com/in/vinaykhatu",
+    highlightWords: ["Kabra"],
   },
 ];
 
@@ -105,6 +108,7 @@ const LeadershipTeam: React.FC = () => {
                       description={member.description}
                       imageUrl={member.imageUrl}
                       linkedinUrl={member.linkedinUrl}
+                      highlightWords={member.highlightWords}
                     />
                   </div>
                 ))}

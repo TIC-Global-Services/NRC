@@ -17,11 +17,12 @@ interface TeamMember {
   name: string;
   role: string;
   description: string;
-  imageUrl: StaticImageData;
+  imageUrl: string | StaticImageData;
   linkedinUrl?: string;
+  highlightWords?: string[];
 }
 
-// Demo Data
+
 const teamMembers: TeamMember[] = [
   {
     id: 1,
@@ -31,6 +32,7 @@ const teamMembers: TeamMember[] = [
       "Nitin has about three decades of deal making experience across sectors with a special focus on healthcare & lifesciences. Nitin leads the Pharma, Healthcare and Chemicals/Industrials practice at NRC.",
     imageUrl: nitinjain,
     linkedinUrl: "https://linkedin.com/in/meerasingh",
+    highlightWords: ["Jain"],
   },
   {
     id: 2,
@@ -40,6 +42,7 @@ const teamMembers: TeamMember[] = [
       "Pratik is a finance professional with 25+ years of experience in corporate finance and valuations. He founded Lakshya Consulting, later integrated with NRC’s advisory arm, and has worked with leading firms like Zee Telefilms, BDO, EDS, and ICICI Bank.",
     imageUrl: pratik,
     linkedinUrl: "https://linkedin.com/in/meerasingh",
+    highlightWords: ["Singhi"],
   },
   {
     id: 3,
@@ -49,6 +52,7 @@ const teamMembers: TeamMember[] = [
       "Satyajit has about 18 years of experience in Investment Banking and Management Consulting. He has advised clients in Technology (Both SaaS and Consumer Internet), Digital Commerce, Fintech, Digital Media and Education sectors on fund raising and M&A transactions.",
     imageUrl: satyajit,
     linkedinUrl: "https://linkedin.com/in/meerasingh",
+    highlightWords: ["Chakraborty"],
   },
 ];
 
@@ -113,6 +117,7 @@ const CorporateAdvisoryTeam: React.FC = () => {
                     description={member.description}
                     imageUrl={member.imageUrl}
                     linkedinUrl={member.linkedinUrl}
+                    highlightWords={member.highlightWords}
                     isAdvisory
                   />
                 </div>

@@ -97,7 +97,7 @@ const OurValue = () => {
               </div>
 
               {/* Right SVG Animation Area */}
-              <div className="relative w-full  h-full justify-items-end lg:flex hidden items-center justify-center">
+              <div className="relative w-full  h-full justify-items-end lg:flex hidden items-start mt-[20%] justify-center ">
                 <svg
                   width="580"
                   height="381"

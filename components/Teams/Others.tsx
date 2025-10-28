@@ -9,6 +9,7 @@ import {
   kunaljadhwani,
   kunalsabnis,
   mustafaarif,
+  narayan,
   nitinjain,
   pragatikhadse,
   pratik,
@@ -29,36 +30,30 @@ interface TeamMember {
   description: string;
   imageUrl: string | StaticImageData;
   linkedinUrl?: string;
+  highlightWords?: string[];
 }
 
-// Demo Data
+
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Roshni",
+    name: "Roshni Vaid",
     role: "Senior Portfolio Manager",
     description:
       "Pragati has over 20 years of public market experience in equity research across multiple sectors in India and Asia. She complements the company’s research capabilities in evaluating investment opportunities in public markets.",
     imageUrl: roshini,
     linkedinUrl: "https://linkedin.com/in/arjunpatel",
+    highlightWords: ["Vaid"],
   },
   {
     id: 2,
-    name: "Pratik Singhi",
-    role: "Managing Director",
+    name: "Narayan Nimkar",
+    role: "VP – Operations & Compliance",
     description:
-      "Pratik is a finance professional with 25+ years of experience in corporate finance and valuations. He founded Lakshya Consulting, later integrated with NRC’s advisory arm, and has worked with leading firms like Zee Telefilms, BDO, EDS, and ICICI Bank.",
-    imageUrl: pratik,
+      "Narayan has 32+ years of experience in the Indian stock market, including 17 years on the buy side. He has held key roles at ICICI Prudential, PGIM India, and Cholamandalam Securities, and holds a PGPMS from Welingkar’s Institute.",
+    imageUrl: narayan,
     linkedinUrl: "https://linkedin.com/in/meerasingh",
-  },
-  {
-    id: 3,
-    name: "Satyajit Chakraborty",
-    role: "Director",
-    description:
-      "Satyajit has about 18 years of experience in Investment Banking and Management Consulting. He has advised clients in Technology (Both SaaS and Consumer Internet), Digital Commerce, Fintech, Digital Media and Education sectors on fund raising and M&A transactions.",
-    imageUrl: satyajit,
-    linkedinUrl: "https://linkedin.com/in/meerasingh",
+    highlightWords: ["Nimkar"],
   },
 ];
 
@@ -104,14 +99,14 @@ const OthersSection: React.FC = () => {
             <div className="text-center mb-16">
               <h1 className="text-3xl md:text-5xl font-light text-gray-900 mb-4">
                 <SlideUpText animationMode="always">
-                                  {/* Asset <span className="text-primary">Management Team</span> */}
-                                  Others
+                  {/* Asset <span className="text-primary">Management Team</span> */}
+                  Others
                 </SlideUpText>
               </h1>
             </div>
 
             {/* Team Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 justify-items-center w-[90%] md:w-[100%] lg:w-[65%] mx-auto">
               {teamMembers.map((member, index) => (
                 <div
                   key={member.id}
@@ -125,6 +120,7 @@ const OthersSection: React.FC = () => {
                     description={member.description}
                     imageUrl={member.imageUrl}
                     linkedinUrl={member.linkedinUrl}
+                    highlightWords={member.highlightWords}
                   />
                 </div>
               ))}

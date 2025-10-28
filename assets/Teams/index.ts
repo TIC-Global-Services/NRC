@@ -10,6 +10,7 @@ import vallabh from "@/assets/Teams/vallabh.png"
 import satyajit from "@/assets/Teams/satyajit.png"
 import pratik from "@/assets/Teams/pratik.png";
 import roshini from "@/assets/Teams/roshini.png";
+import narayan from "@/assets/Teams/narayan.png";
 
 export {
     // leadership
@@ -31,5 +32,6 @@ export {
 
     // others
     roshini,
+    narayan
 
 }
