@@ -13,9 +13,14 @@ const AIF = () => {
     <div className="bg-[#F6F9FC]">
       <Hero
         title1="Investing in India's "
-        title1Color="Growth Story"
+        title2Color="Growth Story"
+        mobileTitle1="Investing in India's "
+        mobileTitle2Color="Growth Story"
         desc1="Nine Rivers Capital offers unique opportunities to participate in the dynamic growth of the"
         desc2="Indian economy through our AIF funds."
+        mobDes1="Nine Rivers Capital offers unique opportunities to"
+        mobDes2="participate in the dynamic growth of the Indian"
+        mobDes3="economy through our AIF funds."
       />
       <div className="flex items-center justify-center text-center">
         <SlideUpText
@@ -34,7 +39,7 @@ const AIF = () => {
       <InvestmentStrategy />
       <InvestmentProcess />
       <PortfolioHighlights />
-      <RecentBlogs/>
+      <RecentBlogs />
     </div>
   );
 };

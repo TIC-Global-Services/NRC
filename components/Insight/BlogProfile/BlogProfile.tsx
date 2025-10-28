@@ -27,7 +27,7 @@ const BlogProfile = ({ blog }: any) => {
                         typeof blog.banner === "string" ? blog.banner : blog.banner.src
                     }
                     alt={blog.title}
-                    className="w-full lg:h-screen md:h-[80vh] h-[638px]"
+                    className="w-full lg:h-screen md:h-[80vh] h-[70vh]"
                     width={1000}
                     height={900}
                 />
@@ -128,7 +128,7 @@ const BlogProfile = ({ blog }: any) => {
                             return (
                                 <h2
                                     key={index}
-                                    className="md:text-[32px] text-[24px] leading-[160%] font-bold max-w-3xl mx-auto mt-6 mb-4"
+                                    className="md:text-[32px] text-[24px] md:leading-[160%] font-bold max-w-3xl mx-auto mt-6 mb-4"
                                 >
                                     {section.content}
                                 </h2>
@@ -147,7 +147,7 @@ const BlogProfile = ({ blog }: any) => {
                                                 : section.src?.src
                                         }
                                         alt={section.caption || "Blog image"}
-                                        className="w-full lg:h-[75vh] md:h-[60vh]  h-[450px] mx-auto"
+                                        className="w-full lg:h-[75vh] md:h-[60vh]  h-[50vh] mx-auto"
                                     />
                                     {section.caption && (
                                         <figcaption className="text-center text-base leading-[140%] mt-3 ">

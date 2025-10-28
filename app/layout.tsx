@@ -16,12 +16,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Local Fonts - SF Pro
+// Local Fonts - SF Pro with WOFF2 fallback for iOS
 const sfPro = localFont({
   src: [
+    // Light - WOFF2 first (iOS compatible), then OTF fallback
+    {
+      path: "../public/fonts/SF-Pro-Display-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
     {
       path: "../public/fonts/SF-Pro-Display-Light.otf",
       weight: "300",
+      style: "normal",
+    },
+    // Regular - WOFF2 first (iOS compatible), then OTF fallback
+    {
+      path: "../public/fonts/SF-Pro-Display-Regular.woff2",
+      weight: "400",
       style: "normal",
     },
     {
@@ -29,9 +41,21 @@ const sfPro = localFont({
       weight: "400",
       style: "normal",
     },
+    // Semibold - WOFF2 first (iOS compatible), then OTF fallback
+    {
+      path: "../public/fonts/SF-Pro-Display-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
     {
       path: "../public/fonts/SF-Pro-Display-Semibold.otf",
       weight: "600",
+      style: "normal",
+    },
+    // Bold - WOFF2 first (iOS compatible), then OTF fallback
+    {
+      path: "../public/fonts/SF-Pro-Display-Bold.woff2",
+      weight: "700",
       style: "normal",
     },
     {
@@ -42,6 +66,7 @@ const sfPro = localFont({
   ],
   variable: "--font-sf-pro",
   display: "swap",
+  fallback: ["-apple-system", "BlinkMacSystemFont", "system-ui", "sans-serif"],
 });
 
 // Local Font - Century Gothic

@@ -73,7 +73,7 @@ const MobileScrollProgress: React.FC<MobileScrollProgressProps> = ({
   return (
     <div ref={ref}>
       <div
-        className="scroll-wrapper relative w-full bg-white overflow-hidden"
+        className="scroll-wrapper relative w-full overflow-hidden"
         style={{ height: "60vh" }}
       >
         {/* Fixed Title */}

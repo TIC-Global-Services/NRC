@@ -113,7 +113,7 @@ const Footer = () => {
               {/* Connect Section */}
               <motion.div
                 variants={itemVariants}
-                className="space-y-4 flex flex-col items-end justify-start"
+                className="space-y-4 flex flex-col md:items-end justify-start"
               >
                 <h3 className="md:text-xl text-lg font-medium mb-3">
                   Connect with us

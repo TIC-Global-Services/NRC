@@ -79,7 +79,7 @@ const HorizontalScrollProgress: React.FC<HorizontalScrollProgressProps> = ({
 
   return (
     <div ref={ref}>
-      <div className="scroll-wrapper relative w-full h-screen overflow-hidden bg-white">
+      <div className="scroll-wrapper relative w-full h-screen overflow-hidden ">
         {/* Fixed Title */}
         <div className="absolute top-20 md:top-36 left-8 md:left-14 z-20">
           <h1 className="text-2xl md:text-4xl leading-9 font-normal">

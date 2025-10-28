@@ -113,7 +113,7 @@ const FAQ = () => {
             "Questions": "text-primary",
           }}
           isMB={false}
-          className="md:hidden block"
+          className="md:hidden block mb-6"
         />
 
 
@@ -170,7 +170,7 @@ const FAQ = () => {
                     }}
                     transition={{ duration: 0.2 }}
                   >
-                    <h3 className="text-lg font-medium text-gray-800 pr-4">
+                    <h3 className="text-lg md:text-[20px] leading-[31px] font-medium text-black pr-4">
                       {item.question}
                     </h3>
 

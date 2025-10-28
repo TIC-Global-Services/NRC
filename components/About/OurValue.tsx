@@ -47,7 +47,10 @@ const OurValue = () => {
   }, [scrollYProgress]);
 
   return (
-    <div ref={containerRef} className="h-[600vh] lg:pt-14 pt-24 lg:pb-14 bg-white">
+    <div
+      ref={containerRef}
+      className="h-[600vh] lg:pt-14 pt-24 lg:pb-14 bg-white"
+    >
       <div className="sticky top-0 lg:h-[120vh] h-screen overflow-hidden">
         <Container
           disablePaddingBottomMobile
@@ -64,9 +67,12 @@ const OurValue = () => {
                   transition={{ duration: 0.8 }}
                   className="space-y-6"
                 >
-                  <h1 className="text-4xl md:text-5xl font-light text-black leading-tight">
+                  <h1 className="lg:text-[44px] md:text-5xl text-[26px] leading-8 lg:leading-[3.5rem] font-normal mb-4">
                     Our <span className="text-primary">Values</span>
                   </h1>
+                  {/* <h1 className="text-4xl md:text-5xl font-light text-black leading-tight">
+                    Our <span className="text-primary">Values</span>
+                  </h1> */}
                 </motion.div>
 
                 {/* Value Cards Stack */}

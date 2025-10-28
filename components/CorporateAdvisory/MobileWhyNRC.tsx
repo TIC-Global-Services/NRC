@@ -135,7 +135,7 @@ const MobileWhyNRC = () => {
                                 key={index}
                                 className="w-[98vw] flex-shrink-0 flex items-center justify-start pr-4"
                             >
-                                <div className="w-full h-[450px] md:h-[600px]">
+                                <div className="w-[98%] h-[450px] md:h-[600px]">
                                     <PartnershipCard
                                         image={card.image}
                                         alt={card.alt}
@@ -149,11 +149,11 @@ const MobileWhyNRC = () => {
                 </div>
 
                 {/* Mobile Navigation Arrows */}
-                <div className="flex justify-end gap-4 mt-6">
+                <div className="flex justify-start gap-4 mt-6">
                     <button
                         onClick={goToPreviousMobile}
                         disabled={mobileIndex === 0}
-                        className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5] rounded-full flex items-center justify-center"
                     >
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="24" fill="#EFEFF5" />
@@ -164,7 +164,7 @@ const MobileWhyNRC = () => {
                     <button
                         onClick={goToNextMobile}
                         disabled={mobileIndex >= partnershipData.length - 1}
-                        className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5] rounded-full flex items-center justify-center"
                     >
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="24" fill="#EFEFF5" />

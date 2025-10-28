@@ -39,65 +39,75 @@ const ContentList = () => {
     const filteredContent = getFilteredContent();
 
     return (
-        <Container disableYSpacing className='pt-9 md:pb-48 pb-20'>
-            <div className=" py-8">
-                {/* Filter Bar */}
-                <FilterBar
-                    activeTab={activeTab}
-                    setActiveTab={setActiveTab}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                />
+      <Container disableYSpacing className="pt-9 md:pb-48 pb-20">
+        <div className=" py-8">
+          {/* Filter Bar */}
+          <FilterBar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
 
-                {/* Content Grid */}
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={`${activeTab}-${searchQuery}`}
-                        className={`grid grid-cols-1 ${filteredContent.length <= 0 ? `` : `md:grid-cols-2 lg:grid-cols-3`} gap-[19px] gap-y-8 w-full `}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        {filteredContent.length > 0 ? (
-                            filteredContent.map((item: any, index: any) => (
-                                <motion.div
-                                    key={`${item.title}-${index}`}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                                >
-                                    {activeTab === 'blog' ? (
-                                        <BlogCard
-                                            title={item.title}
-                                            date={item.publishedDate}
-                                            image={item.banner}
-                                            description={item.description}
-                                        />
-                                    ) : (
-                                        <NewspaperCard
-                                            title={item.title}
-                                            date={item.publishedDate}
-                                            image={item.banner}
-                                            description={item.description}
-                                        />
-                                    )}
-                                </motion.div>
-                            ))
-                        ) : (
-                            <motion.div
-                                className="flex flex-col items-center justify-center w-full"
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.4 }}
-                            >
-                                <Image src={NoBlogPlaceHolder} alt='NoBlogPlaceHolder' className='' width={529} height={600} />
-                            </motion.div>
-                        )}
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-        </Container>
+          {/* Content Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeTab}-${searchQuery}`}
+              className={`grid grid-cols-1 ${
+                filteredContent.length <= 0
+                  ? ``
+                  : `md:grid-cols-2 lg:grid-cols-3`
+              } gap-[19px] gap-y-8 w-full `}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {filteredContent.length > 0 ? (
+                filteredContent.map((item: any, index: any) => (
+                  <motion.div
+                    key={`${item.title}-${index}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    {activeTab === "blog" ? (
+                      <BlogCard
+                        title={item.title}
+                        date={item.publishedDate}
+                        image={item.banner}
+                        description={item.description}
+                      />
+                    ) : (
+                      <BlogCard
+                        title={item.title}
+                        date={item.publishedDate}
+                        image={item.banner}
+                        description={item.description}
+                      />
+                    )}
+                  </motion.div>
+                ))
+              ) : (
+                <motion.div
+                  className="flex flex-col items-center justify-center w-full"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <Image
+                    src={NoBlogPlaceHolder}
+                    alt="NoBlogPlaceHolder"
+                    className=""
+                    width={529}
+                    height={600}
+                  />
+                </motion.div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </Container>
     );
 };
 

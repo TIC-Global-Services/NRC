@@ -32,8 +32,8 @@ const PartnershipCard: React.FC<PartnershipCardProps> = ({
         <Image src={image} alt={alt} className="w-full h-full object-cover" />
       </div>
       <div className="p-6 bg-[#B8B5FF] flex flex-col items- justify-center">
-        <h3 className="text-3xl leading-[31px] text-black mb-2">{title}</h3>
-        <p className="text-lg leading-[31px] max-w-xs">{description}</p>
+        <h3 className="md:text-3xl text-xl leading-[31px] text-black mb-2">{title}</h3>
+        <p className="md:text-lg text-base md:leading-[31px] max-w-xs">{description}</p>
       </div>
     </div>
   );
@@ -368,47 +368,47 @@ const Partnerships = () => {
           <button
             onClick={goToPreviousMobile}
             disabled={mobileIndex === 0}
-            className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="48" height="48" rx="24" fill="#EFEFF5" />
-              <path
-                d="M22.6667 26.6654L20 23.9987M20 23.9987L22.6667 21.332M20 23.9987H28"
-                stroke="black"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            className="w-14 h-14 bg-[#EFEFF5] rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition"
+                      >
+                        <svg
+                          width="30"
+                          height="30"
+                          viewBox="0 0 30 30"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="30" height="30" rx="15" fill="#EFEFF5" />
+                          <path
+                            d="M13.5208 18.0754L10.1875 14.742M10.1875 14.742L13.5208 11.4087M10.1875 14.742H20.1875"
+                            stroke="black"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
           </button>
 
           <button
             onClick={goToNextMobile}
             disabled={mobileIndex >= partnershipData.length - 1}
-            className="hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="48" height="48" rx="24" fill="#EFEFF5" />
-              <path
-                d="M25.3333 26.6654L28 23.9987M28 23.9987L25.3333 21.332M28 23.9987H20"
-                stroke="black"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            className="w-14 h-14 bg-[#EFEFF5] rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition"
+                      >
+                        <svg
+                          width="30"
+                          height="30"
+                          viewBox="0 0 30 30"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="30" height="30" rx="15" fill="#EFEFF5" />
+                          <path
+                            d="M16.8542 18.0754L20.1875 14.742M20.1875 14.742L16.8542 11.4087M20.1875 14.742H10.1875"
+                            stroke="black"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
           </button>
         </div>
       </div>

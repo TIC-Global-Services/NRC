@@ -23,17 +23,16 @@ const RecentBlogs = () => {
     <Container disableYSpacing className="md:pt-[87px] md:pb-48 pt-12">
       <div>
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center md:mb-12 mb-7">
           <SlideUpText animationMode="always">
-            <h2 className="text-4xl md:text-5xl font-light text-gray-900">
-              Our Recent{" "}
-              <span className="text-primary font-medium">Blogs</span>
-            </h2>
+            <h1 className="lg:text-[44px] text-left md:text-center sfPro md:text-5xl text-[26px] leading-8 lg:leading-[3.5rem] font-normal">
+              Our Recent <span className="text-primary">Blogs</span>
+            </h1>
           </SlideUpText>
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[19px]  h-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] md:gap-[19px]  h-auto">
           {/* Blog Posts */}
           {blogPosts.slice(0, 2).map((post, i) => (
             <BlogCard
@@ -56,8 +55,7 @@ const RecentBlogs = () => {
             </div>
 
             <div className="relative z-10 flex flex-col justify-between items-start h-full">
-              <div
-              >
+              <div>
                 {/* Small label */}
                 <div className="text-purple-200 inline-block rounded-[6px] text-sm mb-2 font-medium px-[10px] py-[6px] bg-[#7F5EFB]">
                   Blogs
@@ -69,9 +67,7 @@ const RecentBlogs = () => {
                 </h3>
               </div>
 
-              <div
-                className="flex flex-col justify-between items-start"
-              >
+              <div className="flex flex-col justify-between items-start">
                 {/* Description */}
                 <p className="text-[#B8B5FF] text-sm 2xl:text-base leading-[24px] mb-3">
                   We are pleased to announce that Nine Rivers Capital acted as
@@ -79,16 +75,18 @@ const RecentBlogs = () => {
                   equity capital raise from JM Financial Private Equity
                 </p>
 
-                <AnimatedButton onClick={() => router.push('/insights')} label="Explore More" />
+                <AnimatedButton
+                  onClick={() => router.push("/insights")}
+                  label="Explore More"
+                />
               </div>
             </div>
           </div>
         </div>
 
-
         <AnimatedButton
           className="md:hidden mt-6 mb-36"
-          onClick={() => router.push('/insights')}
+          onClick={() => router.push("/insights")}
           label="Explore More"
         />
       </div>

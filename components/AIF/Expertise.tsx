@@ -361,24 +361,18 @@ const Expertise = () => {
             <button
               onClick={prevSlide}
               disabled={currentSlide === 0}
-              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5] "
             >
               <svg
-                width="49"
-                height="48"
-                viewBox="0 0 49 48"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <rect
-                  x="0.421875"
-                  width="48"
-                  height="48"
-                  rx="24"
-                  fill="#EFEFF5"
-                />
+                <rect width="30" height="30" rx="15" fill="#EFEFF5" />
                 <path
-                  d="M23.0885 26.6654L20.4219 23.9987M20.4219 23.9987L23.0885 21.332M20.4219 23.9987H28.4219"
+                  d="M13.5208 18.0754L10.1875 14.742M10.1875 14.742L13.5208 11.4087M10.1875 14.742H20.1875"
                   stroke="black"
                   stroke-miterlimit="10"
                   stroke-linecap="round"
@@ -389,24 +383,18 @@ const Expertise = () => {
             <button
               onClick={nextSlide}
               disabled={currentSlide === totalSlides - 1}
-              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-full flex items-center justify-center hover:shadow-xl transition-all duration-200 text-base hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed w-14 h-14 bg-[#EFEFF5] "
             >
               <svg
-                width="49"
-                height="48"
-                viewBox="0 0 49 48"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <rect
-                  x="0.421875"
-                  width="48"
-                  height="48"
-                  rx="24"
-                  fill="#EFEFF5"
-                />
+                <rect width="30" height="30" rx="15" fill="#EFEFF5" />
                 <path
-                  d="M25.7552 26.6654L28.4219 23.9987M28.4219 23.9987L25.7552 21.332M28.4219 23.9987H20.4219"
+                  d="M16.8542 18.0754L20.1875 14.742M20.1875 14.742L16.8542 11.4087M20.1875 14.742H10.1875"
                   stroke="black"
                   stroke-miterlimit="10"
                   stroke-linecap="round"
