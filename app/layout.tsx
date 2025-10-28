@@ -83,10 +83,56 @@ export const centuryGothic = localFont({
   fallback: ["Arial", "sans-serif"],
 });
 
-// Metadata with dark/light mode icons
 export const metadata: Metadata = {
-  title: "NRC",
-  description: "NRC",
+  metadataBase: new URL("https://nrc-tic.vercel.app"),
+  title: {
+    default: "Nine Rivers Capital | Private-Equity Rigor in Public Markets",
+    template: "%s | Nine Rivers Capital",
+  },
+  description:
+    "Nine Rivers Capital (NRC) is a boutique investment management firm offering SEBI-registered Portfolio Management Services (PMS) and Alternative Investment Funds (AIFs) for HNIs and Family Offices. We apply private-equity rigor to public markets to create long-term value through disciplined, research-driven investing.",
+  keywords: [
+    "Nine Rivers Capital",
+    "NRC TIC",
+    "Portfolio Management Services",
+    "Alternative Investment Funds",
+    "Aurum Small Cap Opportunities",
+    "Aurum Multiplier Fund",
+    "Wealth Management",
+    "Private Equity Approach",
+    "HNIs Investment",
+    "Family Office Investments",
+    "Value Investing India",
+    "Long-term investing",
+    "Research-based investing",
+  ],
+  authors: [{ name: "Nine Rivers Capital" }],
+  creator: "Nine Rivers Capital",
+  publisher: "Nine Rivers Capital Holdings Pvt. Ltd.",
+  openGraph: {
+    type: "website",
+    url: "https://nrc-tic.vercel.app",
+    title: "Nine Rivers Capital | Private-Equity Rigor in Public Markets",
+    description:
+      "Nine Rivers Capital offers SEBI-registered PMS and AIF investment strategies, combining deep research and conviction-driven investing for HNIs and Family Offices.",
+    siteName: "Nine Rivers Capital",
+    images: [
+      {
+        url: "/og-image.jpg", 
+        width: 1200,
+        height: 630,
+        alt: "Nine Rivers Capital – Private-Equity Approach to Public Markets",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nine Rivers Capital | Investing for Long-Term Value Creation",
+    description:
+      "A boutique partner in wealth creation. NRC brings private-equity-style diligence and conviction-driven investing to public markets.",
+    images: ["/og-image.jpg"],
+    creator: "@NineRiversCap", 
+  },
   icons: {
     icon: [
       { url: "/NRC_Logo_light.ico", media: "(prefers-color-scheme: light)" },
@@ -97,7 +143,21 @@ export const metadata: Metadata = {
       { url: "/NRC_Logo_dark.ico", media: "(prefers-color-scheme: dark)" },
     ],
   },
+  // icons: {
+  //   icon: [
+  //     { url: "/NRC_Logo_light.ico", media: "(prefers-color-scheme: light)" },
+  //     { url: "/NRC_Logo_dark.ico", media: "(prefers-color-scheme: dark)" },
+  //   ],
+  //   apple: [
+  //     { url: "/NRC_Logo_light.ico", media: "(prefers-color-scheme: light)" },
+  //     { url: "/NRC_Logo_dark.ico", media: "(prefers-color-scheme: dark)" },
+  //   ],
+  // },
+  alternates: {
+    canonical: "https://nrc-tic.vercel.app",
+  },
 };
+
 
 export default function RootLayout({
   children,
