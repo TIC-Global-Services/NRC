@@ -47,7 +47,7 @@ const OurValue = () => {
   }, [scrollYProgress]);
 
   return (
-    <div ref={containerRef} className="h-[600vh] lg:pt-14 pt-24 bg-white">
+    <div ref={containerRef} className="h-[600vh] lg:pt-14 pt-24 lg:pb-14 bg-white">
       <div className="sticky top-0 lg:h-[120vh] h-screen overflow-hidden">
         <Container
           disablePaddingBottomMobile

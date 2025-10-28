@@ -8,7 +8,8 @@ import { NRC_Logo } from "@/assets/Home";
 import { usePathname } from "next/navigation";
 import AnimatedButton from "../ui/animatedButton";
 
-const MobileNavbarDemo = () => {
+const MobileNavbar = () => {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedDropdown, setExpandedDropdown] = useState(null);
   const [activeItem, setActiveItem] = useState("Home");
@@ -23,7 +24,11 @@ const MobileNavbarDemo = () => {
     { name: "Home", hasDropdown: false, link: "/" },
     { name: "About us", hasDropdown: false, link: "/about" },
     { name: "Asset Management", hasDropdown: true, link: "#" },
-    { name: "Corporate Advisory", hasDropdown: false, link: "/corporate-advisory" },
+    {
+      name: "Corporate Advisory",
+      hasDropdown: false,
+      link: "/corporate-advisory",
+    },
     { name: "Team", hasDropdown: false, link: "/team" },
     { name: "Insights", hasDropdown: false, link: "/insights" },
     { name: "Contact Us", hasDropdown: false, link: "/contact" },
@@ -31,10 +36,80 @@ const MobileNavbarDemo = () => {
 
   const dropdownItems = [
     { name: "PMS", link: "/pms" },
-    { name: "AIF", link: "/aif" }
+    { name: "AIF", link: "/aif" },
   ];
 
-  const handleNavClick = (item:any) => {
+  // Function to determine active item based on pathname
+  const getActiveItem = (currentPath: string): string => {
+    // Check if current path is /pms or /aif - these should activate "Asset Management"
+    if (currentPath === "/pms" || currentPath === "/aif") {
+      return "Asset Management";
+    }
+
+    // Check if path starts with a nav item path (for nested routes)
+    for (const item of navItems) {
+      if (
+        item.link !== "#" &&
+        item.link !== "/" &&
+        currentPath.startsWith(item.link)
+      ) {
+        return item.name;
+      }
+    }
+
+    // Direct match for exact paths
+    const exactMatch = navItems.find((item) => item.link === currentPath);
+    if (exactMatch) return exactMatch.name;
+
+    // Check if we're on the home page
+    if (currentPath === "/") {
+      return "Home";
+    }
+
+    return "Home";
+  };
+
+  // Set active item based on pathname
+  useEffect(() => {
+    const active = getActiveItem(pathname);
+    setActiveItem(active);
+  }, [pathname]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Store the current scroll position
+      const scrollY = window.scrollY;
+
+      // Prevent scrolling on body
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore scroll position when menu closes
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+
+      // Restore scroll position
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  const handleNavClick = (item: any) => {
     if (item.hasDropdown) {
       setExpandedDropdown(expandedDropdown === item.name ? null : item.name);
     } else {
@@ -46,7 +121,7 @@ const MobileNavbarDemo = () => {
     }
   };
 
-  const handleSubNavClick = (subItem:any) => {
+  const handleSubNavClick = (subItem: any) => {
     setIsMenuOpen(false);
     setExpandedDropdown(null);
     // Navigate to the link
@@ -56,7 +131,6 @@ const MobileNavbarDemo = () => {
   const handleLoginRoute = () => {
     window.open("https://faconnect.kotak.com", "_blank");
   };
-
 
   return (
     <div className="relative z-[999]">
@@ -230,4 +304,4 @@ const MobileNavbarDemo = () => {
   );
 };
 
-export default MobileNavbarDemo;
+export default MobileNavbar;

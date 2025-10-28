@@ -5,6 +5,7 @@ import { gsap } from "@/lib/gsap/gsapSetup";
 import { ScrollManager } from "@/lib/gsap/scrollManager";
 import AnimatedButton from "../ui/animatedButton";
 import { useHeroScroll } from "@/context/HeroScrollContext";
+import { useRouter } from "next/navigation";
 
 // IndexedDB Cache Manager
 class FrameCacheManager {
@@ -79,6 +80,7 @@ const Hero = () => {
   const idleFrameDelay = 1000 / idleFrameRate;
   const idleDirectionRef = useRef<"forward" | "backward">("forward");
 
+  const router = useRouter();
   const { setHeroScrolled, setHeroContentRevealed } = useHeroScroll();
 
   // Track when hero section is scrolled past
@@ -503,6 +505,7 @@ const Hero = () => {
                 isBtnScale={false}
                 label="Explore Our PMS"
                 delay={0.5}
+                onClick={()=>router.push("/pms")}
               />
             </div>
           </div>

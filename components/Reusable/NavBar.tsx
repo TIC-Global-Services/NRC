@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Container from "./Container";
@@ -39,7 +45,11 @@ const NAV_ITEMS: NavItemType[] = [
   { name: "Home", hasDropdown: false, link: "/" },
   { name: "About us", hasDropdown: false, link: "/about" },
   { name: "Asset Management", hasDropdown: true, link: "#" },
-  { name: "Corporate Advisory", hasDropdown: false, link: "/corporate-advisory" },
+  {
+    name: "Corporate Advisory",
+    hasDropdown: false,
+    link: "/corporate-advisory",
+  },
   { name: "Team", hasDropdown: false, link: "/team" },
   { name: "Insights", hasDropdown: false, link: "/insights" },
   { name: "Contact Us", hasDropdown: false, link: "/contact" },
@@ -47,143 +57,160 @@ const NAV_ITEMS: NavItemType[] = [
 
 const DROPDOWN_ITEMS = [
   { name: "PMS", link: "/pms" },
-  { name: "AIF", link: "/aif" }
+  { name: "AIF", link: "/aif" },
 ];
 
 // Memoized NavItem component
-const NavItem = React.memo<NavItemProps>(({ item, isActive, index, link, onDropdownToggle, isDropdownOpen }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const hasAnimatedRef = useRef(false);
+const NavItem = React.memo<NavItemProps>(
+  ({ item, isActive, index, link, onDropdownToggle, isDropdownOpen }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const hasAnimatedRef = useRef(false);
 
-  useEffect(() => {
-    hasAnimatedRef.current = true;
-  }, []);
+    useEffect(() => {
+      hasAnimatedRef.current = true;
+    }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (item.hasDropdown) {
-      e.preventDefault();
-      onDropdownToggle();
-    } else {
-      window.location.href = link;
-    }
-  }, [item.hasDropdown, link, onDropdownToggle]);
+    const handleClick = useCallback(
+      (e: React.MouseEvent) => {
+        if (item.hasDropdown) {
+          e.preventDefault();
+          onDropdownToggle();
+        } else {
+          window.location.href = link;
+        }
+      },
+      [item.hasDropdown, link, onDropdownToggle]
+    );
 
-  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
-  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+    const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+    const handleMouseLeave = useCallback(() => setIsHovered(false), []);
 
-  return (
-    <motion.div
-      className="relative flex items-center cursor-pointer"
-      initial={!hasAnimatedRef.current ? { opacity: 0, y: -15 } : false}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        type: "spring",
-        stiffness: 200,
-        damping: 18,
-        duration: 0.3,
-        delay: !hasAnimatedRef.current ? index * 0.05 : 0,
-      }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <div className="w-2 flex justify-center">
-        <AnimatePresence>
-          {isHovered && !isActive && (
-            <motion.div
-              className="w-1 h-1 rounded-full bg-black"
-              initial={{ opacity: 0, scale: 0, x: -10 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                x: 0,
-                transition: { type: "spring", stiffness: 400, damping: 25 },
-              }}
-              exit={{ opacity: 0, scale: 0, x: -10, transition: { duration: 0.2 } }}
-            />
-          )}
-        </AnimatePresence>
-      </div>
-
-      <motion.a
-        href={link}
-        className={`font-medium ml-1 text-sm [@media(min-width:1000px)]:text-[14px] [@media(min-width:1200px)]:text-base ${isActive ? "text-[#6A48E8] font-semibold" : "text-[#484848] hover:text-gray-800"
-          }`}
-        animate={{ color: isActive ? "#6A48E8" : "#484848" }}
-        transition={{ duration: 0.3 }}
+    return (
+      <motion.div
+        className="relative flex items-center cursor-pointer"
+        initial={!hasAnimatedRef.current ? { opacity: 0, y: -15 } : false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 18,
+          duration: 0.3,
+          delay: !hasAnimatedRef.current ? index * 0.05 : 0,
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+        whileTap={{ scale: 0.98 }}
       >
-        {item.name}
-      </motion.a>
-
-      {item.hasDropdown && (
-        <motion.div
-          className="ml-1"
-          animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-        >
-          <ChevronDown className="w-4 h-4 text-black" />
-        </motion.div>
-      )}
-
-      <AnimatePresence>
-        {item.hasDropdown && isDropdownOpen && (
-          <motion.div
-            className="absolute top-full mt-6 left-0 rounded-2xl min-w-[200px] z-50"
-            style={{
-              WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid #FFFFFF1A",
-              boxShadow: "0px 48px 100px 0px #110C2E26",
-              background: "#FFFFFF52",
-            }}
-            initial={{ opacity: 0, y: -15, scale: 0.9, rotateX: -15 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              rotateX: 0,
-              transition: { duration: 0.4, type: "spring", stiffness: 150 },
-            }}
-            exit={{
-              opacity: 0,
-              y: -15,
-              scale: 0.9,
-              rotateX: -15,
-              transition: { duration: 0.2 },
-            }}
-          >
-            {DROPDOWN_ITEMS.map((subItem, subIndex) => (
-              <motion.a
-                key={subItem.name}
-                href={subItem.link}
-                className={`text-base py-3 px-6 text-secondary cursor-pointer transition-all duration-200 flex flex-row items-center justify-start gap-[10px] ${subItem.name === "PMS" ? "md:border-b border-[#E7E3F7]" : ""
-                  }`}
-                initial={{ opacity: 0, x: -10 }}
+        <div className="w-2 flex justify-center">
+          <AnimatePresence>
+            {isHovered && !isActive && (
+              <motion.div
+                className="w-1 h-1 rounded-full bg-black"
+                initial={{ opacity: 0, scale: 0, x: -10 }}
                 animate={{
                   opacity: 1,
+                  scale: 1,
                   x: 0,
-                  transition: { delay: subIndex * 0.1 + 0.2, duration: 0.3 },
+                  transition: { type: "spring", stiffness: 400, damping: 25 },
                 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.location.href = subItem.link;
+                exit={{
+                  opacity: 0,
+                  scale: 0,
+                  x: -10,
+                  transition: { duration: 0.2 },
                 }}
-              >
-                <div className="w-1 h-1 bg-black hover:text-black rounded-full"></div>
-                {subItem.name}
-              </motion.a>
-            ))}
+              />
+            )}
+          </AnimatePresence>
+        </div>
+
+        <motion.a
+          href={link}
+          className={`font-medium ml-1 text-sm [@media(min-width:1000px)]:text-[14px] [@media(min-width:1200px)]:text-base ${
+            isActive
+              ? "text-[#6A48E8] font-semibold"
+              : "text-[#484848] hover:text-gray-800"
+          }`}
+          animate={{ color: isActive ? "#6A48E8" : "#484848" }}
+          transition={{ duration: 0.3 }}
+        >
+          {item.name}
+        </motion.a>
+
+        {item.hasDropdown && (
+          <motion.div
+            className="ml-1"
+            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+          >
+            <ChevronDown className="w-4 h-4 text-black" />
           </motion.div>
         )}
-      </AnimatePresence>
-    </motion.div>
-  );
-});
+
+        <AnimatePresence>
+          {item.hasDropdown && isDropdownOpen && (
+            <motion.div
+              className="absolute top-full mt-6 left-0 rounded-2xl min-w-[200px] z-50"
+              style={{
+                WebkitBackdropFilter: "blur(20px)",
+                border: "1px solid #FFFFFF1A",
+                boxShadow: "0px 48px 100px 0px #110C2E26",
+                background: "#FFFFFF52",
+              }}
+              initial={{ opacity: 0, y: -15, scale: 0.9, rotateX: -15 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                transition: { duration: 0.4, type: "spring", stiffness: 150 },
+              }}
+              exit={{
+                opacity: 0,
+                y: -15,
+                scale: 0.9,
+                rotateX: -15,
+                transition: { duration: 0.2 },
+              }}
+            >
+              {DROPDOWN_ITEMS.map((subItem, subIndex) => (
+                <motion.a
+                  key={subItem.name}
+                  href={subItem.link}
+                  className={`text-base py-3 px-6 text-secondary cursor-pointer transition-all duration-200 flex flex-row items-center justify-start gap-[10px] ${
+                    subItem.name === "PMS" ? "md:border-b border-[#E7E3F7]" : ""
+                  }`}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    transition: { delay: subIndex * 0.1 + 0.2, duration: 0.3 },
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = subItem.link;
+                  }}
+                >
+                  <div className="w-1 h-1 bg-black hover:text-black rounded-full"></div>
+                  {subItem.name}
+                </motion.a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    );
+  }
+);
 
 NavItem.displayName = "NavItem";
 
-const Navbar: React.FC<NavbarProps> = ({ visibility = true, isHomePage = false }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  visibility = true,
+  isHomePage = false,
+}) => {
   const { isHeroScrolled, isHeroContentRevealed } = useHeroScroll();
   const pathname = usePathname();
 
@@ -198,15 +225,18 @@ const Navbar: React.FC<NavbarProps> = ({ visibility = true, isHomePage = false }
   const lastScrollYRef = useRef(0);
   const ticking = useRef(false);
 
-const handleLoginRoute = () => {
-  window.open("https://faconnect.kotak.com", "_blank");
-};
+  const handleLoginRoute = () => {
+    window.open("https://faconnect.kotak.com", "_blank");
+  };
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isHome = useMemo(() => mounted && pathname === "/", [mounted, pathname]);
+  const isHome = useMemo(
+    () => mounted && pathname === "/",
+    [mounted, pathname]
+  );
 
   // Memoized active item calculation
   const getActiveItem = useCallback((currentPath: string): string => {
@@ -219,6 +249,17 @@ const handleLoginRoute = () => {
       return "Asset Management";
     }
 
+    // Check if path starts with a nav item path (for nested routes)
+    for (const item of NAV_ITEMS) {
+      if (
+        item.link !== "#" &&
+        item.link !== "/" &&
+        currentPath.startsWith(item.link)
+      ) {
+        return item.name;
+      }
+    }
+
     // Direct match
     const exactMatch = NAV_ITEMS.find((item) => item.link === currentUrl);
     if (exactMatch) return exactMatch.name;
@@ -229,6 +270,11 @@ const handleLoginRoute = () => {
         (item) => item.link === currentUrl && !item.link.includes("#")
       );
       if (pathMatch) return pathMatch.name;
+    }
+
+    // Check if we're on the home page
+    if (currentPath === "/") {
+      return "Home";
     }
 
     return "Home";
@@ -262,7 +308,8 @@ const handleLoginRoute = () => {
             } else if (isHeroScrolled) {
               // Scrolled past hero section → Normal scroll behavior
               const scrollingUp = currentScrollY < lastScrollY;
-              const scrollingDown = currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD;
+              const scrollingDown =
+                currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD;
 
               if (scrollingUp && !isVisible) {
                 setIsVisible(true);
@@ -277,7 +324,8 @@ const handleLoginRoute = () => {
           } else {
             // OTHER PAGES: Normal scroll behavior
             const scrollingUp = currentScrollY < lastScrollY;
-            const scrollingDown = currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD;
+            const scrollingDown =
+              currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD;
 
             if (scrollingUp && !isVisible) {
               setIsVisible(true);
@@ -358,7 +406,11 @@ const handleLoginRoute = () => {
                 delay: 0.5,
               },
             }}
-            whileHover={{ scale: 1.08, rotate: 2, transition: { duration: 0.3 } }}
+            whileHover={{
+              scale: 1.08,
+              rotate: 2,
+              transition: { duration: 0.3 },
+            }}
             whileTap={{ scale: 0.95 }}
           >
             <Image
