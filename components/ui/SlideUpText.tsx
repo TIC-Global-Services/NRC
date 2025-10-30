@@ -107,7 +107,7 @@ const SlideUpText: React.FC<SlideUpTextProps> = ({
         ? textContent.split(' ')
         : textContent.split('');
 
-      const MotionComponent = motion(getWrapperTag('span'));
+      const MotionComponent = motion.create(getWrapperTag('span'));
 
       return (
         <MotionComponent
@@ -133,7 +133,7 @@ const SlideUpText: React.FC<SlideUpTextProps> = ({
 
   // For React elements or mixed content - use span to avoid hydration errors
   if (hasReactElements || !isTextOnly) {
-    const MotionComponent = motion(getWrapperTag('span'));
+    const MotionComponent = motion.create(getWrapperTag('span'));
 
     return (
       <MotionComponent
@@ -160,7 +160,7 @@ const SlideUpText: React.FC<SlideUpTextProps> = ({
   }
 
   // Regular animation for simple text content
-  const MotionComponent = motion(getWrapperTag('span'));
+  const MotionComponent = motion.create(getWrapperTag('span'));
 
   return (
     <MotionComponent

@@ -16,8 +16,8 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
 
   const raw = await res.json();
 
-  console.log("Raw portfolio data:", raw);
-  console.log("First row keys:", Object.keys(raw[0] || {}));
+  // console.log("Raw portfolio data:", raw);
+  // console.log("First row keys:", Object.keys(raw[0] || {}));
 
   // Helper function to safely parse numbers
   const parseValue = (value: any): number => {
@@ -34,7 +34,7 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
   // Convert sheet JSON into chart-ready format using ONLY actual data
   const formatted: PortfolioRow[] = raw
     .map((row: any, index: number) => {
-      console.log(`Processing row ${index}:`, row);
+      // console.log(`Processing row ${index}:`, row);
 
       // Get all possible month/date column names from the row
       const possibleMonthKeys = Object.keys(row).filter(key =>
@@ -44,21 +44,21 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
         key === 'Date'
       );
 
-      console.log("Found possible month keys:", possibleMonthKeys);
+      // console.log("Found possible month keys:", possibleMonthKeys);
 
       // Try to get month value from the row
       let monthValue = null;
       for (const key of possibleMonthKeys) {
         if (row[key] && row[key] !== '') {
           monthValue = row[key];
-          console.log(`Using month from key "${key}":`, monthValue);
+          // console.log(`Using month from key "${key}":`, monthValue);
           break;
         }
       }
 
       // If no month column found or empty, skip this row
       if (!monthValue || monthValue === '') {
-        console.log(`Skipping row ${index} - no valid month data`);
+        // console.log(`Skipping row ${index} - no valid month data`);
         return null;
       }
 
@@ -71,8 +71,8 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
         key.includes('NRC') || key.includes('Aurum') || key.includes('Portfolio')
       );
 
-      console.log("Found benchmark keys:", benchmarkKeys);
-      console.log("Found portfolio keys:", portfolioKeys);
+      // console.log("Found benchmark keys:", benchmarkKeys);
+      // console.log("Found portfolio keys:", portfolioKeys);
 
       let benchmark = 0;
       let portfolio = 0;
@@ -82,7 +82,7 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
         const value = parseValue(row[key]);
         if (value !== 0) {
           benchmark = value;
-          console.log(`Using benchmark from key "${key}":`, benchmark);
+          // console.log(`Using benchmark from key "${key}":`, benchmark);
           break;
         }
       }
@@ -92,14 +92,14 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
         const value = parseValue(row[key]);
         if (value !== 0) {
           portfolio = value;
-          console.log(`Using portfolio from key "${key}":`, portfolio);
+          // console.log(`Using portfolio from key "${key}":`, portfolio);
           break;
         }
       }
 
       // Skip rows where both benchmark and portfolio are 0 (no real data)
       if (benchmark === 0 && portfolio === 0) {
-        console.log(`Skipping row ${index} - no valid benchmark or portfolio data`);
+        // console.log(`Skipping row ${index} - no valid benchmark or portfolio data`);
         return null;
       }
 
@@ -111,8 +111,8 @@ export async function fetchPortfolioData(): Promise<PortfolioRow[]> {
     })
     .filter((row: PortfolioRow | null): row is PortfolioRow => row !== null); // Remove null entries
 
-  console.log("Final formatted data:", formatted);
-  console.log(`Total valid data points: ${formatted.length}`);
+  // console.log("Final formatted data:", formatted);
+  // console.log(`Total valid data points: ${formatted.length}`);
 
   return formatted;
 }
@@ -229,11 +229,11 @@ export function getOptimalDisplayData(
 
   // If we have fewer points than maxPoints, return all data
   if (sortedData.length <= maxPoints) {
-    console.log(`Data length (${sortedData.length}) <= maxPoints (${maxPoints}), returning all data`);
+    // console.log(`Data length (${sortedData.length}) <= maxPoints (${maxPoints}), returning all data`);
     return sortedData;
   }
 
-  console.log(`Sampling ${sortedData.length} data points down to ${maxPoints} points`);
+  // console.log(`Sampling ${sortedData.length} data points down to ${maxPoints} points`);
 
   const selectedIndices = new Set<number>();
 
@@ -297,9 +297,9 @@ export function getOptimalDisplayData(
   const finalIndices = Array.from(selectedIndices).sort((a, b) => a - b);
   const result = finalIndices.map(i => sortedData[i]);
 
-  console.log(`Selected ${result.length} points from ${sortedData.length} total points`);
-  console.log("Selected data points:", result.map(d => d.month));
-  console.log("Selected indices:", finalIndices);
+  // console.log(`Selected ${result.length} points from ${sortedData.length} total points`);
+  // console.log("Selected data points:", result.map(d => d.month));
+  // console.log("Selected indices:", finalIndices);
 
   return result;
 }
@@ -338,7 +338,7 @@ export function getDataByInterval(
     result.push(sortedData[sortedData.length - 1]);
   }
 
-  console.log(`${interval} data points:`, result.map(d => d.month));
+  // console.log(`${interval} data points:`, result.map(d => d.month));
   return result;
 }
 
@@ -369,7 +369,7 @@ export function getDisplayData(
 ): PortfolioRow[] {
   const { totalMonths } = getDataRange(data);
 
-  console.log(`Processing ${data.length} data points spanning ${totalMonths} months`);
+  // console.log(`Processing ${data.length} data points spanning ${totalMonths} months`);
 
   switch (preferredStrategy) {
     case 'yearly':

@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import AnimatedButton from "../ui/animatedButton";
 
@@ -55,29 +55,12 @@ const Hero: React.FC<HeroProps> = ({
   CTAOneOnclick,
   CTATwoOnclick,
 }) => {
-  const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [videoReady, setVideoReady] = useState<boolean>(false);
 
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const framesRef = useRef<(HTMLImageElement | null)[]>([]);
-  const animationFrameRef = useRef<number | null>(null);
-  const isRenderingRef = useRef<boolean>(false);
-  const lastFrameTimeRef = useRef<number>(0);
-  const isAnimatingRef = useRef<boolean>(false);
-  const loadingQueueRef = useRef<Set<number>>(new Set());
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const mountedRef = useRef<boolean>(true);
-  const objectUrlsRef = useRef<Set<string>>(new Set());
-
-  const totalFrames: number = 249;
-  const frameRate: number = 30;
-  const frameDelay: number = 1000 / frameRate;
-
-  // Priority frames - load every 3rd frame initially
-  const priorityFrames = useRef(Array.from({ length: 83 }, (_, i) => i * 3));
 
   // Check if mobile-specific titles are provided
   const hasMobileTitles =
@@ -96,319 +79,85 @@ const Hero: React.FC<HeroProps> = ({
     ? mobileTitle2Color || ""
     : title2Color;
 
-  const cleanupObjectUrls = useCallback(() => {
-    objectUrlsRef.current.forEach((url) => {
-      try {
-        URL.revokeObjectURL(url);
-      } catch (e) {
-        // Ignore errors
-      }
-    });
-    objectUrlsRef.current.clear();
-  }, []);
-
-  const render = useCallback((frameIndex: number): void => {
-    if (!mountedRef.current || isRenderingRef.current) return;
-
-    const canvas = canvasRef.current;
-    const context = contextRef.current;
-    const currentImage = framesRef.current[frameIndex];
-
-    if (!canvas || !context || !currentImage || !currentImage.complete) return;
-
-    isRenderingRef.current = true;
-
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
-
-    animationFrameRef.current = requestAnimationFrame(() => {
-      if (!mountedRef.current) {
-        isRenderingRef.current = false;
-        return;
-      }
-
-      try {
-        const rect = canvas.getBoundingClientRect();
-        const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
-
-        const displayWidth = rect.width;
-        const displayHeight = rect.height;
-
-        canvas.width = displayWidth * dpr;
-        canvas.height = displayHeight * dpr;
-
-        context.scale(dpr, dpr);
-        context.imageSmoothingEnabled = true;
-        context.imageSmoothingQuality = "high";
-
-        const imgWidth = currentImage.naturalWidth || currentImage.width;
-        const imgHeight = currentImage.naturalHeight || currentImage.height;
-
-        const scaleX = displayWidth / imgWidth;
-        const scaleY = displayHeight / imgHeight;
-        const baseScale = Math.max(scaleX, scaleY);
-        const scale = baseScale * 2.2;
-
-        const scaledWidth = imgWidth * scale;
-        const scaledHeight = imgHeight * scale;
-
-        const x = (displayWidth - scaledWidth) / 2;
-        const y = (displayHeight - scaledHeight) / 2;
-
-        context.clearRect(0, 0, displayWidth, displayHeight);
-        context.drawImage(currentImage, x, y, scaledWidth, scaledHeight);
-      } catch (err) {
-        console.error("Render error:", err);
-      } finally {
-        isRenderingRef.current = false;
-      }
-    });
-  }, []);
-
-  const animateFrames = useCallback(
-    (timestamp: number) => {
-      if (!mountedRef.current || !isPlaying || !isAnimatingRef.current) return;
-
-      if (timestamp - lastFrameTimeRef.current >= frameDelay) {
-        setCurrentFrame((prevFrame) => {
-          const nextFrame = (prevFrame + 1) % totalFrames;
-
-          let frameToRender = nextFrame;
-          let attempts = 0;
-          while (!framesRef.current[frameToRender] && attempts < totalFrames) {
-            frameToRender = (frameToRender + 1) % totalFrames;
-            attempts++;
-          }
-
-          if (framesRef.current[frameToRender]) {
-            render(frameToRender);
-          }
-
-          return nextFrame;
-        });
-
-        lastFrameTimeRef.current = timestamp;
-      }
-
-      if (isAnimatingRef.current && mountedRef.current) {
-        requestAnimationFrame(animateFrames);
-      }
-    },
-    [isPlaying, frameDelay, totalFrames, render]
-  );
-
   useEffect(() => {
-    if (!isPlaying || !isInitialized || !mountedRef.current) {
-      isAnimatingRef.current = false;
-      return;
-    }
-
-    isAnimatingRef.current = true;
-    lastFrameTimeRef.current = performance.now();
-    requestAnimationFrame(animateFrames);
-
-    return () => {
-      isAnimatingRef.current = false;
-    };
-  }, [isPlaying, isInitialized, animateFrames]);
-
-  // Main initialization and loading effect
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const video = videoRef.current;
+    if (!video) return;
 
     mountedRef.current = true;
 
-    const initializeAndLoad = async () => {
+    // Initialize text visibility immediately
+    if (mountedRef.current) {
+      setIsInitialized(true);
+    }
+
+    const safePlay = async (video: HTMLVideoElement) => {
       try {
-        const context = canvas.getContext("2d", {
-          alpha: true,
-          desynchronized: true,
-          willReadFrequently: false,
-        });
-
-        if (!context) {
-          setError("Canvas context not supported");
-          return;
-        }
-
-        contextRef.current = context;
-        framesRef.current = new Array(totalFrames).fill(null);
-
-        // Optimized image loader using browser cache
-        const loadImage = async (
-          index: number,
-          isPriority: boolean = false
-        ): Promise<void> => {
-          if (!mountedRef.current || loadingQueueRef.current.has(index)) return;
-
-          loadingQueueRef.current.add(index);
-
-          const frameNo = index.toString();
-          const framePath = `/NRC_wave_output/${frameNo}.webp`;
-
-          try {
-            // Use fetch with cache control - browser handles caching automatically
-            const response = await fetch(framePath, {
-              priority: isPriority ? "high" : "low",
-              cache: "force-cache",
-            } as any);
-
-            if (!response.ok || !mountedRef.current) {
-              throw new Error("Failed to fetch or component unmounted");
-            }
-
-            const blob = await response.blob();
-            if (!mountedRef.current) return;
-
-            const img = new Image();
-            const url = URL.createObjectURL(blob);
-            objectUrlsRef.current.add(url);
-
-            await new Promise<void>((resolve, reject) => {
-              img.onload = () => {
-                if (mountedRef.current) {
-                  framesRef.current[index] = img;
-                }
-                resolve();
-              };
-              img.onerror = reject;
-              img.src = url;
-            });
-          } catch (err) {
-            if (mountedRef.current) {
-              console.error(`Frame ${index} failed:`, err);
-            }
-          } finally {
-            loadingQueueRef.current.delete(index);
-          }
-        };
-
-        // PHASE 1: Load and render first frame
-        await loadImage(0, true);
-
-        if (!mountedRef.current) return;
-
-        if (framesRef.current[0]) {
-          render(0);
-          setIsInitialized(true);
-          setIsPlaying(true);
-        }
-
-        // PHASE 2: Load priority frames in batches
-        const loadPriorityFrames = async () => {
-          const priorityBatchSize = 12;
-          const frames = priorityFrames.current;
-
-          for (
-            let i = 0;
-            i < frames.length && mountedRef.current;
-            i += priorityBatchSize
-          ) {
-            const batch = frames.slice(i, i + priorityBatchSize);
-            await Promise.allSettled(batch.map((idx) => loadImage(idx, true)));
-            // Small delay to prevent blocking
-            if (mountedRef.current) {
-              await new Promise((resolve) => setTimeout(resolve, 5));
-            }
-          }
-        };
-
-        // PHASE 3: Load remaining frames
-        const loadRemainingFrames = async () => {
-          const remainingFrames = Array.from(
-            { length: totalFrames },
-            (_, i) => i
-          ).filter((i) => !priorityFrames.current.includes(i) && i !== 0);
-
-          const batchSize = 15;
-          for (
-            let i = 0;
-            i < remainingFrames.length && mountedRef.current;
-            i += batchSize
-          ) {
-            const batch = remainingFrames.slice(i, i + batchSize);
-            await Promise.allSettled(batch.map((idx) => loadImage(idx, false)));
-            // Prevent blocking
-            if (mountedRef.current) {
-              await new Promise((resolve) => setTimeout(resolve, 20));
-            }
-          }
-        };
-
-        // Run priority and remaining loads in sequence
-        await loadPriorityFrames();
-        if (mountedRef.current) {
-          loadRemainingFrames();
-        }
-      } catch (err) {
-        console.error("Initialization error:", err);
-        if (mountedRef.current) {
-          setError("Failed to initialize animation");
+        await video.play();
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
+          console.error("Video play failed:", err);
         }
       }
     };
 
-    initializeAndLoad();
+    const handleLoadedData = () => {
+      if (mountedRef.current) {
+        setVideoReady(true);
+        safePlay(video); // ✅ use helper instead
+      }
+    };
+
+    const handleError = (e: Event) => {
+      if (mountedRef.current) {
+        console.error("Video error:", e);
+        setError("Failed to load video");
+      }
+    };
+
+    const handleCanPlay = () => {
+      if (mountedRef.current && !videoReady) {
+        setVideoReady(true);
+        safePlay(video); // ✅ use helper instead
+      }
+    };
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("error", handleError);
+
+    // Attempt to play on load
+    video.load();
+    safePlay(video);
 
     return () => {
       mountedRef.current = false;
-      isAnimatingRef.current = false;
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = null;
+      if (video) {
+        video.pause();
+        video.removeEventListener("loadeddata", handleLoadedData);
+        video.removeEventListener("canplay", handleCanPlay);
+        video.removeEventListener("error", handleError);
       }
-
-      // Cleanup object URLs
-      cleanupObjectUrls();
-
-      // Clear frames
-      framesRef.current = [];
-      loadingQueueRef.current.clear();
     };
-  }, [render, cleanupObjectUrls]);
+  }, []);
 
-  // Handle window resize with debouncing
-  useEffect(() => {
-    let resizeTimeout: NodeJS.Timeout;
-
-    const handleResize = (): void => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        if (mountedRef.current && framesRef.current[currentFrame]) {
-          render(currentFrame);
-        }
-      }, 150);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      clearTimeout(resizeTimeout);
-    };
-  }, [currentFrame, render]);
-
-  // Handle visibility change
+  // Handle visibility change to pause/resume video
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!mountedRef.current) return;
 
+      const video = videoRef.current;
+      if (!video) return;
+
       if (document.hidden) {
-        isAnimatingRef.current = false;
-      } else if (isPlaying && isInitialized) {
-        isAnimatingRef.current = true;
-        lastFrameTimeRef.current = performance.now();
-        requestAnimationFrame(animateFrames);
+        video.pause();
+      } else if (videoReady) {
+        video.play()
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [isPlaying, isInitialized, animateFrames]);
+  }, [videoReady]);
 
   if (error) {
     return (
@@ -423,7 +172,6 @@ const Hero: React.FC<HeroProps> = ({
 
   return (
     <section
-      ref={sectionRef}
       className="w-full relative h-screen overflow-hidden"
       style={{
         background: `radial-gradient(circle at top, #C5BAF6 0%, #DAD4F1 36%, #FCFAF2 100%)`,
@@ -431,19 +179,27 @@ const Hero: React.FC<HeroProps> = ({
     >
       <div className="w-full h-full flex items-center justify-center relative">
         <div
-          className="absolute bg-transparent bottom-0 w-full"
+          className="absolute bg-transparent -bottom-[35%] w-full"
           style={{ height: "100vh" }}
         >
-          <canvas
-            ref={canvasRef}
-            className="w-full h-[100%]"
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
             style={{
               maxWidth: "100vw",
               display: "block",
-              opacity: isInitialized ? 1 : 0,
+              opacity: videoReady ? 1 : 0,
               transition: "opacity 0.3s ease-in-out",
             }}
-          />
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/Wave_Video/Waves.webm" type="video/webm" />
+            <source src="/Wave_Video/Waves.mov" type="video/quicktime" />
+            Your browser does not support the video tag.
+          </video>
         </div>
 
         <motion.div

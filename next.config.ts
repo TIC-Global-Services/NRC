@@ -10,18 +10,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  // If you're using Turbopack (Next.js 15+)
-  experimental: {
-    turbo: {
-      // Turbopack specific settings if needed
-    },
-  },
-
-  // Keep your existing webpack config if you have one
-  webpack: (config:any) => {
-    // Your existing webpack modifications
-    return config;
-  },
+  
   images: {
     remotePatterns: [
       {

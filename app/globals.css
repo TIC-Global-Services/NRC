@@ -25,7 +25,11 @@
   }
 }
 
+/*Align Debugger*/
 
+/* *{
+  border: 1px red solid;
+} */
 
 body {
   font-family: 'SF Pro Display', sans-serif !important;

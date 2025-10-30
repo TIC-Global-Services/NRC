@@ -7,6 +7,8 @@ interface HeroScrollContextType {
     setHeroScrolled: (scrolled: boolean) => void;
     isHeroContentRevealed: boolean;
     setHeroContentRevealed: (revealed: boolean) => void;
+    isHeroImagesLoaded: boolean;
+    setHeroImagesLoaded: (loaded: boolean) => void;
 }
 
 const HeroScrollContext = createContext<HeroScrollContextType | undefined>(undefined);
@@ -14,6 +16,7 @@ const HeroScrollContext = createContext<HeroScrollContextType | undefined>(undef
 export const HeroScrollProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isHeroScrolled, setIsHeroScrolled] = useState(false);
     const [isHeroContentRevealed, setIsHeroContentRevealed] = useState(false);
+    const [isHeroImagesLoaded, setIsHeroImagesLoaded] = useState(false);
 
     const setHeroScrolled = useCallback((scrolled: boolean) => {
         setIsHeroScrolled(scrolled);
@@ -23,12 +26,18 @@ export const HeroScrollProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setIsHeroContentRevealed(revealed);
     }, []);
 
+    const setHeroImagesLoaded = useCallback((loaded: boolean) => {
+        setIsHeroImagesLoaded(loaded);
+    }, []);
+
     return (
         <HeroScrollContext.Provider value={{
             isHeroScrolled,
             setHeroScrolled,
             isHeroContentRevealed,
-            setHeroContentRevealed
+            setHeroContentRevealed,
+            isHeroImagesLoaded,
+            setHeroImagesLoaded
         }}>
             {children}
         </HeroScrollContext.Provider>

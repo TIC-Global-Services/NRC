@@ -1,6 +1,5 @@
 import React from 'react'
 import Hero from '../Common/Hero'
-import AnimatedButton from '../ui/animatedButton'
 import WhoWeAre from './WhoWeAre'
 import NineRivers from './NineRivers'
 import WealthFlows from './WealthFlows'

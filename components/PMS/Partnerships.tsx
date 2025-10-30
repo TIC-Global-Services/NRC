@@ -381,9 +381,9 @@ const Partnerships = () => {
                           <path
                             d="M13.5208 18.0754L10.1875 14.742M10.1875 14.742L13.5208 11.4087M10.1875 14.742H20.1875"
                             stroke="black"
-                            stroke-miterlimit="10"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeMiterlimit="10"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
           </button>
@@ -404,9 +404,9 @@ const Partnerships = () => {
                           <path
                             d="M16.8542 18.0754L20.1875 14.742M20.1875 14.742L16.8542 11.4087M20.1875 14.742H10.1875"
                             stroke="black"
-                            stroke-miterlimit="10"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeMiterlimit="10"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
           </button>

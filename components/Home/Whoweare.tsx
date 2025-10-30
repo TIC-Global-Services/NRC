@@ -39,7 +39,7 @@ export default function WealthCreationSection() {
             {/* Description */}
             <div className="mb-6 max-w-2xl mt-2 md:mt-0">
               <p className="text-[#484848] text-sm md:text-base leading-relaxed">
-                <SlideUpText animationMode="always" delay={0.7}>
+                <SlideUpText animationMode="always">
                   We are an independent, owner-managed investment house offering
                   SEBI-registered Portfolio Management Services. Over the last
                   12+ years, we have built a reputation for disciplined

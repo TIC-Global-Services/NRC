@@ -8,15 +8,15 @@ import React, {
   useRef,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Container from "./Container";
 import Image from "next/image";
 import { NRC_Logo } from "@/assets/Home";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AnimatedButton from "../ui/animatedButton";
 import { useHeroScroll } from "@/context/HeroScrollContext";
+import Link from "next/link";
 
-// Define types
 interface NavItemType {
   name: string;
   hasDropdown: boolean;
@@ -27,7 +27,6 @@ interface NavItemProps {
   item: NavItemType;
   isActive: boolean;
   index: number;
-  link: string;
   onDropdownToggle: () => void;
   isDropdownOpen: boolean;
 }
@@ -37,7 +36,6 @@ interface NavbarProps {
   isHomePage?: boolean;
 }
 
-// Constants moved outside component to prevent recreation
 const SCROLL_THRESHOLD = 50;
 const HIDE_THRESHOLD = 100;
 
@@ -60,30 +58,51 @@ const DROPDOWN_ITEMS = [
   { name: "AIF", link: "/aif" },
 ];
 
-// Memoized NavItem component
+// === NavItem ===
 const NavItem = React.memo<NavItemProps>(
-  ({ item, isActive, index, link, onDropdownToggle, isDropdownOpen }) => {
+  ({ item, isActive, index, onDropdownToggle, isDropdownOpen }) => {
     const [isHovered, setIsHovered] = useState(false);
     const hasAnimatedRef = useRef(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
     useEffect(() => {
       hasAnimatedRef.current = true;
     }, []);
+
+    // ✅ Close dropdown when clicking outside
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          isDropdownOpen &&
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
+          onDropdownToggle(); // Close it
+        }
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
+    }, [isDropdownOpen, onDropdownToggle]);
 
     const handleClick = useCallback(
       (e: React.MouseEvent) => {
         if (item.hasDropdown) {
           e.preventDefault();
           onDropdownToggle();
-        } else {
-          window.location.href = link;
         }
       },
-      [item.hasDropdown, link, onDropdownToggle]
+      [item.hasDropdown, onDropdownToggle]
     );
 
-    const handleMouseEnter = useCallback(() => setIsHovered(true), []);
-    const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+    const handleDropdownClick = useCallback(
+      (link: string) => {
+        onDropdownToggle(); // ✅ Close dropdown before navigating
+        router.push(link); // ✅ Client-side navigation
+      },
+      [onDropdownToggle, router]
+    );
 
     return (
       <motion.div
@@ -97,12 +116,13 @@ const NavItem = React.memo<NavItemProps>(
           duration: 0.3,
           delay: !hasAnimatedRef.current ? index * 0.05 : 0,
         }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
         whileTap={{ scale: 0.98 }}
+        ref={dropdownRef}
       >
+        {/* hover dot */}
         <div className="w-2 flex justify-center">
           <AnimatePresence>
             {isHovered && !isActive && (
@@ -126,19 +146,20 @@ const NavItem = React.memo<NavItemProps>(
           </AnimatePresence>
         </div>
 
-        <motion.a
-          href={link}
+        {/* ✅ Use Link for normal items */}
+        <Link
+          href={item.link === "#" ? "" : item.link}
+          onClick={handleClick}
           className={`font-medium ml-1 text-sm [@media(min-width:1000px)]:text-[14px] [@media(min-width:1200px)]:text-base ${
             isActive
               ? "text-[#6A48E8] font-semibold"
               : "text-[#484848] hover:text-gray-800"
           }`}
-          animate={{ color: isActive ? "#6A48E8" : "#484848" }}
-          transition={{ duration: 0.3 }}
         >
           {item.name}
-        </motion.a>
+        </Link>
 
+        {/* Dropdown arrow */}
         {item.hasDropdown && (
           <motion.div
             className="ml-1"
@@ -149,6 +170,7 @@ const NavItem = React.memo<NavItemProps>(
           </motion.div>
         )}
 
+        {/* Dropdown menu */}
         <AnimatePresence>
           {item.hasDropdown && isDropdownOpen && (
             <motion.div
@@ -159,43 +181,37 @@ const NavItem = React.memo<NavItemProps>(
                 boxShadow: "0px 48px 100px 0px #110C2E26",
                 background: "#FFFFFF52",
               }}
-              initial={{ opacity: 0, y: -15, scale: 0.9, rotateX: -15 }}
+              initial={{ opacity: 0, y: -15, scale: 0.9 }}
               animate={{
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                rotateX: 0,
                 transition: { duration: 0.4, type: "spring", stiffness: 150 },
               }}
               exit={{
                 opacity: 0,
                 y: -15,
                 scale: 0.9,
-                rotateX: -15,
                 transition: { duration: 0.2 },
               }}
             >
               {DROPDOWN_ITEMS.map((subItem, subIndex) => (
-                <motion.a
+                <motion.button
                   key={subItem.name}
-                  href={subItem.link}
-                  className={`text-base py-3 px-6 text-secondary cursor-pointer transition-all duration-200 flex flex-row items-center justify-start gap-[10px] ${
+                  className={`w-full text-left text-base cursor-pointer py-3 px-6 text-secondary transition-all duration-200 flex flex-row items-center justify-start gap-[10px] ${
                     subItem.name === "PMS" ? "md:border-b border-[#E7E3F7]" : ""
-                  }`}
+                  } hover:text-black`}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{
                     opacity: 1,
                     x: 0,
                     transition: { delay: subIndex * 0.1 + 0.2, duration: 0.3 },
                   }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.location.href = subItem.link;
-                  }}
+                  onClick={() => handleDropdownClick(subItem.link)} // ✅ navigate + close
                 >
-                  <div className="w-1 h-1 bg-black hover:text-black rounded-full"></div>
+                  <div className="w-1 h-1 bg-black rounded-full"></div>
                   {subItem.name}
-                </motion.a>
+                </motion.button>
               ))}
             </motion.div>
           )}
@@ -207,167 +223,88 @@ const NavItem = React.memo<NavItemProps>(
 
 NavItem.displayName = "NavItem";
 
+// === Navbar ===
 const Navbar: React.FC<NavbarProps> = ({
   visibility = true,
   isHomePage = false,
 }) => {
   const { isHeroScrolled, isHeroContentRevealed } = useHeroScroll();
   const pathname = usePathname();
-
-  // State management
   const [activeItem, setActiveItem] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [mounted, setMounted] = useState(false);
 
-  // Refs for performance
   const lastScrollYRef = useRef(0);
   const ticking = useRef(false);
 
-  const handleLoginRoute = () => {
-    window.open("https://faconnect.kotak.com", "_blank");
-  };
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setIsDropdownOpen(false);
+  }, [pathname]);
 
   const isHome = useMemo(
     () => mounted && pathname === "/",
     [mounted, pathname]
   );
 
-  // Memoized active item calculation
   const getActiveItem = useCallback((currentPath: string): string => {
-    if (typeof window === "undefined") return "Home";
-
-    const currentUrl = window.location.pathname + window.location.hash;
-
-    // Check if current path is /pms or /aif - these should activate "Asset Management"
     if (currentPath === "/pms" || currentPath === "/aif") {
       return "Asset Management";
     }
-
-    // Check if path starts with a nav item path (for nested routes)
-    for (const item of NAV_ITEMS) {
-      if (
-        item.link !== "#" &&
-        item.link !== "/" &&
-        currentPath.startsWith(item.link)
-      ) {
-        return item.name;
-      }
-    }
-
-    // Direct match
-    const exactMatch = NAV_ITEMS.find((item) => item.link === currentUrl);
-    if (exactMatch) return exactMatch.name;
-
-    // Path match without hash
-    if (!currentUrl.includes("#")) {
-      const pathMatch = NAV_ITEMS.find(
-        (item) => item.link === currentUrl && !item.link.includes("#")
-      );
-      if (pathMatch) return pathMatch.name;
-    }
-
-    // Check if we're on the home page
-    if (currentPath === "/") {
-      return "Home";
-    }
-
-    return "Home";
+    const match = NAV_ITEMS.find((item) => item.link === currentPath);
+    return match ? match.name : "Home";
   }, []);
 
-  // Set active item based on pathname
   useEffect(() => {
-    const active = getActiveItem(pathname);
-    setActiveItem(active);
+    setActiveItem(getActiveItem(pathname));
   }, [pathname, getActiveItem]);
 
-  // Optimized scroll handler using RAF
+  const handleScroll = useCallback(() => {
+    if (!ticking.current) {
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const lastScrollY = lastScrollYRef.current;
+
+        const scrollingUp = currentScrollY < lastScrollY;
+        const scrollingDown = currentScrollY > lastScrollY;
+
+        if (isHome) {
+          if (scrollingDown && isVisible && currentScrollY > HIDE_THRESHOLD)
+            setIsVisible(false);
+          else if (scrollingUp && !isVisible) setIsVisible(true);
+        } else {
+          if (scrollingDown && isVisible && currentScrollY > HIDE_THRESHOLD)
+            setIsVisible(false);
+          else if (scrollingUp && !isVisible) setIsVisible(true);
+        }
+
+        lastScrollYRef.current = currentScrollY;
+        ticking.current = false;
+      });
+      ticking.current = true;
+    }
+  }, [isHome, isVisible]);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (!ticking.current) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          const lastScrollY = lastScrollYRef.current;
-
-          // Update scrolled state
-          const scrolled = currentScrollY > SCROLL_THRESHOLD;
-          if (scrolled !== isScrolled) {
-            setIsScrolled(scrolled);
-          }
-
-          if (isHome) {
-            // HOME PAGE LOGIC
-            if (isHeroContentRevealed && !isHeroScrolled) {
-              // Content is revealed but still in hero section → ALWAYS SHOW navbar
-              if (!isVisible) setIsVisible(true);
-            } else if (isHeroScrolled) {
-              // Scrolled past hero section → Normal scroll behavior
-              const scrollingUp = currentScrollY < lastScrollY;
-              const scrollingDown =
-                currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD;
-
-              if (scrollingUp && !isVisible) {
-                setIsVisible(true);
-              } else if (scrollingDown && isVisible) {
-                setIsVisible(false);
-                setIsDropdownOpen(false);
-              }
-            } else {
-              // Content not revealed yet → HIDE navbar
-              if (isVisible) setIsVisible(false);
-            }
-          } else {
-            // OTHER PAGES: Normal scroll behavior
-            const scrollingUp = currentScrollY < lastScrollY;
-            const scrollingDown =
-              currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD;
-
-            if (scrollingUp && !isVisible) {
-              setIsVisible(true);
-            } else if (scrollingDown && isVisible) {
-              setIsVisible(false);
-              setIsDropdownOpen(false);
-            }
-          }
-
-          lastScrollYRef.current = currentScrollY;
-          ticking.current = false;
-        });
-
-        ticking.current = true;
-      }
-    };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome, isHeroContentRevealed, isHeroScrolled, isScrolled, isVisible]);
+  }, [handleScroll]);
 
-  // Memoized navbar visibility calculation
-  const shouldShowNavbar = useMemo(() => {
-    if (isHome) {
-      // On home page: Show navbar if content is revealed AND isVisible is true
-      return isHeroContentRevealed && isVisible;
-    }
-    // Other pages: Normal visibility
-    return isVisible;
-  }, [isHome, isHeroContentRevealed, isVisible]);
-
-  // Memoized dropdown toggle
   const handleDropdownToggle = useCallback(() => {
     setIsDropdownOpen((prev) => !prev);
   }, []);
 
-  // Memoized navbar background class
   const navbarBgClass = useMemo(() => {
     return isHeroScrolled
       ? "bg-white border-[#E5E5E5]"
       : "bg-white/30 backdrop-blur-[20px] border-white/30";
   }, [isHeroScrolled]);
+
+  const handleLoginRoute = useCallback(() => {
+    window.open("https://faconnect.kotak.com", "_blank");
+  }, []);
 
   return (
     <motion.div
@@ -375,8 +312,8 @@ const Navbar: React.FC<NavbarProps> = ({
       style={{ top: isHomePage ? "24px" : "40px" }}
       initial={{ y: -120, opacity: 0 }}
       animate={{
-        y: shouldShowNavbar ? 0 : -120,
-        opacity: visibility && shouldShowNavbar ? 1 : 0,
+        y: isVisible ? 0 : -120,
+        opacity: visibility && isVisible ? 1 : 0,
         transition: {
           type: "spring",
           stiffness: 100,
@@ -390,38 +327,40 @@ const Navbar: React.FC<NavbarProps> = ({
         <nav
           className={`rounded-full px-8 2xl:py-4 md:py-3 grid grid-cols-[auto_1fr_auto] items-center transition-all duration-300 ${navbarBgClass} border`}
         >
-          <motion.a
-            className="flex items-center justify-start"
-            href="/"
-            initial={{ opacity: 0, x: -50, scale: 0.8 }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              scale: 1,
-              transition: {
-                type: "spring",
-                stiffness: 150,
-                damping: 12,
-                duration: 0.6,
-                delay: 0.5,
-              },
-            }}
-            whileHover={{
-              scale: 1.08,
-              rotate: 2,
-              transition: { duration: 0.3 },
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Image
-              src={NRC_Logo}
-              alt="LogoImg"
-              width={80}
-              height={34}
-              className="[@media(min-width:1000px)]:w-[65px] [@media(min-width:1000px)]:h-[28px] [@media(min-width:1200px)]:w-[80px] [@media(min-width:1200px)]:h-[34px]"
-            />
-          </motion.a>
+          {/* ✅ Logo link */}
+          <Link href="/" className="flex items-center justify-start">
+            <motion.div
+              initial={{ opacity: 0, x: -50, scale: 0.8 }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                transition: {
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 12,
+                  duration: 0.6,
+                  delay: 0.5,
+                },
+              }}
+              whileHover={{
+                scale: 1.08,
+                rotate: 2,
+                transition: { duration: 0.3 },
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Image
+                src={NRC_Logo}
+                alt="LogoImg"
+                width={80}
+                height={34}
+                className="[@media(min-width:1000px)]:w-[65px] [@media(min-width:1000px)]:h-[28px] [@media(min-width:1200px)]:w-[80px] [@media(min-width:1200px)]:h-[34px]"
+              />
+            </motion.div>
+          </Link>
 
+          {/* Nav Items */}
           <div className="flex items-center justify-center gap-6">
             {NAV_ITEMS.map((item, index) => (
               <NavItem
@@ -429,13 +368,13 @@ const Navbar: React.FC<NavbarProps> = ({
                 item={item}
                 isActive={activeItem === item.name}
                 index={index}
-                link={item.link}
                 onDropdownToggle={handleDropdownToggle}
                 isDropdownOpen={item.hasDropdown && isDropdownOpen}
               />
             ))}
           </div>
 
+          {/* CTA */}
           <motion.div
             className="flex items-center justify-end"
             initial={{ opacity: 0, x: 50, scale: 0.8 }}
@@ -453,9 +392,11 @@ const Navbar: React.FC<NavbarProps> = ({
             }}
           >
             <AnimatedButton
-              onClick={handleLoginRoute}
               label="Log In"
               variant="purple"
+              onClick={() =>
+                window.open("https://faconnect.kotak.com",)
+              }
               className="[@media(min-width:1000px)]:px-4 [@media(min-width:1000px)]:py-1.5 [@media(min-width:1200px)]:px-5 [@media(min-width:1200px)]:py-2"
             />
           </motion.div>

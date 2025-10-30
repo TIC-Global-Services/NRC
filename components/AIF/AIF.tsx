@@ -10,7 +10,7 @@ import RecentBlogs from "../CorporateAdvisory/RecentBlogs";
 
 const AIF = () => {
   return (
-    <div className="bg-[#F6F9FC]">
+    <div className="bg-[#F6F9FC] overflow-x-hidden">
       <Hero
         title1="Investing in India's "
         title2Color="Growth Story"

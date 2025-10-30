@@ -120,7 +120,7 @@ const OurValue = () => {
                     fill="#F2F3FD"
                     stroke="#D8D9DE"
                   />
-                  <g clip-path="url(#clip0_262_1324)">
+                  <g clipPath="url(#clip0_262_1324)">
                     <path
                       d="M362.354 246.75H322.316V166.09L241.549 166.196L241.496 126.157L362.354 125.998V246.75Z"
                       fill="#6A48E8"
@@ -189,7 +189,7 @@ const OurValue = () => {
                       rx="4"
                       fill="#E9EAFB"
                     />
-                    <g clip-path="url(#clip1_262_1324)">
+                    <g clipPath="url(#clip1_262_1324)">
                       <path
                         fillRule="evenodd"
                         clipRule="evenodd"
@@ -207,8 +207,8 @@ const OurValue = () => {
                         y2="260.213"
                         gradientUnits="userSpaceOnUse"
                       >
-                        <stop stop-color="white" />
-                        <stop offset="1" stop-color="#6A48E8" />
+                        <stop stopColor="white" />
+                        <stop offset="1" stopColor="#6A48E8" />
                       </linearGradient>
                       <clipPath id="clip0_262_1324">
                         <rect
@@ -266,7 +266,7 @@ const OurValue = () => {
                       rx="4"
                       fill="#E9EAFB"
                     />
-                    <g clip-path="url(#clip2_262_1324)">
+                    <g clipPath="url(#clip2_262_1324)">
                       <path
                         fillRule="evenodd"
                         clipRule="evenodd"
@@ -311,7 +311,7 @@ const OurValue = () => {
                       rx="4"
                       fill="#E9EAFB"
                     />
-                    <g clip-path="url(#clip3_262_1324)">
+                    <g clipPath="url(#clip3_262_1324)">
                       <path
                         d="M25.7305 72.7676V75.0176H14.8555C13.9604 75.0176 13.1019 74.662 12.469 74.0291C11.836 73.3961 11.4805 72.5377 11.4805 71.6426C11.4805 70.7475 11.836 69.889 12.469 69.2561C13.1019 68.6232 13.9604 68.2676 14.8555 68.2676H15.2305V66.7676H14.8555C13.5625 66.7676 12.3226 67.2812 11.4083 68.1954C10.4941 69.1097 9.98047 70.3496 9.98047 71.6426C9.98047 72.9355 10.4941 74.1755 11.4083 75.0897C12.3226 76.004 13.5625 76.5176 14.8555 76.5176H25.7305V78.7676H31.7305V72.7676H25.7305ZM30.2305 77.2676H27.2305V74.2676H30.2305V77.2676Z"
                         fill="#6A48E8"

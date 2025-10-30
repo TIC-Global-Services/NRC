@@ -218,7 +218,7 @@ export default function StrategiesSection() {
                 <span className="text-primary">One <br className="md:hidden"/> Discipline.</span>
               </h2>
             </SlideUpText>
-            <SlideUpText animationMode="always" delay={0.4}>
+            <SlideUpText animationMode="always">
               <p className="text-sm md:text-base text-secondary font-[400] max-w-4xl mx-auto leading-[23px] md:leading-relaxed">
                 Nine Rivers Capital offers a select suite of SEBI-registered PMS
                 and AIF strategies. Each is crafted with

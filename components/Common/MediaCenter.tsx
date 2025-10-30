@@ -71,10 +71,10 @@ const MediaCentreSection = () => {
                 <path
                   d="M29.6302 36.9186L24.2969 31.5853M24.2969 31.5853L29.6302 26.252M24.2969 31.5853H40.2969"
                   stroke="black"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>
@@ -93,10 +93,10 @@ const MediaCentreSection = () => {
                 <path
                   d="M34.9635 36.9186L40.2969 31.5853M40.2969 31.5853L34.9635 26.252M40.2969 31.5853H24.2969"
                   stroke="black"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>
@@ -148,9 +148,9 @@ const MediaCentreSection = () => {
               <path
                 d="M13.5208 18.0754L10.1875 14.742M10.1875 14.742L13.5208 11.4087M10.1875 14.742H20.1875"
                 stroke="black"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>
@@ -169,9 +169,9 @@ const MediaCentreSection = () => {
               <path
                 d="M16.8542 18.0754L20.1875 14.742M20.1875 14.742L16.8542 11.4087M20.1875 14.742H10.1875"
                 stroke="black"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>

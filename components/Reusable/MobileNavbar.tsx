@@ -2,33 +2,29 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { NRC_Logo } from "@/assets/Home";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AnimatedButton from "../ui/animatedButton";
 
 const MobileNavbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [expandedDropdown, setExpandedDropdown] = useState(null);
+  const [expandedDropdown, setExpandedDropdown] = useState<string | null>(null);
   const [activeItem, setActiveItem] = useState("Home");
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Prevent initial animation by setting loaded state after mount
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  useEffect(() => setIsLoaded(true), []);
 
   const navItems = [
     { name: "Home", hasDropdown: false, link: "/" },
     { name: "About us", hasDropdown: false, link: "/about" },
     { name: "Asset Management", hasDropdown: true, link: "#" },
-    {
-      name: "Corporate Advisory",
-      hasDropdown: false,
-      link: "/corporate-advisory",
-    },
+    { name: "Corporate Advisory", hasDropdown: false, link: "/corporate-advisory" },
     { name: "Team", hasDropdown: false, link: "/team" },
     { name: "Insights", hasDropdown: false, link: "/insights" },
     { name: "Contact Us", hasDropdown: false, link: "/contact" },
@@ -39,68 +35,37 @@ const MobileNavbar = () => {
     { name: "AIF", link: "/aif" },
   ];
 
-  // Function to determine active item based on pathname
   const getActiveItem = (currentPath: string): string => {
-    // Check if current path is /pms or /aif - these should activate "Asset Management"
-    if (currentPath === "/pms" || currentPath === "/aif") {
-      return "Asset Management";
-    }
-
-    // Check if path starts with a nav item path (for nested routes)
+    if (currentPath === "/pms" || currentPath === "/aif") return "Asset Management";
     for (const item of navItems) {
-      if (
-        item.link !== "#" &&
-        item.link !== "/" &&
-        currentPath.startsWith(item.link)
-      ) {
-        return item.name;
-      }
+      if (item.link !== "#" && currentPath.startsWith(item.link)) return item.name;
     }
-
-    // Direct match for exact paths
-    const exactMatch = navItems.find((item) => item.link === currentPath);
-    if (exactMatch) return exactMatch.name;
-
-    // Check if we're on the home page
-    if (currentPath === "/") {
-      return "Home";
-    }
-
+    if (currentPath === "/") return "Home";
     return "Home";
   };
 
-  // Set active item based on pathname
   useEffect(() => {
     const active = getActiveItem(pathname);
     setActiveItem(active);
   }, [pathname]);
 
-  // Prevent body scroll when menu is open
+  // Prevent body scroll when menu open
   useEffect(() => {
     if (isMenuOpen) {
-      // Store the current scroll position
       const scrollY = window.scrollY;
-
-      // Prevent scrolling on body
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = "100%";
       document.body.style.overflow = "hidden";
     } else {
-      // Restore scroll position when menu closes
       const scrollY = document.body.style.top;
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
       document.body.style.overflow = "";
-
-      // Restore scroll position
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      }
+      if (scrollY) window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
 
-    // Cleanup function
     return () => {
       document.body.style.position = "";
       document.body.style.top = "";
@@ -116,16 +81,14 @@ const MobileNavbar = () => {
       setActiveItem(item.name);
       setIsMenuOpen(false);
       setExpandedDropdown(null);
-      // Navigate to the link
-      window.location.href = item.link;
+      router.push(item.link);
     }
   };
 
   const handleSubNavClick = (subItem: any) => {
     setIsMenuOpen(false);
     setExpandedDropdown(null);
-    // Navigate to the link
-    window.location.href = subItem.link;
+    router.push(subItem.link);
   };
 
   const handleLoginRoute = () => {
@@ -134,21 +97,19 @@ const MobileNavbar = () => {
 
   return (
     <div className="relative z-[999]">
-      {/* Fixed Header - No initial animation, immediate positioning */}
+      {/* Header */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 lg:hidden block  transition-opacity duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 lg:hidden block transition-opacity duration-300 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       >
         <div className="flex items-center justify-between px-6 py-4">
-          {/* Logo - Static positioning */}
-          <a href="/" className="flex items-center cursor-pointer">
-            <div className="w-15 h-8 rounded flex items-center justify-center">
+          <Link href="/" className="flex items-center cursor-pointer">
+            <div className="w-15 h-8 flex items-center justify-center">
               <Image src={NRC_Logo} alt="NRC Logo" width={60} height={26} />
             </div>
-          </a>
+          </Link>
 
-          {/* Login Button & Menu Toggle - Static positioning */}
           <div className="flex items-center gap-3">
             <AnimatedButton
               onClick={handleLoginRoute}
@@ -158,7 +119,7 @@ const MobileNavbar = () => {
             />
 
             <button
-              className="p-2 rounded-full transition-colors "
+              className="p-2 rounded-full transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <AnimatePresence mode="wait">
@@ -189,7 +150,7 @@ const MobileNavbar = () => {
         </div>
       </div>
 
-      {/* Full Screen Menu Overlay */}
+      {/* Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -219,22 +180,18 @@ const MobileNavbar = () => {
                       ease: "easeOut",
                     }}
                   >
-                    {/* Main Navigation Item */}
                     <div
                       className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors duration-200"
                       onClick={() => handleNavClick(item)}
                     >
                       <span
                         className={`text-2xl leading-[34px] transition-colors duration-200 ${
-                          activeItem === item.name
-                            ? "text-black "
-                            : "text-gray-600 "
+                          activeItem === item.name ? "text-black" : "text-gray-600"
                         }`}
                       >
                         {item.name}
                       </span>
 
-                      {/* Dropdown Arrow */}
                       {item.hasDropdown && (
                         <motion.div
                           animate={{
@@ -258,40 +215,37 @@ const MobileNavbar = () => {
                       )}
                     </div>
 
-                    {/* Dropdown Items */}
-                    {item.hasDropdown && (
-                      <AnimatePresence>
-                        {expandedDropdown === item.name && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="bg-transparent rounded-lg mt-2 py-2">
-                              {dropdownItems.map((subItem, subIndex) => (
-                                <motion.div
-                                  key={subItem.name}
-                                  initial={{ x: -10, opacity: 0 }}
-                                  animate={{ x: 0, opacity: 1 }}
-                                  transition={{
-                                    duration: 0.2,
-                                    delay: subIndex * 0.1,
-                                  }}
-                                  className="py-3 px-4 text-secondary cursor-pointer hover:bg-gray-100 hover:text-secondary rounded transition-colors duration-200 text-[20px] leading-[34px]"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleSubNavClick(subItem);
-                                  }}
-                                >
-                                  {subItem.name}
-                                </motion.div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                    {/* Dropdown */}
+                    {item.hasDropdown && expandedDropdown === item.name && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="bg-transparent rounded-lg mt-2 py-2">
+                          {dropdownItems.map((subItem, subIndex) => (
+                            <motion.div
+                              key={subItem.name}
+                              initial={{ x: -10, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              transition={{
+                                duration: 0.2,
+                                delay: subIndex * 0.1,
+                              }}
+                            >
+                              <Link
+                                href={subItem.link}
+                                className="block py-3 px-4 text-secondary hover:bg-gray-100 hover:text-secondary rounded transition-colors duration-200 text-[20px] leading-[34px]"
+                                onClick={() => handleSubNavClick(subItem)}
+                              >
+                                {subItem.name}
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
                     )}
                   </motion.div>
                 ))}
