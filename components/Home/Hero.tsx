@@ -17,8 +17,6 @@ let globalLoadPromise: Promise<void> | null = null;
 
 const Hero = () => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [loadProgress, setLoadProgress] = useState(0);
-  const [showLoading, setShowLoading] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -257,14 +255,8 @@ const Hero = () => {
 
   // Ultra-fast parallel loading function
   const loadAllFramesUltraFast = useCallback(async () => {
-    const BATCH_SIZE = 40; // Load 40 images simultaneously
-    const TOTAL_BATCHES = Math.ceil(totalFrames / BATCH_SIZE);
-    
-    let loadedCount = 0;
-
     const loadImage = async (index: number): Promise<void> => {
       if (framesCache[index]) {
-        loadedCount++;
         return;
       }
 
@@ -287,34 +279,16 @@ const Hero = () => {
         });
         
         framesCache[index] = bitmap;
-        loadedCount++;
-        
-        if (mountedRef.current) {
-          setLoadProgress(Math.round((loadedCount / totalFrames) * 100));
-        }
       } catch (err) {
         if (mountedRef.current) {
           console.error(`Frame ${index} failed:`, err);
         }
-        loadedCount++;
       }
     };
 
-    // Load in optimized batches
-    for (let batchIndex = 0; batchIndex < TOTAL_BATCHES; batchIndex++) {
-      const startIdx = batchIndex * BATCH_SIZE;
-      const endIdx = Math.min(startIdx + BATCH_SIZE, totalFrames);
-      
-      const batchPromises = [];
-      for (let i = startIdx; i < endIdx; i++) {
-        batchPromises.push(loadImage(i));
-      }
-      
-      // Load batch in parallel
-      await Promise.all(batchPromises);
-      
-      if (!mountedRef.current) break;
-    }
+    // Load all frames in parallel for maximum speed
+    const loadPromises = Array.from({ length: totalFrames }, (_, i) => loadImage(i));
+    await Promise.all(loadPromises);
   }, [totalFrames, idleFrameCount]);
 
   // Main initialization
@@ -340,7 +314,6 @@ const Hero = () => {
     const initializeAndLoad = async () => {
       // If already loading globally, wait for it
       if (isGloballyLoading && globalLoadPromise) {
-        setShowLoading(false); // Don't show loading if already cached/loading
         await globalLoadPromise;
         
         if (mountedRef.current && framesCache[0]) {
@@ -356,8 +329,7 @@ const Hero = () => {
       const allFramesCached = framesCache.every(frame => frame !== null);
       
       if (allFramesCached) {
-        // All frames already loaded, skip loading screen
-        setShowLoading(false);
+        // All frames already loaded, initialize immediately
         if (mountedRef.current && framesCache[0]) {
           render(0);
           setIsInitialized(true);
@@ -367,10 +339,7 @@ const Hero = () => {
         return;
       }
 
-      // Show loading only if frames need to be loaded
-      setShowLoading(true);
-
-      // Start global loading
+      // Start global loading in background (no UI blocking)
       isGloballyLoading = true;
       
       globalLoadPromise = (async () => {
@@ -430,22 +399,6 @@ const Hero = () => {
       className="w-full h-screen relative overflow-hidden"
     >
       <div className="w-full h-screen flex items-center justify-center overflow-hidden">
-        {/* Loading indicator */}
-        {showLoading && !isInitialized && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-white">
-            <div className="text-2xl font-light mb-4 gothicFont">
-              Loading Experience
-            </div>
-            <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-[#8B5CF6] transition-all duration-300 ease-out"
-                style={{ width: `${loadProgress}%` }}
-              />
-            </div>
-            <div className="mt-2 text-sm text-gray-600">{loadProgress}%</div>
-          </div>
-        )}
-
         <canvas
           ref={canvasRef}
           width={1920}
