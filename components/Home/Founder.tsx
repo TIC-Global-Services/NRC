@@ -7,7 +7,7 @@ import SlideUpText from "../ui/SlideUpText";
 
 const FounderComponent = () => {
   return (
-    <Container isNavbar className="sfPro md:pt-16">
+    <Container isNavbar className="sfPro md:py-16">
       <motion.section
         className=""
         initial={{ opacity: 0 }}
@@ -19,7 +19,7 @@ const FounderComponent = () => {
           },
         }}
       >
-        <div className="max-w-7xl mx-auto sfPro">
+        <div className=" mx-auto sfPro">
           <div className="grid grid-cols-1 lg:grid-cols-[0.45fr_0.55fr] items-center ">
             {/* Left side - Image */}
             <motion.div className="relative h-[100%]">

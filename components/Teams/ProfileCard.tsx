@@ -29,27 +29,28 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   return (
     <div
       className={`max-w-md mx-auto ${
-        isAdvisory && "shadow"
-      } relative bg-white rounded-xl overflow-hidden z-20`}
+        isAdvisory && "shadow-xl"
+      } relative bg-white rounded-xl overflow-hidden z-20 lg:pb-6`}
     >
       {/* Header Image Section */}
       <div className="relative -mb-5 h-80 z-30">
         <Image
           src={imageUrl}
           alt={`${name} - ${role}`}
-          width={300}
-          height={450}
+          width={600}
+          height={750}
+          quality={100}
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-6 right-6">
-          <span className="bg-white px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
+        <div className="absolute top-4 right-3">
+          <span className="bg-white px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm text-sm">
             {role}
           </span>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="p-5 rounded-xl h-[260px] md:h-[280px] relative z-40 bg-white -mt-5">
+      <div className="p-5 rounded-xl h-auto pb-16 md:pb-0 md:h-[300px] lg:h-[280px] relative z-40 bg-white -mt-5">
         {/* Name */}
         <h2 className="md:text-3xl text-[20px] leading-[25px] md:leading-[33px] font-light text-gray-900 mb-2 sfPro">
           {nameParts.map((word, idx) => (
@@ -66,7 +67,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         </h2>
 
         {/* Description */}
-        <div className="pr-3">
+        <div className=" ">
           <p className="text-secondary text-xs leading-[18px] md:text-base md:leading-[24px] w-[96%]">
             {description}
           </p>
@@ -74,7 +75,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* LinkedIn Icon */}
         {linkedinUrl && (
-          <div className="absolute bottom-6 right-6">
+          <div className="absolute bottom-4 lg:-bottom-2 right-4">
             <a
               href={linkedinUrl}
               target="_blank"

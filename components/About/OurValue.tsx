@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import Container from "../Reusable/Container";
@@ -6,36 +7,47 @@ import AnimatedButton from "../ui/animatedButton";
 const valueCards = [
   {
     title: "Expertise",
-    desc: "Rigorous analysis and domain knowledge."
+    desc: "Rigorous analysis and domain knowledge.",
   },
   {
     title: "Trust & Integrity",
-    desc: "Open communication and aligned interests."
+    desc: "Open communication and aligned interests.",
   },
   {
     title: "Transparency",
-    desc: "Clear reporting and honest risk disclosure."
+    desc: "Clear reporting and honest risk disclosure.",
   },
   {
     title: "Client-centricity",
-    desc: "Solutions built around client objectives and time horizons."
+    desc: "Solutions built around client objectives and time horizons.",
   },
   {
     title: "Long-term Orientation",
-    desc: "Patient capital and disciplined decision-making."
-  }
+    desc: "Patient capital and disciplined decision-making.",
+  },
 ];
 
 const OurValue = () => {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
+  // Detect screen size (disable scroll animations on mobile)
   useEffect(() => {
+    const checkScreen = () => setIsLargeScreen(window.innerWidth >= 1024);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
+  // Scroll-based step animation (only for large screens)
+  useEffect(() => {
+    if (!isLargeScreen) return;
     const unsubscribe = scrollYProgress.onChange((progress) => {
       const step = Math.min(
         Math.floor(progress * (valueCards.length + 1)),
@@ -44,23 +56,30 @@ const OurValue = () => {
       setCurrentStep(step);
     });
     return unsubscribe;
-  }, [scrollYProgress]);
+  }, [scrollYProgress, isLargeScreen]);
 
   return (
     <div
       ref={containerRef}
-      className="h-[600vh] lg:pt-14 pt-24 lg:pb-14 bg-white"
+      className="pt-24 bg-white h-auto lg:h-[600vh]"
     >
-      <div className="sticky top-0 lg:h-[120vh] h-screen overflow-hidden">
+      <div
+        className="
+          h-auto lg:h-[120vh]
+          lg:sticky -top-10
+          overflow-visible lg:overflow-hidden
+        "
+      >
         <Container
           disablePaddingBottomMobile
           disablePaddingTopMobile
-          className="h-full md:-pt-36 md:-pb-56 lg:-pb-36 "
+          className="h-full md:-pt-36 md:-pb-56 lg:-pb-36"
         >
-          <div className="h-full flex items-center justify-center ">
+          <div className="h-full flex items-center justify-center">
             <div className="w-full grid grid-cols-1 lg:grid-cols-[4fr_6fr] gap-12 items-start">
-              {/* Left Content Section */}
-              <div className="flex flex-col justify-start space-y-8 ">
+              
+              {/* LEFT: Text + Value Cards */}
+              <div className="flex flex-col justify-start">
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -70,20 +89,24 @@ const OurValue = () => {
                   <h1 className="lg:text-[44px] md:text-5xl text-[26px] leading-8 lg:leading-[3.5rem] font-normal mb-4">
                     Our <span className="text-primary">Values</span>
                   </h1>
-                  {/* <h1 className="text-4xl md:text-5xl font-light text-black leading-tight">
-                    Our <span className="text-primary">Values</span>
-                  </h1> */}
                 </motion.div>
 
-                {/* Value Cards Stack */}
                 <div className="space-y-4 md:w-full lg:max-w-lg">
                   {valueCards.map((card, index) => (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, y: 100 }}
+                      initial={{ opacity: 0, y: 50 }}
                       animate={{
-                        opacity: index < currentStep ? 1 : 0,
-                        y: index < currentStep ? 0 : 100,
+                        opacity: !isLargeScreen
+                          ? 1 // always visible on mobile
+                          : index < currentStep
+                          ? 1
+                          : 0,
+                        y: !isLargeScreen
+                          ? 0
+                          : index < currentStep
+                          ? 0
+                          : 50,
                       }}
                       transition={{
                         duration: 0.6,
@@ -91,10 +114,10 @@ const OurValue = () => {
                       }}
                       className="bg-[#F8F8F8] rounded-lg p-4 md:p-8 lg:p-4 w-full"
                     >
-                      <h3 className="2xl:text-[26px] md:text-[26px] text-[20px] leading-7 font-normal text-black mb-2">
+                      <h3 className="md:text-2xl text-[20px] leading-7 font-normal">
                         {card.title}
                       </h3>
-                      <p className="2xl:text-[20px] md:text-lg text-sm leading-8 text-secondary">
+                      <p className="md:text-base text-sm leading-8 text-secondary">
                         {card.desc}
                       </p>
                     </motion.div>
@@ -102,7 +125,7 @@ const OurValue = () => {
                 </div>
               </div>
 
-              {/* Right SVG Animation Area */}
+               {/* Right SVG Animation Area */}
               <div className="relative w-full  h-full justify-items-end lg:flex hidden items-start mt-[20%] justify-center ">
                 <svg
                   width="580"
@@ -366,6 +389,7 @@ const OurValue = () => {
                   </motion.g>
                 </svg>
               </div>
+
             </div>
           </div>
         </Container>

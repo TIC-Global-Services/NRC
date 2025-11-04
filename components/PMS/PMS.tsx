@@ -4,7 +4,7 @@ import Glance from "./Glance/Glance";
 import OurEdge from "./OurEdge";
 import Strategies from "./Strategies";
 import Partnerships from "./Partnerships";
-import TrustedPartner from "./TrustedPartner";
+import TrustedPartner from "./TrustedPartnerSection";
 import FamilyOffices from "./FamilyOffices";
 import FAQ from "./FAQ";
 import WealthFlows from "./WealthFlows";

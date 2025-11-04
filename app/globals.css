@@ -3,17 +3,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary:#6A48E8;
-  --secondary:#484848;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-primary:var(--primary);
-  --color-secondary:var(--secondary);
+  --color-primary: #6A48E8;
+  --color-secondary: #484848;
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sf-pro: var(--font-sf-pro);
   --font-gothic: var(--font-century-gothic);
 }
 
@@ -32,7 +29,7 @@
 } */
 
 body {
-  font-family: 'SF Pro Display', sans-serif !important;
+  font-family: var(--font-sf-pro), sans-serif !important;
 }
 
 

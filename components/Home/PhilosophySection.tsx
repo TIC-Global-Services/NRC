@@ -33,7 +33,7 @@ export default function PhilosophySection() {
 
 
                 {/* Description */}
-                <SlideUpText animationMode="always" delay={0.4} className="mt-2 md:mt-0">
+                <SlideUpText animationMode="always" delay={0.1} className="mt-2 md:mt-0">
                   <p className="text-sm md:text-base text-secondary leading-6 md:leading-relaxed max-w-lg font-[400]">
                     Every investment undergoes rigorous PE-style
                     diligence—business model checks, promoter governance,

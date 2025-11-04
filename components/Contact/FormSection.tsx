@@ -15,7 +15,7 @@ const FormSection = () => {
       <div className="flex flex-col justify-between items-start gap-6 lg:gap-0">
         {/* Heading */}
         <SlideUpText animationMode="always">
-          <h2 className="text-4xl lg:text-6xl font-medium text-gray-900 max-w-3xl leading-tight">
+          <h2 className="text-4xl lg:text-5xl font-medium text-gray-900 max-w-3xl leading-tight">
             Join Us in Creating <br /> Something Great
           </h2>
         </SlideUpText>

@@ -3,377 +3,240 @@
 import { useState } from "react";
 import Container from "../Reusable/Container";
 import FlexibleHeading from "../ui/FlexibleHeading";
-import {
-  // TrackRecordLogo1,
-  // TrackRecordLogo2,
-  // TrackRecordLogo3,
-  // TrackRecordLogo4,
-  // TrackRecordLogo5,
-  // TrackRecordLogo6,
-
-  // Tech
-  TechImgOne,
-  TechImgTwo,
-  TechImgThree,
-  TechImgFour,
-  // TechImgFive,
-  TechImgSix,
-  TechImgSeven,
-  TechImgEight,
-  TechImgNine,
-  TechImgTen,
-  TechImgEleven,
-  TechImgTwelve,
-
-  // commerce
-  CommerceImgOne,
-  CommerceImgTwo,
-  CommerceImgThree,
-  CommerceImgFour,
-  CommerceImgFive,
-  CommerceImgSix,
-  CommerceImgSeven,
-  CommerceImgEight,
-  CommerceImgNine,
-  CommerceImgTen,
-  CommerceImgEleven,
-  CommerceImgTwelve,
-
-  // healthcare
-  HealthcareImgOne,
-  HealthcareImgTwo,
-  HealthcareImgThree,
-  HealthcareImgFour,
-  HealthcareImgFive,
-  HealthcareImgSix,
-  HealthcareImgSeven,
-  HealthcareImgEight,
-  HealthcareImgNine,
-  HealthcareImgTen,
-  HealthcareImgEleven,
-
-  // industrial
-  IndustrialImgOne,
-  IndustrialImgTwo,
-  IndustrialImgThree,
-  IndustrialImgFour,
-  IndustrialImgFive,
-  IndustrialImgSix,
-  IndustrialImgSeven,
-  IndustrialImgEight,
-} from "@/assets/CorporateAdvisory";
 import Image from "next/image";
+import {
+  TechImgOne, TechImgTwo, TechImgThree, TechImgFour, TechImgSix, TechImgSeven,
+  TechImgEight, TechImgNine, TechImgTen, TechImgEleven, TechImgTwelve,
+  CommerceImgOne, CommerceImgTwo, CommerceImgThree, CommerceImgFour, CommerceImgFive,
+  CommerceImgSix, CommerceImgSeven, CommerceImgEight, CommerceImgNine, CommerceImgTen,
+  CommerceImgEleven, CommerceImgTwelve,
+  HealthcareImgOne, HealthcareImgTwo, HealthcareImgThree, HealthcareImgFour, HealthcareImgFive,
+  HealthcareImgSix, HealthcareImgSeven, HealthcareImgEight, HealthcareImgNine,
+  HealthcareImgTen, HealthcareImgEleven,
+  IndustrialImgOne, IndustrialImgTwo, IndustrialImgThree, IndustrialImgFour,
+  IndustrialImgFive, IndustrialImgSix, IndustrialImgSeven, IndustrialImgEight,
+} from "@/assets/CorporateAdvisory";
 
 const OurTrack = () => {
   const [activeLabel, setActiveLabel] = useState("Technology");
-
-  const handleLabelSelection = (label: any) => {
-    setActiveLabel(label);
-  };
 
   const TrackRecord = [
     {
       id: 1,
       label: "Technology",
       desc: "Consumer Internet, B2B Technology, Frontier Technologies, IT Services & BPO, Digital Transformation & Cloud",
-      leftLogs: [
-        TechImgOne,
-        TechImgTwo,
-        TechImgThree,
-        TechImgFour,
-        // TechImgFive,
-        TechImgSix,
-      ],
-      rightLogs: [
-        TechImgSeven,
-        TechImgEight,
-        TechImgNine,
-        TechImgTen,
-        TechImgEleven,
-        TechImgTwelve,
+      logos: [
+        TechImgOne, TechImgTwo, TechImgThree, TechImgFour, TechImgSix,
+        TechImgSeven, TechImgEight, TechImgNine, TechImgTen, TechImgEleven, TechImgTwelve,
       ],
     },
     {
       id: 2,
       label: "Consumer",
       desc: "Consumer Brands, Products & Services, Logistics, Media, Education",
-      leftLogs: [
-        CommerceImgOne,
-        CommerceImgTwo,
-        CommerceImgThree,
-        CommerceImgFour,
-        CommerceImgFive,
-      ],
-      rightLogs: [
-        CommerceImgSix,
-        CommerceImgSeven,
-        CommerceImgEight,
-        CommerceImgNine,
-        CommerceImgTen,
-        CommerceImgEleven,
-        CommerceImgTwelve,
+      logos: [
+        CommerceImgOne, CommerceImgTwo, CommerceImgThree, CommerceImgFour, CommerceImgFive,
+        CommerceImgSix, CommerceImgSeven, CommerceImgEight, CommerceImgNine,
+        CommerceImgTen, CommerceImgEleven, CommerceImgTwelve,
       ],
     },
     {
       id: 3,
       label: "Healthcare",
       desc: "Healthcare delivery, Pharmaceuticals, Medical Devices, Health-tech, Veterinary Services",
-      leftLogs: [
-        HealthcareImgOne,
-        HealthcareImgTwo,
-        HealthcareImgThree,
-        HealthcareImgFour,
-        HealthcareImgFive,
-      ],
-      rightLogs: [
-        HealthcareImgSix,
-        HealthcareImgSeven,
-        HealthcareImgEight,
-        HealthcareImgNine,
-        HealthcareImgTen,
-        HealthcareImgEleven,
+      logos: [
+        HealthcareImgOne, HealthcareImgTwo, HealthcareImgThree, HealthcareImgFour, HealthcareImgFive,
+        HealthcareImgSix, HealthcareImgSeven, HealthcareImgEight, HealthcareImgNine,
+        HealthcareImgTen, HealthcareImgEleven,
       ],
     },
     {
       id: 4,
       label: "Industrial",
       desc: "Auto Ancillary, Engineering Goods, Industrial Automation, Industrial Ancillaries, Specialty Chemicals.",
-      leftLogs: [
-        IndustrialImgOne,
-        IndustrialImgTwo,
-        IndustrialImgThree,
-        IndustrialImgFour,
-      ],
-      rightLogs: [
-        IndustrialImgFive,
-        IndustrialImgSix,
-        IndustrialImgSeven,
-        IndustrialImgEight,
+      logos: [
+        IndustrialImgOne, IndustrialImgTwo, IndustrialImgThree, IndustrialImgFour,
+        IndustrialImgFive, IndustrialImgSix, IndustrialImgSeven, IndustrialImgEight,
       ],
     },
   ];
 
-  const currentTrack = TrackRecord.find((track) => track.label === activeLabel);
+  const currentTrack = TrackRecord.find((t) => t.label === activeLabel)!;
+
+  // Split into 3 distinct sets for lanes
+  const logos = currentTrack.logos;
+  const groupSize = Math.ceil(logos.length / 3);
+  const col1 = logos.slice(0, groupSize);
+  const col2 = logos.slice(groupSize, groupSize * 2);
+  const col3 = logos.slice(groupSize * 2);
 
   return (
     <>
-      {/* Desktop */}
-      <div className="lg:block hidden w-full">
+      {/* ============= DESKTOP ============= */}
+      <div className="hidden lg:block w-full">
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          @keyframes riverFlowLeft {
-            0% {
-              transform: translateY(-150px) translateX(0px);
-              opacity: 0;
+            /* Infinite vertical scrolls */
+            @keyframes infiniteUp {
+              0% { transform: translateY(0); }
+              100% { transform: translateY(-50%); }
             }
-            10% {
-              opacity: 1;
+            @keyframes infiniteDown {
+              0% { transform: translateY(-50%); }
+              100% { transform: translateY(0); }
             }
-            25% {
-              transform: translateY(25vh) translateX(-60px);
+
+            .lane {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 3rem;
             }
-            50% {
-              transform: translateY(50vh) translateX(40px);
+
+            .lane-wrapper {
+              height: 100%;
+              overflow: hidden;
+              position: relative;
+              mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+              -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
             }
-            75% {
-              transform: translateY(75vh) translateX(-80px);
+
+            .scroll-up {
+              animation: infiniteUp 25s linear infinite;
             }
-            90% {
-              opacity: 1;
+            .scroll-down {
+              animation: infiniteDown 25s linear infinite;
             }
-            100% {
-              transform: translateY(100vh) translateX(30px);
-              opacity: 0;
-            }
-          }
-          
-          @keyframes riverFlowRight {
-            0% {
-              transform: translateY(-100px) translateX(0px);
-              opacity: 0;
-            }
-            10% {
-              opacity: 1;
-            }
-            25% {
-              transform: translateY(25vh) translateX(80px);
-            }
-            50% {
-              transform: translateY(50vh) translateX(-40px);
-            }
-            75% {
-              transform: translateY(75vh) translateX(60px);
-            }
-            90% {
-              opacity: 1;
-            }
-            100% {
-              transform: translateY(100vh) translateX(-30px);
-              opacity: 0;
-            }
-          }
-          
-          .river-logo-left {
-            animation: riverFlowLeft 6s linear infinite;
-            animation-fill-mode: both;
-          }
-          
-          .river-logo-right {
-            animation: riverFlowRight 6s linear infinite;
-            animation-fill-mode: both;
-          }
-        `,
+          `,
           }}
         />
 
         <Container className="max-w-full px-8">
-          <div className="grid grid-cols-[40%_60%] h-screen w-full overflow-hidden">
-            {/* Selection part */}
-            <div >
+          <div className="grid grid-cols-[35%_65%] h-screen w-full overflow-hidden">
+            {/* ==== LEFT SELECTION ==== */}
+            <div className="pr-8 flex flex-col justify-center">
               <FlexibleHeading
-                title=" Our Track Record"
+                title="Our Track Record"
                 maxWidth="max-w-3xl"
                 alignment="left"
-                highlights={{
-                  Record: "text-primary",
-                }}
+                highlights={{ Record: "text-primary" }}
               />
 
-              {TrackRecord.map((track) => (
-                <div
-                  key={track.id}
-                  onClick={() => handleLabelSelection(track.label)}
-                  className={`rounded-[12px] px-4 py-8 mb-3 cursor-pointer transition-all duration-300 hover:shadow-md ${activeLabel === track.label
-                      ? "bg-white  "
-                      : " hover:bg-gray-50"
+              <div className="space-y-4">
+                {TrackRecord.map((track) => (
+                  <div
+                    key={track.id}
+                    onClick={() => setActiveLabel(track.label)}
+                    className={`rounded-[12px] p-4 cursor-pointer transition-all duration-300 ${
+                      activeLabel === track.label
+                        ? "bg-white shadow-md"
+                        : "hover:bg-gray-50"
                     }`}
-                >
-                  <div>
+                  >
                     <h3
-                      className={`font-[400] text-2xl ${activeLabel === track.label ? "" : "text-secondary"
-                        }`}
+                      className={`font-[400] text-lg md:text-xl ${
+                        activeLabel === track.label ? "text-black" : "text-gray-500"
+                      }`}
                     >
                       {track.label}
                     </h3>
                     {activeLabel === track.label && (
-                      <p className="text-base text-gray-600 mt-3 leading-[31px]">
+                      <p className="text-base text-gray-600 mt-3 leading-[28px]">
                         {track.desc}
                       </p>
                     )}
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* Animation container with proper overflow handling */}
-            <div className="relative h-full overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-around">
-                {/* Left river column */}
-                <div className="relative w-1/2 h-full ">
-                  {currentTrack?.leftLogs.map((logo, index) => (
-                    <div
-                      key={`left-${index}-${activeLabel}`}
-                      className="river-logo-right absolute rounded-xl"
-                      style={{
-                        animationDelay: `${index * 0.9}s`,
-                        left: "50%",
-                        marginLeft: "-86px",
-                        top: "0",
-                      }}
-                    >
-                      <Image
-                        src={logo || "/placeholder.svg"}
-                        alt={`Technology ${index}`}
-                        className="w-[250px] h-12 object-contain"
-                      />
+            {/* ==== RIGHT THREE-LANE SCROLLER ==== */}
+            <div className="relative flex justify-between h-full">
+              {[
+                { dir: "up", data: col1 },
+                { dir: "down", data: col2 },
+                { dir: "up", data: col3 },
+              ].map((col, index) => (
+                <div key={index} className="lane-wrapper w-[30%] flex justify-center">
+                  {/* Two stacked copies of logos for perfect loop */}
+                  <div
+                    className={`scroll-${col.dir} absolute inset-0`}
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    <div className="lane">
+                      {col.data.map((logo, i) => (
+                        <Image
+                          key={`${index}-A-${i}`}
+                          src={logo}
+                          alt={`logo-${i}`}
+                          className="w-[180px] h-10 object-contain opacity-90"
+                        />
+                      ))}
                     </div>
-                  ))}
-                </div>
-
-                {/* Right river column */}
-                <div className="relative w-1/2 h-full overflow-hidden">
-                  {currentTrack?.rightLogs.map((logo, index) => (
-                    <div
-                      key={`right-${index}-${activeLabel}`}
-                      className="river-logo-right absolute rounded-xl"
-                      style={{
-                        animationDelay: `${index * 0.9}s`,
-                        left: "50%",
-                        marginLeft: "-86px",
-                        top: "0",
-                      }}
-                    >
-                      <Image
-                        src={logo || "/placeholder.svg"}
-                        alt={`Technology ${index}`}
-                        className="w-[250px] h-14 object-contain"
-                      />
+                    <div className="lane">
+                      {col.data.map((logo, i) => (
+                        <Image
+                          key={`${index}-B-${i}`}
+                          src={logo}
+                          alt={`logo-${i}`}
+                          className="w-[180px] h-10 object-contain opacity-90"
+                        />
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </Container>
       </div>
 
-      {/* Mobile */}
+      {/* ============= MOBILE ============= */}
       <div className="lg:hidden">
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          @keyframes scrollHorizontalMobile {
-            0% {
-              transform: translateX(0);
+            @keyframes scrollHorizontalMobile {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
             }
-            100% {
-              transform: translateX(-50%);
+            .scroll-container-mobile {
+              display: flex;
+              animation: scrollHorizontalMobile 20s linear infinite;
             }
-          }
-          
-          .scroll-container-mobile {
-            display: flex;
-            animation: scrollHorizontalMobile 20s linear infinite;
-            will-change: transform;
-          }
-        `,
+          `,
           }}
         />
-
         <Container disablePaddingTopMobile disablePaddingBottomDesktop>
-          <div className="lg:py-8 py-12">
+          <div className="py-12">
             <FlexibleHeading
-              title=" Our Track Record"
+              title="Our Track Record"
               maxWidth="max-w-3xl"
               alignment="left"
-              highlights={{
-                Record: "text-primary",
-              }}
+              highlights={{ Record: "text-primary" }}
             />
 
-            <div className="space-y-6 mt-8">
+            <div className="space-y-8 mt-8">
               {TrackRecord.map((track) => (
-                <div key={track.id} className="space-y-4 bg-white py-8 lg:px-0 rounded-[12px]">
-                  {/* Card Header */}
-                  <div className="space-y-2  px-4 ">
-                    <h3 className="font-[400] text-2xl">{track.label}</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {track.desc}
-                    </p>
-                  </div>
+                <div
+                  key={track.id}
+                  className="bg-white py-8 px-4 rounded-[12px] space-y-4"
+                >
+                  <h3 className="font-[400] text-2xl">{track.label}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {track.desc}
+                  </p>
 
-                  {/* Scrolling Logos */}
-                  <div className="relative overflow-hidden w-full">
+                  <div className="relative overflow-hidden w-full mt-4">
                     <div className="scroll-container-mobile">
-                      {/* Duplicate logos for seamless infinite loop */}
-                      {[...track.leftLogs, ...track.leftLogs].map((logo, index) => (
+                      {[...track.logos, ...track.logos].map((logo, index) => (
                         <div
                           key={`${track.id}-${index}`}
-                          className="flex-shrink-0 w-32 h-12 pr-7 flex items-center justify-center"
+                          className="flex-shrink-0 w-32 h-12 pr-6 flex items-center justify-center"
                         >
                           <Image
-                            src={logo || "/placeholder.svg"}
+                            src={logo}
                             alt={`${track.label} logo ${index}`}
                             className="w-full h-full object-contain"
                             width={128}

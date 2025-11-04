@@ -39,7 +39,7 @@ const ContentList = () => {
     const filteredContent = getFilteredContent();
 
     return (
-      <Container disableYSpacing className="pt-9 md:pb-48 pb-20">
+      <Container disableYSpacing className="pt-9 pb-20">
         <div className=" py-8">
           {/* Filter Bar */}
           <FilterBar

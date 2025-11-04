@@ -5,6 +5,7 @@ export const AnimatedChart = ({
   isActive,
   maxXAxisPoints = 20,
   showQuarterlyLabels = true,
+  lastUpdated,
 }: {
   data: {
     title: string;
@@ -15,10 +16,11 @@ export const AnimatedChart = ({
   isActive: boolean;
   maxXAxisPoints?: number;
   showQuarterlyLabels?: boolean;
+  lastUpdated?: string;
 }) => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [hoveredPoint, setHoveredPoint] = useState<{
-    type: 'portfolio' | 'benchmark';
+    type: "portfolio" | "benchmark";
     index: number;
     value: number;
     month: string;
@@ -41,8 +43,8 @@ export const AnimatedChart = ({
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   useEffect(() => {
@@ -57,9 +59,7 @@ export const AnimatedChart = ({
 
       // Super smooth easing function
       const easeInOutCubic = (t: number): number => {
-        return t < 0.5
-          ? 4 * t * t * t
-          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       };
 
       const easedProgress = easeInOutCubic(rawProgress);
@@ -89,7 +89,11 @@ export const AnimatedChart = ({
     return targetValue * progress;
   };
 
-  const createPath = (points: any[], progress: number, isAnimated: boolean = true) => {
+  const createPath = (
+    points: any[],
+    progress: number,
+    isAnimated: boolean = true
+  ) => {
     if (points.length === 0) return "";
 
     const { width, height } = dimensions;
@@ -99,27 +103,46 @@ export const AnimatedChart = ({
     const paddingBottom = 50;
     const xStep = (width - paddingLeft - paddingRight) / (points.length - 1);
 
-    const visiblePoints = isAnimated ? Math.ceil(points.length * progress) : points.length;
+    const visiblePoints = isAnimated
+      ? Math.ceil(points.length * progress)
+      : points.length;
 
     if (visiblePoints < 2) {
       const x = paddingLeft;
-      const y = height - paddingBottom - ((getAnimatedValue(points[0].value, progress) - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
+      const y =
+        height -
+        paddingBottom -
+        ((getAnimatedValue(points[0].value, progress) - minValue) /
+          (maxValue - minValue)) *
+          (height - paddingTop - paddingBottom);
       return `M ${x} ${y}`;
     }
 
     let path = "";
 
     for (let i = 0; i < visiblePoints; i++) {
-      const currentValue = isAnimated ? getAnimatedValue(points[i].value, progress) : points[i].value;
+      const currentValue = isAnimated
+        ? getAnimatedValue(points[i].value, progress)
+        : points[i].value;
       const x = paddingLeft + i * xStep;
-      const y = height - paddingBottom - ((currentValue - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
+      const y =
+        height -
+        paddingBottom -
+        ((currentValue - minValue) / (maxValue - minValue)) *
+          (height - paddingTop - paddingBottom);
 
       if (i === 0) {
         path += `M ${x} ${y}`;
       } else {
-        const prevValue = isAnimated ? getAnimatedValue(points[i - 1].value, progress) : points[i - 1].value;
+        const prevValue = isAnimated
+          ? getAnimatedValue(points[i - 1].value, progress)
+          : points[i - 1].value;
         const prevX = paddingLeft + (i - 1) * xStep;
-        const prevY = height - paddingBottom - ((prevValue - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
+        const prevY =
+          height -
+          paddingBottom -
+          ((prevValue - minValue) / (maxValue - minValue)) *
+            (height - paddingTop - paddingBottom);
 
         const cp1x = prevX + (x - prevX) * 0.5;
         const cp1y = prevY;
@@ -132,17 +155,26 @@ export const AnimatedChart = ({
 
     // Smooth partial segment for the last visible point
     if (isAnimated && visiblePoints < points.length) {
-      const fraction = (points.length * progress) - Math.floor(points.length * progress);
+      const fraction =
+        points.length * progress - Math.floor(points.length * progress);
       if (fraction > 0) {
         const i = visiblePoints;
         const prevValue = getAnimatedValue(points[i - 1].value, progress);
         const currentValue = getAnimatedValue(points[i].value, progress);
 
         const prevX = paddingLeft + (i - 1) * xStep;
-        const prevY = height - paddingBottom - ((prevValue - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
+        const prevY =
+          height -
+          paddingBottom -
+          ((prevValue - minValue) / (maxValue - minValue)) *
+            (height - paddingTop - paddingBottom);
 
         const x = paddingLeft + i * xStep;
-        const y = height - paddingBottom - ((currentValue - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
+        const y =
+          height -
+          paddingBottom -
+          ((currentValue - minValue) / (maxValue - minValue)) *
+            (height - paddingTop - paddingBottom);
 
         const partialX = prevX + (x - prevX) * fraction;
         const partialY = prevY + (y - prevY) * fraction;
@@ -167,7 +199,9 @@ export const AnimatedChart = ({
   const paddingBottom = 50;
   const xStep = (width - paddingLeft - paddingRight) / (data.data.length - 1);
 
-  const yAxisLabels = [-50, 150, 350, 550, 750, 950, 1150, 1350, 1550, 1750, 1950, 2150];
+  const yAxisLabels = [
+    -50, 150, 350, 550, 750, 950, 1150, 1350, 1550, 1750, 1950, 2150,
+  ];
 
   const getLabelsToShow = () => {
     const totalLabels = months.length;
@@ -220,16 +254,31 @@ export const AnimatedChart = ({
 
   const labelsToShow = getLabelsToShow();
 
-  const calculateCAGR = (dataPoints: Array<{ month: string; value: number }>) => {
+  const calculateCAGR = (
+    dataPoints: Array<{ month: string; value: number }>
+  ) => {
     if (dataPoints.length < 2) return 0;
 
     const firstValue = dataPoints[0].value;
     const lastValue = dataPoints[dataPoints.length - 1].value;
 
     const parseMonthYear = (monthStr: string) => {
-      const [month, year] = monthStr.split('-');
-      const monthIndex = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(month);
-      return { month: monthIndex, year: parseInt('20' + year) };
+      const [month, year] = monthStr.split("-");
+      const monthIndex = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ].indexOf(month);
+      return { month: monthIndex, year: parseInt("20" + year) };
     };
 
     const start = parseMonthYear(dataPoints[0].month);
@@ -237,7 +286,7 @@ export const AnimatedChart = ({
 
     const yearDiff = end.year - start.year;
     const monthDiff = end.month - start.month;
-    const totalYears = yearDiff + (monthDiff / 12);
+    const totalYears = yearDiff + monthDiff / 12;
 
     const growthMultiple = (1 + lastValue / 100) / (1 + firstValue / 100);
     const cagr = (Math.pow(growthMultiple, 1 / totalYears) - 1) * 100;
@@ -254,7 +303,8 @@ export const AnimatedChart = ({
 
     data.data.forEach((portfolioPoint, index) => {
       if (index < data.benchmarkData.length) {
-        const difference = portfolioPoint.value - data.benchmarkData[index].value;
+        const difference =
+          portfolioPoint.value - data.benchmarkData[index].value;
         if (difference > maxDifference && difference > 100) {
           maxDifference = difference;
           bestIndex = index;
@@ -281,11 +331,25 @@ export const AnimatedChart = ({
       return;
     }
 
-    const portfolioValue = getAnimatedValue(data.data[dataIndex].value, animationProgress);
-    const benchmarkValue = getAnimatedValue(data.benchmarkData[dataIndex].value, animationProgress);
+    const portfolioValue = getAnimatedValue(
+      data.data[dataIndex].value,
+      animationProgress
+    );
+    const benchmarkValue = getAnimatedValue(
+      data.benchmarkData[dataIndex].value,
+      animationProgress
+    );
 
-    const portfolioY = height - paddingBottom - ((portfolioValue - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
-    const benchmarkY = height - paddingBottom - ((benchmarkValue - minValue) / (maxValue - minValue)) * (height - paddingTop - paddingBottom);
+    const portfolioY =
+      height -
+      paddingBottom -
+      ((portfolioValue - minValue) / (maxValue - minValue)) *
+        (height - paddingTop - paddingBottom);
+    const benchmarkY =
+      height -
+      paddingBottom -
+      ((benchmarkValue - minValue) / (maxValue - minValue)) *
+        (height - paddingTop - paddingBottom);
 
     const distToPortfolio = Math.abs(mouseY - portfolioY);
     const distToBenchmark = Math.abs(mouseY - benchmarkY);
@@ -297,12 +361,14 @@ export const AnimatedChart = ({
       const x = paddingLeft + dataIndex * xStep;
 
       setHoveredPoint({
-        type: isPortfolioCloser ? 'portfolio' : 'benchmark',
+        type: isPortfolioCloser ? "portfolio" : "benchmark",
         index: dataIndex,
-        value: isPortfolioCloser ? data.data[dataIndex].value : data.benchmarkData[dataIndex].value,
+        value: isPortfolioCloser
+          ? data.data[dataIndex].value
+          : data.benchmarkData[dataIndex].value,
         month: data.data[dataIndex].month,
         x,
-        y: isPortfolioCloser ? portfolioY : benchmarkY
+        y: isPortfolioCloser ? portfolioY : benchmarkY,
       });
     } else {
       setHoveredPoint(null);
@@ -310,11 +376,13 @@ export const AnimatedChart = ({
   };
 
   return (
-    <div className="relative bg-white rounded-lg md:px-8 px-4 pt-5 pb-3">
-      <h3 className="md:text-lg text-sm leading-3 md:leading-8 font-[400] text-black">
+    <div className="relative bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] md:px-10 px-5 pt-6 pb-6 transition-all duration-300 hover:shadow-[0_6px_25px_rgba(0,0,0,0.08)]">
+      {/* Title */}
+      <h3 className="md:text-xl text-base font-semibold text-primary text-center mb-6">
         {data.title}
       </h3>
 
+      {/* Chart Container */}
       <div ref={containerRef} className="relative w-full">
         <svg
           ref={svgRef}
@@ -327,28 +395,58 @@ export const AnimatedChart = ({
           onMouseLeave={() => setHoveredPoint(null)}
         >
           <defs>
-            <filter id="filter0_d_growth" x="0" y="0" width="60" height="40">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feOffset in="blur" dx="0" dy="2" result="offsetBlur" />
-              <feMerge>
-                <feMergeNode in="offsetBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
+            {/* Glow for active line */}
+            <filter id="shadow-blur">
+              <feDropShadow
+                dx="0"
+                dy="1"
+                stdDeviation="1.5"
+                floodColor="#6366F1"
+                floodOpacity="0.25"
+              />
             </filter>
+
+            {/* Gradient under Portfolio Line */}
+            <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#6976EB" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#6976EB" stopOpacity="0" />
+            </linearGradient>
           </defs>
 
-          {/* Y-axis labels */}
+          {/* Grid Lines */}
+          {yAxisLabels.map((_, index) => {
+            const y =
+              height -
+              paddingBottom -
+              (index / (yAxisLabels.length - 1)) *
+                (height - paddingTop - paddingBottom);
+            return (
+              <line
+                key={index}
+                x1={paddingLeft}
+                y1={y}
+                x2={width - paddingRight}
+                y2={y}
+                stroke="#E5E7EB"
+                strokeWidth="1"
+                strokeDasharray="3,3"
+              />
+            );
+          })}
+
+          {/* Y-axis Labels */}
           {yAxisLabels.map((label, index) => {
             const y =
               height -
               paddingBottom -
-              (index / (yAxisLabels.length - 1)) * (height - paddingTop - paddingBottom);
+              (index / (yAxisLabels.length - 1)) *
+                (height - paddingTop - paddingBottom);
             return (
               <text
                 key={index}
                 x={paddingLeft - 10}
                 y={y}
-                className="text-[10px] fill-[#484848] font-medium"
+                className="text-[10px] fill-gray-500 font-medium"
                 textAnchor="end"
                 dominantBaseline="middle"
               >
@@ -358,230 +456,209 @@ export const AnimatedChart = ({
             );
           })}
 
-          {/* X-axis labels */}
+          {/* X-axis Labels */}
           {labelsToShow.map((labelIndex: number) => {
             const month = months[labelIndex];
             const x = paddingLeft + labelIndex * xStep;
+            const labelY = height - paddingBottom + 15;
 
             return (
               <text
                 key={`${month}-${labelIndex}`}
                 x={x}
-                y={height - paddingBottom + 20}
-                className="text-[10px] fill-[#484848] font-medium"
-                textAnchor="middle"
-                transform={`rotate(-90 ${x} ${height - paddingBottom + 20})`}
+                y={labelY}
+                className="text-[10px] fill-gray-600 font-medium"
+                textAnchor="end"
+                transform={`rotate(-90 ${x} ${labelY})`}
               >
                 {month}
               </text>
             );
           })}
 
-          {/* Grid lines */}
-          {yAxisLabels.map((_, index) => {
-            const y =
-              height -
-              paddingBottom -
-              (index / (yAxisLabels.length - 1)) * (height - paddingTop - paddingBottom);
-            return (
-              <line
-                key={index}
-                x1={paddingLeft}
-                y1={y}
-                x2={width - paddingRight}
-                y2={y}
-                stroke="#f0f0f0"
-                strokeWidth="1"
-                strokeDasharray="2,2"
-              />
-            );
-          })}
-
-          {/* Zero line */}
-          {minValue <= 0 && maxValue >= 0 && (
-            <line
-              x1={paddingLeft}
-              y1={
-                height -
-                paddingBottom -
-                ((0 - minValue) / (maxValue - minValue)) *
-                (height - paddingTop - paddingBottom)
-              }
-              x2={width - paddingRight}
-              y2={
-                height -
-                paddingBottom -
-                ((0 - minValue) / (maxValue - minValue)) *
-                (height - paddingTop - paddingBottom)
-              }
-              stroke="#d0d0d0"
-              strokeWidth="2"
-            />
-          )}
-
-          {/* Benchmark path */}
+          {/* Benchmark Line */}
           <path
             d={createPath(data.benchmarkData, animationProgress)}
             stroke="#FEC700"
             strokeWidth="2"
             fill="none"
-            vectorEffect="non-scaling-stroke"
+            className="drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
           />
 
-          {/* Portfolio path */}
+          {/* Portfolio Line + Gradient */}
           <path
             d={createPath(data.data, animationProgress)}
             stroke="#6976EB"
-            strokeWidth="3"
-            fill="none"
-            vectorEffect="non-scaling-stroke"
+            strokeWidth="2.5"
+            fill="url(#portfolioGradient)"
+            filter="url(#shadow-blur)"
           />
 
-          {/* Growth indicator */}
+          {/* +X.X% Bubble */}
           {bestGrowthIndex !== -1 && animationProgress >= 0.98 && (
-            <g style={{ opacity: Math.min((animationProgress - 0.98) / 0.02, 1) }}>
+            <g
+              style={{
+                opacity: Math.min((animationProgress - 0.98) / 0.02, 1),
+                transformOrigin: "center",
+                transformBox: "fill-box",
+              }}
+            >
+              {/* Circle highlight */}
               <circle
                 cx={paddingLeft + bestGrowthIndex * xStep}
                 cy={
                   height -
                   paddingBottom -
-                  ((getAnimatedValue(data.data[bestGrowthIndex].value, animationProgress) - minValue) /
+                  ((getAnimatedValue(
+                    data.data[bestGrowthIndex].value,
+                    animationProgress
+                  ) -
+                    minValue) /
                     (maxValue - minValue)) *
-                  (height - paddingTop - paddingBottom)
+                    (height - paddingTop - paddingBottom)
                 }
-                r="10.5538"
-                fill="#6A48E8"
-                fillOpacity="0.2"
+                r="10"
+                fill="#6976EB"
+                fillOpacity="0.15"
               />
               <circle
                 cx={paddingLeft + bestGrowthIndex * xStep}
                 cy={
                   height -
                   paddingBottom -
-                  ((getAnimatedValue(data.data[bestGrowthIndex].value, animationProgress) - minValue) /
+                  ((getAnimatedValue(
+                    data.data[bestGrowthIndex].value,
+                    animationProgress
+                  ) -
+                    minValue) /
                     (maxValue - minValue)) *
-                  (height - paddingTop - paddingBottom)
+                    (height - paddingTop - paddingBottom)
                 }
-                r="3.19813"
-                fill="#6A48E8"
+                r="3.5"
+                fill="#6976EB"
               />
 
+              {/* Tooltip bubble */}
               <g
-                transform={`translate(${paddingLeft + bestGrowthIndex * xStep - 24.5}, ${height -
+                transform={`translate(${
+                  paddingLeft + bestGrowthIndex * xStep - 24.5
+                }, ${
+                  height -
                   paddingBottom -
-                  ((getAnimatedValue(data.data[bestGrowthIndex].value, animationProgress) - minValue) /
+                  ((getAnimatedValue(
+                    data.data[bestGrowthIndex].value,
+                    animationProgress
+                  ) -
+                    minValue) /
                     (maxValue - minValue)) *
-                  (height - paddingTop - paddingBottom) - 50
-                  })`}
+                    (height - paddingTop - paddingBottom) -
+                  50
+                })`}
               >
-                <g opacity="0.75" filter="url(#filter0_d_1431_1390)">
-                  <rect width="49.2512" height="26.8643" rx="6.39626" fill="#1F1A5F" />
-                  <path d="M24.5 31L22.3404 26.8643H26.6596L24.5 31Z" fill="#1F1A5F" />
-                  <text
-                    x="24.5"
-                    y="13.4"
-                    className="text-[10px] fill-white font-medium"
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                  >
-                    +{data.data[bestGrowthIndex].value.toFixed(1)}%
-                  </text>
-                </g>
+                <rect width="50" height="26" rx="6" fill="#1F1A5F" />
+                <path d="M24.5 31L22.3 26.8H26.7L24.5 31Z" fill="#1F1A5F" />
+                <text
+                  x="25"
+                  y="14"
+                  fill="white"
+                  fontSize="10"
+                  fontWeight="600"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  +{data.data[bestGrowthIndex].value.toFixed(1)}%
+                </text>
               </g>
             </g>
           )}
 
-          {/* Hover circles */}
-          {data.benchmarkData.map((point, index) => {
-            const x = paddingLeft + index * xStep;
-            const y =
-              height -
-              paddingBottom -
-              ((getAnimatedValue(point.value, animationProgress) - minValue) / (maxValue - minValue)) *
-              (height - paddingTop - paddingBottom);
-
-            return (
-              <circle
-                key={`benchmark-hover-${index}`}
-                cx={x}
-                cy={y}
-                r="8"
-                fill="transparent"
-                className="cursor-pointer"
-              />
-            );
-          })}
-
-          {data.data.map((point, index) => {
-            const x = paddingLeft + index * xStep;
-            const y =
-              height -
-              paddingBottom -
-              ((getAnimatedValue(point.value, animationProgress) - minValue) / (maxValue - minValue)) *
-              (height - paddingTop - paddingBottom);
-
-            return (
-              <circle
-                key={`portfolio-hover-${index}`}
-                cx={x}
-                cy={y}
-                r="8"
-                fill="transparent"
-                className="cursor-pointer"
-              />
-            );
-          })}
-
+          {/* Hover point */}
           {hoveredPoint && (
             <circle
               cx={hoveredPoint.x}
               cy={hoveredPoint.y}
               r="5"
-              fill={hoveredPoint.type === 'portfolio' ? '#6976EB' : '#FEC700'}
+              fill={hoveredPoint.type === "portfolio" ? "#6976EB" : "#FEC700"}
               stroke="white"
               strokeWidth="2"
             />
           )}
         </svg>
 
+        {/* Tooltip */}
         {hoveredPoint && (
           <div
-            className="absolute bg-white shadow-lg rounded-lg px-3 py-2 pointer-events-none z-50 border border-gray-200"
+            className="absolute bg-white shadow-lg rounded-lg px-3 py-2 border border-gray-100 pointer-events-none transition-all duration-150 text-xs"
             style={{
               left: `${(hoveredPoint.x / width) * 100}%`,
               top: `${(hoveredPoint.y / height) * 100}%`,
-              transform: 'translate(-50%, -120%)',
+              transform: "translate(-50%, -130%)",
             }}
           >
-            <div className="text-xs font-semibold text-gray-800 mb-1">
+            <p className="font-semibold text-gray-800 mb-1">
               {hoveredPoint.month}
-            </div>
-            <div className={`text-sm font-bold`} style={{ color: hoveredPoint.type === 'portfolio' ? '#6976EB' : '#FEC700' }}>
-              {hoveredPoint.type === 'portfolio' ? 'NRC Aurum Portfolio' : 'S&P BSE 500 TR'}: {hoveredPoint.value.toFixed(2)}%
-            </div>
+            </p>
+            <p
+              className="font-bold"
+              style={{
+                color:
+                  hoveredPoint.type === "portfolio" ? "#6976EB" : "#FEC700",
+              }}
+            >
+              {hoveredPoint.type === "portfolio"
+                ? "Aurum Portfolio"
+                : "S&P BSE 500 TR"}{" "}
+              : {hoveredPoint.value.toFixed(2)}%
+            </p>
           </div>
         )}
       </div>
 
-      <div className="flex gap-6 mt-5">
+      {/* Divider */}
+      <div className="border-t border-gray-100 mt-6 mb-4"></div>
+
+      {/* Legend */}
+      <div className="flex flex-wrap justify-center md:justify-between items-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-1 rounded-full" style={{ backgroundColor: '#FEC700' }}></div>
-          <p className="text-xs text-gray-700">S&P BSE 500 TR</p>
+          <span className="w-5 h-[3px] rounded-full bg-[#FEC700]" />
+          <p className="text-sm text-gray-700 font-medium">S&P BSE 500 TR</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-7 h-1 rounded-full" style={{ backgroundColor: '#6976EB' }}></div>
-          <p className="text-xs text-gray-700">NRC Aurum smallcap portfolio</p>
+          <span className="w-5 h-[3px] rounded-full bg-[#6976EB]" />
+          <p className="text-sm text-gray-700 font-medium">
+            NRC Aurum Smallcap Portfolio
+          </p>
         </div>
       </div>
 
-      <div className="mt-3">
-        <h1 className="text-primary">
-          CAGR Since Inception*: Aurum Small Cap: {portfolioCAGR.toFixed(2)}% | S&P BSE 500 TR: {benchmarkCAGR.toFixed(2)}%
-        </h1>
-        <p className="text-xs mt-1">
-          Performance related information provided above is not verified by SEBI
-          As prescribed by SEBI for investment approaches covered under the
-          Equity strategy
+      {/* CAGR Section */}
+      <div className="mt-5 text-center space-y-1.5">
+        <p className="text-sm font-semibold text-[#1A1A1A]">
+          CAGR Since Inception*
+        </p>
+        <p className="text-[15px] font-bold text-primary">
+          Aurum Small Cap: {portfolioCAGR.toFixed(2)}% | Benchmark:{" "}
+          {benchmarkCAGR.toFixed(2)}%
+        </p>
+
+        {/* Returns as of date (only if available) */}
+        {lastUpdated && (
+          <p className="text-xs text-gray-500 mt-1">
+            Returns as of{" "}
+            {new Date(lastUpdated).toLocaleDateString("en-IN", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+            *
+          </p>
+        )}
+
+        {/* SEBI Disclaimer */}
+        <p className="text-xs text-gray-500 mt-1 leading-relaxed max-w-md mx-auto">
+          Performance-related information is not verified by SEBI. As prescribed
+          by SEBI, individual portfolio performance under the equity strategy
+          may vary.
         </p>
       </div>
     </div>

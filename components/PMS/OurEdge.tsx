@@ -1,14 +1,16 @@
+"use client";
 import React from "react";
-import FlexibleHeading from "../ui/FlexibleHeading";
-import { Col2Row1, Col2Row2 } from "@/assets/PMS";
 import Image from "next/image";
 import Container from "../Reusable/Container";
+import FlexibleHeading from "../ui/FlexibleHeading";
+import { Col2Row1, Col2Row2 } from "@/assets/PMS";
 
 const OurEdge = () => {
   return (
     <Container className="bg-[#FFFFFF]">
 
-      {/* desktop */}
+      {/* 🟣 Headings */}
+      {/* Desktop */}
       <FlexibleHeading
         title="Small Caps : Our Flagship. Our Edge."
         description="This is where discovery, diligence, and discipline create extraordinary long-term wealth."
@@ -16,10 +18,10 @@ const OurEdge = () => {
         highlights={{
           "Our Flagship. Our Edge.": "text-primary",
         }}
-        className="lg:block hidden"
+        className="hidden lg:block"
       />
 
-      {/* tablet / mobile */}
+      {/* Tablet / Mobile */}
       <FlexibleHeading
         title="Small Caps Our Flagship. <br/> Our Edge."
         description="This is where discovery, diligence, and discipline create extraordinary long-term wealth."
@@ -28,23 +30,23 @@ const OurEdge = () => {
           "Our Flagship.": "text-primary",
           "Our Edge.": "text-primary",
         }}
-        className="lg:hidden block"
+        className="block lg:hidden"
       />
 
-      {/* Mobile Layout - Single Column */}
-      <div className=" lg:hidden space-y-4 mt-12 ">
-        <div className="grid grid-cols-[68%_28%] gap-4">
+      {/* 🟣 Mobile / Tablet Layout */}
+      <div className="block lg:hidden space-y-4 mt-12">
+        <div className="grid grid-cols-2 sm:grid-cols-[65%_30%] gap-4">
+
           {/* #1 Card */}
-          <div className="bg-[#F6F9FC] rounded-2xl p-6 h-[131px] md:h-[170px] flex flex-col justify-between">
-            <div className="text-2xl md:text-[32px] leading-6 font-bold">#1</div>
-            <p className="text-xs text-black leading-5 md:text-lg md:leading-[20px]">
-              Small-cap index was the best performing segment in 6 of the last 10
-              years.
+          <div className="bg-[#F6F9FC] rounded-2xl p-6 min-h-[140px] sm:min-h-[170px] flex flex-col justify-between">
+            <div className="text-2xl sm:text-[32px] leading-none font-bold">#1</div>
+            <p className="text-xs sm:text-sm md:text-base text-black leading-5 sm:leading-6 md:leading-[22px]">
+              Small-cap index was the best performing segment in 6 of the last 10 years.
             </p>
           </div>
 
-          {/* Landscape Image */}
-          <div className="bg-white rounded-2xl overflow-hidden h-[131px] md:h-[170px]">
+          {/* Image Right */}
+          <div className="bg-white rounded-2xl overflow-hidden min-h-[140px] sm:min-h-[170px]">
             <Image
               src={Col2Row1}
               alt="Mountain Road"
@@ -54,18 +56,17 @@ const OurEdge = () => {
         </div>
 
         {/* 80% Card */}
-        <div className="bg-[#6A48E8] text-white rounded-2xl py-6 px-4 h-[207px] flex flex-col justify-between">
-          <div className="text-2xl md:text-[32px] leading-6 font-bold mb-4">80%</div>
-          <p className="text-sm leading-6 opacity-90 md:text-lg md:leading-[20px]">
-            Of small caps cater to domestic demand, reducing global volatility
-            impact.
+        <div className="bg-[#6A48E8] text-white rounded-2xl p-6 sm:p-8 min-h-[200px] sm:min-h-[220px] flex flex-col justify-between">
+          <div className="text-2xl sm:text-[32px] leading-none font-bold mb-3">80%</div>
+          <p className="text-sm sm:text-base md:text-lg leading-6 md:leading-7 opacity-90">
+            Of small caps cater to domestic demand, reducing global volatility impact.
           </p>
         </div>
 
-        <div className="grid grid-cols-[28%_68%] gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-[30%_65%] gap-4">
 
           {/* Building Image */}
-          <div className="bg-white rounded-2xl overflow-hidden h-[163px] md:h-[180px]">
+          <div className="bg-white rounded-2xl overflow-hidden min-h-[160px] sm:min-h-[180px]">
             <Image
               src={Col2Row2}
               alt="Modern Buildings"
@@ -74,33 +75,30 @@ const OurEdge = () => {
           </div>
 
           {/* 70%+ Card */}
-          <div className="bg-[#B8B5FF] text-black rounded-2xl py-6 px-4 h-[163px] md:h-[180px] md:flex md:flex-col justify-between">
-            <div className="text-2xl md:text-[32px] leading-6 font-bold mb-4">70%+</div>
-            <p className="text-sm leading-6 opacity-90 md:text-lg md:leading-[20px]">
-              Of listed Indian companies are small caps — under-researched,
-              under-owned.
+          <div className="bg-[#B8B5FF] text-black rounded-2xl p-6 sm:p-8 flex flex-col justify-between min-h-[160px] sm:min-h-[180px]">
+            <div className="text-2xl sm:text-[32px] leading-none font-bold mb-3">70%+</div>
+            <p className="text-sm sm:text-base md:text-lg leading-6 md:leading-7 opacity-90">
+              Of listed Indian companies are small caps — under-researched, under-owned.
             </p>
           </div>
-
-
         </div>
       </div>
 
-      {/* Desktop Layout - Three Column Grid */}
-      <div className="hidden lg:grid lg:grid-cols-3 gap-5 mt-16 h-[600px]">
-        {/* Column 1 - Single large card */}
-        <div className="bg-[#F6F9FC] rounded-2xl p-8 w-full h-full flex flex-col justify-between">
-          <div className="text-[44px] font-bold text-black mb-6">#1</div>
-          <p className="text-2xl leading-[36px] font-[400]">
-            Small-cap index was the best performing segment in 6 of the last 10
-            years.
+      {/* 🟣 Desktop / Large Layout */}
+      <div className="hidden lg:grid grid-cols-3 gap-6  xl:gap-8 auto-rows-fr">
+
+        {/* Column 1 */}
+        <div className="bg-[#F6F9FC] rounded-2xl p-8 flex flex-col justify-between">
+          <div className="text-[44px] font-bold text-black mb-4">#1</div>
+          <p className="text-2xl leading-[36px] font-light">
+            Small-cap index was the best performing segment in 6 of the last 10 years.
           </p>
         </div>
 
-        {/* Column 2 - Two rows with equal height */}
-        <div className="flex flex-col gap-5 h-full">
-          {/* Top: Landscape image - exactly half height */}
-          <div className="bg-white rounded-2xl overflow-hidden h-[285px] w-full">
+        {/* Column 2 */}
+        <div className="flex flex-col gap-6">
+          {/* Top Image */}
+          <div className="bg-white rounded-2xl overflow-hidden flex-1 min-h-[200px]">
             <Image
               src={Col2Row1}
               alt="Mountain Road"
@@ -108,27 +106,27 @@ const OurEdge = () => {
             />
           </div>
 
-          {/* Bottom: 80% purple card - exactly half height */}
-          <div className="bg-primary text-white rounded-2xl p-6 h-[285px] w-full flex flex-col justify-between">
+          {/* Bottom Card */}
+          <div className="bg-primary text-white rounded-2xl p-8 flex flex-col justify-between flex-1">
             <div className="text-[44px] font-bold leading-[58px]">70%+</div>
-            <p className="text-2xl opacity-90 leading-[36px] font-[400]">
-              Of listed Indian companies are small caps — under-researched, under-owned
+            <p className="text-2xl opacity-90 leading-[36px] font-light">
+              Of listed Indian companies are small caps — under-researched, under-owned.
             </p>
           </div>
         </div>
 
-        {/* Column 3 - Two rows with equal height */}
-        <div className="flex flex-col gap-5 h-full">
-          {/* Top: 70%+ purple card - exactly half height */}
-          <div className="bg-primary text-white rounded-2xl p-6 h-[285px] w-full flex flex-col justify-between">
+        {/* Column 3 */}
+        <div className="flex flex-col gap-6">
+          {/* Top Purple Card */}
+          <div className="bg-primary text-white rounded-2xl p-8 flex flex-col justify-between flex-1">
             <div className="text-[44px] font-bold leading-[58px]">80%</div>
-            <p className="text-2xl opacity-90 leading-[36px] font-[400]">
+            <p className="text-2xl opacity-90 leading-[36px] font-light">
               Of small caps cater to domestic demand, reducing global volatility impact.
             </p>
           </div>
 
-          {/* Bottom: Building image - exactly half height */}
-          <div className="bg-white rounded-2xl overflow-hidden h-[285px] w-full">
+          {/* Bottom Image */}
+          <div className="bg-white rounded-2xl overflow-hidden flex-1 min-h-[200px]">
             <Image
               src={Col2Row2}
               alt="Modern Buildings"
@@ -137,8 +135,6 @@ const OurEdge = () => {
           </div>
         </div>
       </div>
-
-
     </Container>
   );
 };

@@ -39,28 +39,28 @@ function StrategyCard({
         <Image
           src={imageUrl || "/placeholder.svg"}
           alt={title}
-          className="w-full h-32 md:h-48 object-cover rounded-xl"
+          className="w-full h-32 md:h-48 object-cover  rounded-xl"
           width={400}
           height={250}
         />
       </div>
 
       {/* Title */}
-      <SlideUpText animationMode="always" delay={0.4}>
+      <SlideUpText animationMode="always">
         <h3 className="md:text-2xl text-lg leading-[34px] md:leading-12 font-[400] text-gray-900  mb-4 md:mb-2">
           {title} <span className="text-primary">{subtitle}</span>
         </h3>
       </SlideUpText>
 
       {/* Sections */}
-      <div className="flex flex-col">
-        <SlideUpText animationMode="always" delay={0.4}>
+      <div className="flex flex-col mb-6">
+        <SlideUpText animationMode="always">
           {sections.map((section, index) => (
             <div key={index}>
               <h4 className={`md:text-lg text-sm leading-3 md:leading-6 font-[400] text-gray-900 mb-2 ${index === 1 ? `mt-4` : ``}`}>
                 {section.heading}
               </h4>
-              <p className="text-gray-600 font-[400] md:leading-6 md:text-base text-xs leading-3.5">
+              <p className="text-secondary font-[400] md:leading-6 md:text-base text-xs leading-3.5">
                 {section.description}
               </p>
             </div>
@@ -168,12 +168,12 @@ export default function StrategiesSection() {
     {
       title: "Portfolio Management",
       subtitle: "Services (PMS)",
-      imageUrl: "/whatwedoImg1.png",
+      imageUrl: "/whatwedo-pms.jpg",
       sections: [
         {
           heading: "Aurum Small Cap Opportunities",
           description:
-            "We are non-consensus investors focused on finding mispriced opportunities through our proprietary 'Private Equity Approach'.",
+            "We are non-consensus investors focused on finding mispriced opportunities through our proprietary ‘Private Equity Approach’. ",
         },
         {
           heading: "Aurum Multiplier Fund",
@@ -185,7 +185,7 @@ export default function StrategiesSection() {
     {
       title: "Alternative Investment",
       subtitle: "Funds (AIF)",
-      imageUrl: "/whatwedoImg2.png",
+      imageUrl: "/whatwedo-aif.jpg",
       sections: [
         {
           heading: "Category I – SME Fund (Closed)",

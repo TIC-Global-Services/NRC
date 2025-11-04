@@ -173,7 +173,7 @@ const Partnerships = () => {
 
 
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile>
+    <Container  disablePaddingBottomMobile>
       <FlexibleHeading
         title="Not Just Portfolios.Partnerships."
         mdTitle="Not Just Portfolios.Partnerships."

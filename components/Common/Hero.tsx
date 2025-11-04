@@ -179,24 +179,22 @@ const Hero: React.FC<HeroProps> = ({
     >
       <div className="w-full h-full flex items-center justify-center relative">
         <div
-          className="absolute bg-transparent -bottom-[35%] w-full"
+          className="absolute bg-transparent -bottom-[35%] md:-bottom-[40%] w-full"
           style={{ height: "100vh" }}
         >
           <video
             ref={videoRef}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover "
             style={{
               maxWidth: "100vw",
               display: "block",
-              opacity: videoReady ? 1 : 0,
-              transition: "opacity 0.3s ease-in-out",
             }}
             muted
             loop
             playsInline
             preload="auto"
           >
-            <source src="/Wave_Video/Waves.webm" type="video/webm" />
+            <source src="/Wave_Video/NRC_Wave_Enhanced.webm" type="video/webm" />
             <source src="/Wave_Video/Waves.mov" type="video/quicktime" />
             Your browser does not support the video tag.
           </video>

@@ -263,7 +263,7 @@ const Footer = () => {
                 className="md:space-y-3 space-y-1 md:col-span-2 lg:col-span-1"
               >
                 <h4 className="md:text-xl text-lg font-medium mb-3">
-                  Compliance Officer
+                  Registered as:
                 </h4>
                 <div className="text-[#FFFFFF] opacity-[60%] space-y-2 text-base">
                   <p>
@@ -323,7 +323,10 @@ const Footer = () => {
                   whileHover={{ color: "#ffffff" }}
                   className="cursor-pointer underline opacity-[60%]"
                 >
+                  <Link href={'/disclaimer'}>
+                  
                   Disclaimer
+                  </Link>
                 </motion.span>
                 <motion.span
                   whileHover={{ color: "#ffffff" }}

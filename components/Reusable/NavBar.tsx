@@ -36,8 +36,6 @@ interface NavbarProps {
   isHomePage?: boolean;
 }
 
-const SCROLL_THRESHOLD = 50;
-const HIDE_THRESHOLD = 100;
 
 const NAV_ITEMS: NavItemType[] = [
   { name: "Home", hasDropdown: false, link: "/" },
@@ -228,31 +226,18 @@ const Navbar: React.FC<NavbarProps> = ({
   visibility = true,
   isHomePage = false,
 }) => {
-  const { isHeroScrolled, isHeroContentRevealed } = useHeroScroll();
   const pathname = usePathname();
   const [activeItem, setActiveItem] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   const [mounted, setMounted] = useState(false);
 
-  const lastScrollYRef = useRef(0);
-  const ticking = useRef(false);
-
   useEffect(() => setMounted(true), []);
+  useEffect(() => setIsDropdownOpen(false), [pathname]);
 
-  useEffect(() => {
-    setIsDropdownOpen(false);
-  }, [pathname]);
-
-  const isHome = useMemo(
-    () => mounted && pathname === "/",
-    [mounted, pathname]
-  );
+  const isHome = useMemo(() => mounted && pathname === "/", [mounted, pathname]);
 
   const getActiveItem = useCallback((currentPath: string): string => {
-    if (currentPath === "/pms" || currentPath === "/aif") {
-      return "Asset Management";
-    }
+    if (currentPath === "/pms" || currentPath === "/aif") return "Asset Management";
     const match = NAV_ITEMS.find((item) => item.link === currentPath);
     return match ? match.name : "Home";
   }, []);
@@ -261,71 +246,29 @@ const Navbar: React.FC<NavbarProps> = ({
     setActiveItem(getActiveItem(pathname));
   }, [pathname, getActiveItem]);
 
-  const handleScroll = useCallback(() => {
-    if (!ticking.current) {
-      window.requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        const lastScrollY = lastScrollYRef.current;
-
-        const scrollingUp = currentScrollY < lastScrollY;
-        const scrollingDown = currentScrollY > lastScrollY;
-
-        if (isHome) {
-          if (scrollingDown && isVisible && currentScrollY > HIDE_THRESHOLD)
-            setIsVisible(false);
-          else if (scrollingUp && !isVisible) setIsVisible(true);
-        } else {
-          if (scrollingDown && isVisible && currentScrollY > HIDE_THRESHOLD)
-            setIsVisible(false);
-          else if (scrollingUp && !isVisible) setIsVisible(true);
-        }
-
-        lastScrollYRef.current = currentScrollY;
-        ticking.current = false;
-      });
-      ticking.current = true;
-    }
-  }, [isHome, isVisible]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
   const handleDropdownToggle = useCallback(() => {
     setIsDropdownOpen((prev) => !prev);
   }, []);
 
-  const navbarBgClass = useMemo(() => {
-    return isHeroScrolled
-      ? "bg-white border-[#E5E5E5]"
-      : "bg-white/30 backdrop-blur-[20px] border-white/30";
-  }, [isHeroScrolled]);
-
-  const handleLoginRoute = useCallback(() => {
-    window.open("https://faconnect.kotak.com", "_blank");
-  }, []);
 
   return (
     <motion.div
-      className="fixed left-0 right-0 w-full hidden lg:block z-[999]"
-      style={{ top: isHomePage ? "24px" : "40px" }}
-      initial={{ y: -120, opacity: 0 }}
+      className="fixed top-4 left-0 right-0 w-full hidden lg:block z-[999]"
+      initial={{ y: -100, opacity: 0 }}
       animate={{
-        y: isVisible ? 0 : -120,
-        opacity: visibility && isVisible ? 1 : 0,
+        y: 0,
+        opacity: visibility ? 1 : 0,
         transition: {
           type: "spring",
           stiffness: 100,
           damping: 20,
-          mass: 1,
           duration: 0.6,
         },
       }}
     >
       <Container isNavbar>
         <nav
-          className={`rounded-full px-8 2xl:py-4 md:py-3 grid grid-cols-[auto_1fr_auto] items-center transition-all duration-300 ${navbarBgClass} border`}
+          className={`rounded-full px-8 2xl:py-4 md:py-3 grid grid-cols-[auto_1fr_auto] items-center transition-all duration-300 bg-white/30 backdrop-blur-[20px] border-white/30 border`}
         >
           {/* ✅ Logo link */}
           <Link href="/" className="flex items-center justify-start">
@@ -395,7 +338,7 @@ const Navbar: React.FC<NavbarProps> = ({
               label="Log In"
               variant="purple"
               onClick={() =>
-                window.open("https://faconnect.kotak.com",)
+                window.open("https://faconnect.kotak.com", "_blank")
               }
               className="[@media(min-width:1000px)]:px-4 [@media(min-width:1000px)]:py-1.5 [@media(min-width:1200px)]:px-5 [@media(min-width:1200px)]:py-2"
             />
@@ -405,5 +348,6 @@ const Navbar: React.FC<NavbarProps> = ({
     </motion.div>
   );
 };
+
 
 export default Navbar;

@@ -12,7 +12,7 @@ import SlideUpText from "../ui/SlideUpText";
 
 const WhoWeServeSection = () => {
   return (
-    <Container disablePaddingBottomMobile disablePaddingTopMobile className="py-12 lg:py-0">
+    <Container disablePaddingBottomMobile disablePaddingTopMobile disablePaddingTopDesktop className="py-12 lg:py-0">
       <motion.section
         className="bg-primary overflow-hidden md:h-[90vh] lg:h-auto  rounded-[12px]  pb-32 md:p-4 lg:p-0 lg:pb-0"
         initial={{ opacity: 0 }}
@@ -66,7 +66,7 @@ const WhoWeServeSection = () => {
                 className="space-y-1 text-[#C3C4FC]"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+                transition={{ duration: 0.6, ease: "easeOut"}}
               >
                 {/* <div className="text-primary">
                                 </div> */}

@@ -33,26 +33,26 @@ const SMEPerformanceCard = () => {
               {/* TVPI Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
                 <div className="md:text-2xl text-xl md:leading-[19px] font-bold">
-                  1.62x
+                  1.48x
                 </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
-                  MOIC*
+                  TVPI*
                 </div>
                 <div className="text-secondary text-xs md:text-sm leading-[16px] pt-8 border-t border-gray-200">
-                  Multiple on Investment Capital
+                  Total Value to Paid-in-capital
                 </div>
               </div>
 
               {/* XIRR Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
                 <div className="md:text-2xl text-xl  md:leading-[19px] font-bold">
-                  1.62x
+                  29.75x
                 </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
-                  MOIC*
+                  XIRR*
                 </div>
                 <div className="text-secondary text-xs md:text-sm leading-[16px] pt-8 border-t border-gray-200">
-                  Multiple on Investment Capital
+                  Internal Rate of Return
                 </div>
               </div>
             </div>
