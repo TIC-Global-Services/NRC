@@ -20,7 +20,7 @@ const Team = () => {
       <div className="w-full flex justify-center">
         <SlideUpText
           animationMode="always"
-          className="md:pt-32 md:pb-[70px] pt-8 pb-56 text-[20px] leading-[31px] md:text-lg font-light text-center max-w-[80%] md:max-w-3xl"
+          className="md:pt-24 pt-20  text-[20px] leading-[31px] md:text-lg font-light text-center max-w-[80%] md:max-w-3xl"
         >
           At Nine Rivers Capital we bring together a diverse group of
           professionals with expertise in asset management and corporate

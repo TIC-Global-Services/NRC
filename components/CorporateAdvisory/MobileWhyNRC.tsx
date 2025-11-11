@@ -26,13 +26,13 @@ const PartnershipCard: React.FC<PartnershipCardProps> = ({
     description,
 }) => {
     return (
-        <div className="grid grid-rows-[35%_65%] md:grid-rows-[30%_70%] h-full rounded-xl overflow-hidden">
-            <div className="flex flex-col items- justify-center mb-7 md:mb-0">
-                <h3 className="md:text-3xl text-base leading-[23px] md:leading-[31px] text-black mb-[10px] font-bold max-w-[220px] md:max-w-full">{title}</h3>
+        <div className="flex flex-col h-[50dvh] rounded-xl gap-10 overflow-hidden">
+            <div className="flex flex-col items-start  justify-start md:mb-0">
+                <h3 className="md:text-3xl text-2xl leading-[23px] md:leading-[31px] text-black mb-[10px] font-bold">{title}</h3>
                 <p className="md:text-lg text-sm leading-4 font-normal md:leading-[31px] max-w-xs md:max-w-xl">{description}</p>
             </div>
             <div>
-                <Image src={image} alt={alt} className="w-full rounded-xl h-full object-cover object-top" />
+                <Image src={image} alt={alt} className="w-full rounded-xl  h-full object-cover object-top" />
             </div>
         </div>
     );
@@ -135,7 +135,7 @@ const MobileWhyNRC = () => {
                                 key={index}
                                 className="w-[98vw] flex-shrink-0 flex items-center justify-start pr-4"
                             >
-                                <div className="w-[98%] h-[450px] md:h-[600px]">
+                                <div className="w-[98%]">
                                     <PartnershipCard
                                         image={card.image}
                                         alt={card.alt}

@@ -20,7 +20,7 @@ const RecentBlogs = () => {
 
   const router = useRouter();
   return (
-    <Container disableYSpacing className="md:pt-[87px] md:pb-30 pt-12">
+    <Container disableYSpacing disablePaddingBottomMobile className="md:pt-[87px] md:pb-30 pt-12">
       <div>
         {/* Header */}
         <div className="text-center md:mb-12 mb-7">

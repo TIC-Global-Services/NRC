@@ -25,7 +25,7 @@ const AIF = () => {
       <div className="flex items-center justify-center text-center">
         <SlideUpText
           animationMode="always"
-          className="pt-32 md:text-lg font-light text-center max-w-[80%] md:max-w-3xl mx-auto lg:pb-0 pb-28"
+          className="pt-32 md:text-lg font-light text-center max-w-[80%] md:max-w-3xl mx-auto lg:pb-0 pb-12"
         >
           As India&apos;s influence in the global economy strengthens, Nine
           Rivers Capital identifies and supports outstanding Indian founders

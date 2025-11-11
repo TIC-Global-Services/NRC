@@ -73,24 +73,22 @@ const WhoWeServeSection = () => {
                 <SlideUpText animationMode="always">
                   <p className="font-medium">We serve investors who seek:</p>
                 </SlideUpText>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
+                
                     <SlideUpText animationMode="always">
-                      Long-term compounding with transparency
+                      • {" "} Long-term compounding with transparency
                     </SlideUpText>
-                  </li>
-                  <li>
+                  
+                
                     <SlideUpText animationMode="always">
-                      A boutique, high-touch partner
+                      • {" "} A boutique, high-touch partner
                     </SlideUpText>
-                  </li>
-                  <li>
+                  
+                
                     <SlideUpText animationMode="always">
-                      Disciplined research and access to under-researched
+                      • {" "} Disciplined research and access to under-researched
                       opportunities
                     </SlideUpText>
-                  </li>
-                </ul>
+                  
               </motion.div>
             </motion.div>
 

@@ -1,5 +1,5 @@
-import WeOfferImg1 from "../../assets/CorporateAdvisory/WeOfferImg1.png"
-import WeOfferImg2 from "../../assets/CorporateAdvisory/WeOfferImg2.png"
+import WeOfferImg1 from "../../assets/CorporateAdvisory/WeOfferImage1.jpg"
+import WeOfferImg2 from "../../assets/CorporateAdvisory/WeOfferImage2.jpg"
 import WeOfferImg3 from "../../assets/CorporateAdvisory/WeOfferImg3.png"
 import RecentBlogImg1 from "../../assets/CorporateAdvisory/RecentBlogImg1.png"
 import RecentBlogImg2 from "../../assets/CorporateAdvisory/RecentBlogImg2.png"

@@ -22,9 +22,10 @@ export default function TrackRecordSection() {
 
   const [ascoData, setAscoData] = useState<PortfolioRow[]>([]);
   const [ampData, setAmpData] = useState<PortfolioRow[]>([]);
-  const [meta, setMeta] = useState<{ lastUpdated?: string; sheetName?: string }>(
-    {}
-  );
+  const [meta, setMeta] = useState<{
+    lastUpdated?: string;
+    sheetName?: string;
+  }>({});
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,27 +38,24 @@ export default function TrackRecordSection() {
   ];
 
   // 🔹 Reusable data loader
-  const loadFundData = useCallback(
-    async (type: "home" | "pms") => {
-      try {
-        setLoading(true);
-        const { data, lastUpdated, sheetName } = await fetchPortfolioData(type);
-        const sortedData = sortDataChronologically(data);
+  const loadFundData = useCallback(async (type: "home" | "pms") => {
+    try {
+      setLoading(true);
+      const { data, lastUpdated, sheetName } = await fetchPortfolioData(type);
+      const sortedData = sortDataChronologically(data);
 
-        if (type === "home") setAscoData(sortedData);
-        else setAmpData(sortedData);
+      if (type === "home") setAscoData(sortedData);
+      else setAmpData(sortedData);
 
-        setMeta({ lastUpdated, sheetName });
-        setError(null);
-      } catch (err) {
-        console.error(`Error fetching ${type} data:`, err);
-        setError(`Failed to load ${type.toUpperCase()} data`);
-      } finally {
-        setLoading(false);
-      }
-    },
-    []
-  );
+      setMeta({ lastUpdated, sheetName });
+      setError(null);
+    } catch (err) {
+      console.error(`Error fetching ${type} data:`, err);
+      setError(`Failed to load ${type.toUpperCase()} data`);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   // 🔸 Load ASCO initially
   useEffect(() => {
@@ -66,7 +64,10 @@ export default function TrackRecordSection() {
 
   // 🔸 Load AMP only when selected and not already loaded
   useEffect(() => {
-    if (selectedFund === "Aurum Multiplier Fund (AMP)" && ampData.length === 0) {
+    if (
+      selectedFund === "Aurum Multiplier Fund (AMP)" &&
+      ampData.length === 0
+    ) {
       loadFundData("pms");
     }
   }, [selectedFund, ampData.length, loadFundData]);
@@ -192,8 +193,9 @@ export default function TrackRecordSection() {
   return (
     <Container
       disablePaddingBottomMobile
+      disableMarginBottomMobile
       disablePaddingTopMobile
-      className="bg-[#F6F9FC] py-12 lg:py-0"
+      className="bg-[#F6F9FC] pt-12 lg:pt-0"
     >
       <section>
         <div className="max-w-7xl mx-auto">
@@ -203,13 +205,14 @@ export default function TrackRecordSection() {
               <Badge label="Our Track Record" />
               <h2 className="text-[26px] mt-4 md:text-5xl font-[400] leading-8 md:leading-[58px]">
                 Focused on Value,
-                <br /> <span className="text-primary">Powered by Experience</span>
+                <br />{" "}
+                <span className="text-primary">Powered by Experience</span>
               </h2>
             </div>
           </div>
 
           <div className="grid lg:grid-cols-[0.45fr_0.55fr] items-end">
-            {/* Left Column - Text & Fund Selection */}
+            {/* Left Column - Desktop Fund Selection */}
             <div className="hidden md:block lg:max-w-md">
               <div className="mb-3">
                 <Badge label="Our Track Record" />
@@ -233,7 +236,8 @@ export default function TrackRecordSection() {
                 <SlideUpText animationMode="always">Offerings</SlideUpText>
               </h3>
 
-              <div className="space-y-3 lg:block md:hidden">
+              {/* Desktop buttons */}
+              <div className="space-y-3">
                 {fundOptions.map((fund) => (
                   <button
                     key={fund}
@@ -241,19 +245,34 @@ export default function TrackRecordSection() {
                     className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-lg ${
                       selectedFund === fund
                         ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
-                        : "opacity-20"
+                        : "opacity-50"
                     }`}
                   >
-                    <span className="font-medium">
-                      <SlideUpText animationMode="always">{fund}</SlideUpText>
-                    </span>
+                    <span className="font-medium">{fund}</span>
                   </button>
                 ))}
               </div>
             </div>
 
+            {/* 🔹 Mobile Fund Buttons */}
+            <div className="md:hidden mt-6 space-y-2">
+              {fundOptions.map((fund) => (
+                <button
+                  key={fund}
+                  onClick={() => setSelectedFund(fund)}
+                  className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-base ${
+                    selectedFund === fund
+                      ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
+                      : "opacity-50"
+                  }`}
+                >
+                  <span className="font-medium">{fund}</span>
+                </button>
+              ))}
+            </div>
+
             {/* Chart Column */}
-            <div className="mt-4 md:mt-12 mb-12 md:mb-0">
+            <div className="mt-4 md:mt-12">
               {/* Disclaimer or tagline */}
               <div className="text-secondary font-medium md:mb-3.5 mb-2 md:text-center md:text-lg md:leading-[23px] text-xs leading-[18px] text-center">
                 <AnimatePresence mode="wait">
@@ -287,8 +306,6 @@ export default function TrackRecordSection() {
 
               {/* Chart */}
               {renderChart()}
-
-              
             </div>
           </div>
         </div>

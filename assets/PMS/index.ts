@@ -1,7 +1,7 @@
 // Glance edge
-import GlanceImg1 from "@/assets/PMS/Glance/Img1.png";
-import GlanceImg2 from "@/assets/PMS/Glance/Img2.png";
-import GlanceImg3 from "@/assets/PMS/Glance/Img3.png";
+import GlanceImg1 from "@/assets/PMS/Glance/pms_history.png";
+import GlanceImg2 from "@/assets/PMS/Glance/small_cap.png";
+import GlanceImg3 from "@/assets/PMS/Glance/sebi-registered.png";
 
 import GlanceSVG1 from "@/assets/PMS/Glance/SVG1.svg";
 import GlanceSVG2 from "@/assets/PMS/Glance/SVG2.svg";

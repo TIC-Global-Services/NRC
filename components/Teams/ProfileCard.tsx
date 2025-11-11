@@ -68,7 +68,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Description */}
         <div className=" ">
-          <p className="text-secondary text-xs leading-[18px] md:text-base md:leading-[24px] w-[96%]">
+          <p className="text-secondary text-sm leading-[18px] md:text-base md:leading-[24px] w-[96%]">
             {description}
           </p>
         </div>

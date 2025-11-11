@@ -191,11 +191,9 @@ const Hero: React.FC<HeroProps> = ({
             }}
             muted
             loop
-            playsInline
-            preload="auto"
           >
             <source src="/Wave_Video/NRC_Wave_Enhanced.webm" type="video/webm" />
-            <source src="/Wave_Video/Waves.mov" type="video/quicktime" />
+            <source src="/Wave_Video/Waves.mov" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

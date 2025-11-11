@@ -1,10 +1,10 @@
 // InfoCard.tsx
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface InfoCardProps {
   title: string;
-  imageSrc: string;
+  imageSrc: string | StaticImageData;
   imageAlt?: string;
   className?: string;
   imageWidth?: number;

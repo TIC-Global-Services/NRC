@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import FlexibleHeading from "../../ui/FlexibleHeading";
 import InfoCard from "./Card";
-import { GlanceSVG1, GlanceSVG2, GlanceSVG3 } from "@/assets/PMS/index";
+import { GlanceImg1, GlanceImg2, GlanceImg3 } from "@/assets/PMS/index";
 import Container from "@/components/Reusable/Container";
 import { Draggable } from "gsap/Draggable";
 import gsap from "gsap";
@@ -21,7 +21,7 @@ const Glance = () => {
     {
       id: 1,
       title: "12+ Years of live PMS history",
-      imageSrc: GlanceSVG1.src || GlanceSVG1,
+      imageSrc: GlanceImg1.src || GlanceImg1,
       imageAlt: "PMS History Illustration",
       imageWidth: 298,
       imageHeight: 175,
@@ -29,7 +29,7 @@ const Glance = () => {
     {
       id: 2,
       title: "2 Strategies (Small Cap & Flexi-Cap)",
-      imageSrc: GlanceSVG2.src || GlanceSVG2,
+      imageSrc: GlanceImg2.src || GlanceImg2,
       imageAlt: "Portfolio Strategy",
       imageWidth: 250,
       imageHeight: 185,
@@ -37,7 +37,7 @@ const Glance = () => {
     {
       id: 3,
       title: "SEBI-Registered | Independent | Founder-led",
-      imageSrc: GlanceSVG3.src || GlanceSVG3,
+      imageSrc: GlanceImg3.src || GlanceImg3,
       imageAlt: "Risk Analytics",
       imageWidth: 210,
       imageHeight: 201,

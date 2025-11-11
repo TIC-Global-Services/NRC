@@ -13,7 +13,7 @@ const WealthFlows = () => {
       }
       
   return (
-    <Container disablePaddingTopMobile className="pt-8 md:pt-20 lg:pt-0">
+    <Container disablePaddingTopMobile disablePaddingBottomMobile className="pt-8 md:pt-20 lg:pt-0">
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-5 lg:h-[80vh]  2xl:h-[70vh]">
         <div className="bg-[#EDEBF1] flex flex-col items-center justify-center text-center gap-4  p-10 rounded-xl md:rounded-lg min-h-[490px] lg:min-h-0">
           <h1 className="text-2xl leading-[34px] md:text-4xl lg:text-[44px] lg:leading-[58px] font-[400]">

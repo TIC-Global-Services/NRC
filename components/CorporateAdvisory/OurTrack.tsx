@@ -5,16 +5,48 @@ import Container from "../Reusable/Container";
 import FlexibleHeading from "../ui/FlexibleHeading";
 import Image from "next/image";
 import {
-  TechImgOne, TechImgTwo, TechImgThree, TechImgFour, TechImgSix, TechImgSeven,
-  TechImgEight, TechImgNine, TechImgTen, TechImgEleven, TechImgTwelve,
-  CommerceImgOne, CommerceImgTwo, CommerceImgThree, CommerceImgFour, CommerceImgFive,
-  CommerceImgSix, CommerceImgSeven, CommerceImgEight, CommerceImgNine, CommerceImgTen,
-  CommerceImgEleven, CommerceImgTwelve,
-  HealthcareImgOne, HealthcareImgTwo, HealthcareImgThree, HealthcareImgFour, HealthcareImgFive,
-  HealthcareImgSix, HealthcareImgSeven, HealthcareImgEight, HealthcareImgNine,
-  HealthcareImgTen, HealthcareImgEleven,
-  IndustrialImgOne, IndustrialImgTwo, IndustrialImgThree, IndustrialImgFour,
-  IndustrialImgFive, IndustrialImgSix, IndustrialImgSeven, IndustrialImgEight,
+  TechImgOne,
+  TechImgTwo,
+  TechImgThree,
+  TechImgFour,
+  TechImgSix,
+  TechImgSeven,
+  TechImgEight,
+  TechImgNine,
+  TechImgTen,
+  TechImgEleven,
+  TechImgTwelve,
+  CommerceImgOne,
+  CommerceImgTwo,
+  CommerceImgThree,
+  CommerceImgFour,
+  CommerceImgFive,
+  CommerceImgSix,
+  CommerceImgSeven,
+  CommerceImgEight,
+  CommerceImgNine,
+  CommerceImgTen,
+  CommerceImgEleven,
+  CommerceImgTwelve,
+  HealthcareImgOne,
+  HealthcareImgTwo,
+  HealthcareImgThree,
+  HealthcareImgFour,
+  HealthcareImgFive,
+  HealthcareImgSix,
+  HealthcareImgSeven,
+  HealthcareImgEight,
+  HealthcareImgNine,
+  HealthcareImgTen,
+  HealthcareImgEleven,
+  IndustrialImgOne,
+  IndustrialImgTwo,
+  IndustrialImgThree,
+  IndustrialImgFour,
+  IndustrialImgFive,
+  IndustrialImgSix,
+  IndustrialImgSeven,
+  IndustrialImgEight,
 } from "@/assets/CorporateAdvisory";
 
 const OurTrack = () => {
@@ -26,8 +58,17 @@ const OurTrack = () => {
       label: "Technology",
       desc: "Consumer Internet, B2B Technology, Frontier Technologies, IT Services & BPO, Digital Transformation & Cloud",
       logos: [
-        TechImgOne, TechImgTwo, TechImgThree, TechImgFour, TechImgSix,
-        TechImgSeven, TechImgEight, TechImgNine, TechImgTen, TechImgEleven, TechImgTwelve,
+        TechImgOne,
+        TechImgTwo,
+        TechImgThree,
+        TechImgFour,
+        TechImgSix,
+        TechImgSeven,
+        TechImgEight,
+        TechImgNine,
+        TechImgTen,
+        TechImgEleven,
+        TechImgTwelve,
       ],
     },
     {
@@ -35,9 +76,18 @@ const OurTrack = () => {
       label: "Consumer",
       desc: "Consumer Brands, Products & Services, Logistics, Media, Education",
       logos: [
-        CommerceImgOne, CommerceImgTwo, CommerceImgThree, CommerceImgFour, CommerceImgFive,
-        CommerceImgSix, CommerceImgSeven, CommerceImgEight, CommerceImgNine,
-        CommerceImgTen, CommerceImgEleven, CommerceImgTwelve,
+        CommerceImgOne,
+        CommerceImgTwo,
+        CommerceImgThree,
+        CommerceImgFour,
+        CommerceImgFive,
+        CommerceImgSix,
+        CommerceImgSeven,
+        CommerceImgEight,
+        CommerceImgNine,
+        CommerceImgTen,
+        CommerceImgEleven,
+        CommerceImgTwelve,
       ],
     },
     {
@@ -45,9 +95,17 @@ const OurTrack = () => {
       label: "Healthcare",
       desc: "Healthcare delivery, Pharmaceuticals, Medical Devices, Health-tech, Veterinary Services",
       logos: [
-        HealthcareImgOne, HealthcareImgTwo, HealthcareImgThree, HealthcareImgFour, HealthcareImgFive,
-        HealthcareImgSix, HealthcareImgSeven, HealthcareImgEight, HealthcareImgNine,
-        HealthcareImgTen, HealthcareImgEleven,
+        HealthcareImgOne,
+        HealthcareImgTwo,
+        HealthcareImgThree,
+        HealthcareImgFour,
+        HealthcareImgFive,
+        HealthcareImgSix,
+        HealthcareImgSeven,
+        HealthcareImgEight,
+        HealthcareImgNine,
+        HealthcareImgTen,
+        HealthcareImgEleven,
       ],
     },
     {
@@ -55,8 +113,14 @@ const OurTrack = () => {
       label: "Industrial",
       desc: "Auto Ancillary, Engineering Goods, Industrial Automation, Industrial Ancillaries, Specialty Chemicals.",
       logos: [
-        IndustrialImgOne, IndustrialImgTwo, IndustrialImgThree, IndustrialImgFour,
-        IndustrialImgFive, IndustrialImgSix, IndustrialImgSeven, IndustrialImgEight,
+        IndustrialImgOne,
+        IndustrialImgTwo,
+        IndustrialImgThree,
+        IndustrialImgFour,
+        IndustrialImgFive,
+        IndustrialImgSix,
+        IndustrialImgSeven,
+        IndustrialImgEight,
       ],
     },
   ];
@@ -112,84 +176,69 @@ const OurTrack = () => {
           }}
         />
 
-        <Container className="max-w-full px-8">
-          <div className="grid grid-cols-[35%_65%] h-screen w-full overflow-hidden">
-            {/* ==== LEFT SELECTION ==== */}
-            <div className="pr-8 flex flex-col justify-center">
-              <FlexibleHeading
-                title="Our Track Record"
-                maxWidth="max-w-3xl"
-                alignment="left"
-                highlights={{ Record: "text-primary" }}
-              />
+        {/* ============= DESKTOP (STATIC VERSION) ============= */}
+        <div className="hidden lg:block w-full">
+          <Container className="max-w-full px-8">
+            <div className="grid grid-cols-[35%_65%] h-screen w-full overflow-hidden">
+              {/* ==== LEFT SELECTION ==== */}
+              <div className="pr-8 flex flex-col justify-center">
+                <FlexibleHeading
+                  title="Our Track Record"
+                  maxWidth="max-w-3xl"
+                  alignment="left"
+                  highlights={{ Record: "text-primary" }}
+                />
 
-              <div className="space-y-4">
-                {TrackRecord.map((track) => (
-                  <div
-                    key={track.id}
-                    onClick={() => setActiveLabel(track.label)}
-                    className={`rounded-[12px] p-4 cursor-pointer transition-all duration-300 ${
-                      activeLabel === track.label
-                        ? "bg-white shadow-md"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    <h3
-                      className={`font-[400] text-lg md:text-xl ${
-                        activeLabel === track.label ? "text-black" : "text-gray-500"
+                <div className="space-y-4 mt-8">
+                  {TrackRecord.map((track) => (
+                    <div
+                      key={track.id}
+                      onClick={() => setActiveLabel(track.label)}
+                      className={`rounded-[12px] p-4 cursor-pointer transition-all duration-300 ${
+                        activeLabel === track.label
+                          ? "bg-white shadow-md"
+                          : "hover:bg-gray-50"
                       }`}
                     >
-                      {track.label}
-                    </h3>
-                    {activeLabel === track.label && (
-                      <p className="text-base text-gray-600 mt-3 leading-[28px]">
-                        {track.desc}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                      <h3
+                        className={`font-[400] text-lg md:text-xl ${
+                          activeLabel === track.label
+                            ? "text-black"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {track.label}
+                      </h3>
+                      {activeLabel === track.label && (
+                        <p className="text-base text-gray-600 mt-3 leading-[28px]">
+                          {track.desc}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ==== RIGHT STATIC LOGOS GRID ==== */}
+              <div className="relative flex justify-center items-center h-full">
+                <div className="grid grid-cols-3 gap-8 w-[90%]">
+                  {logos.map((logo, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-center bg-white rounded-lg p-3 transition-all duration-300"
+                    >
+                      <Image
+                        src={logo}
+                        alt={`logo-${index}`}
+                        className="w-[200px] h-20 object-contain opacity-90"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            {/* ==== RIGHT THREE-LANE SCROLLER ==== */}
-            <div className="relative flex justify-between h-full">
-              {[
-                { dir: "up", data: col1 },
-                { dir: "down", data: col2 },
-                { dir: "up", data: col3 },
-              ].map((col, index) => (
-                <div key={index} className="lane-wrapper w-[30%] flex justify-center">
-                  {/* Two stacked copies of logos for perfect loop */}
-                  <div
-                    className={`scroll-${col.dir} absolute inset-0`}
-                    style={{ display: "flex", flexDirection: "column" }}
-                  >
-                    <div className="lane">
-                      {col.data.map((logo, i) => (
-                        <Image
-                          key={`${index}-A-${i}`}
-                          src={logo}
-                          alt={`logo-${i}`}
-                          className="w-[180px] h-10 object-contain opacity-90"
-                        />
-                      ))}
-                    </div>
-                    <div className="lane">
-                      {col.data.map((logo, i) => (
-                        <Image
-                          key={`${index}-B-${i}`}
-                          src={logo}
-                          alt={`logo-${i}`}
-                          className="w-[180px] h-10 object-contain opacity-90"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
+          </Container>
+        </div>
       </div>
 
       {/* ============= MOBILE ============= */}
