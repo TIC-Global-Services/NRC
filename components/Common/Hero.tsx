@@ -235,10 +235,6 @@ const Hero: React.FC<HeroProps> = ({
                 src="/Wave_Video/NRC_Wave_Enhanced.webm"
                 type="video/webm"
               />
-              <source
-                src="/Wave_Video/NRC_Wave_Transparent_HEVC.mov"
-                type='video/mp4; codecs="hvc1"'
-              />
               Your browser does not support the video tag.
             </video>
           )}
@@ -298,7 +294,7 @@ const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Mobile Titles */}
-              <div className="block md:hidden">
+              <div className="block md:hidden z-50">
                 <motion.span
                   className="text-black inline-block font-[400]"
                   initial={{ y: "100%" }}
@@ -370,7 +366,7 @@ const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Mobile Desc */}
-              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden">
+              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden z-50">
                 <motion.div
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
@@ -402,7 +398,7 @@ const Hero: React.FC<HeroProps> = ({
 
               {/* CTA Buttons */}
               {isCTA && (
-                <div className="flex flex-row gap-4 justify-center items-center">
+                <div className="flex flex-row gap-4 justify-center items-center z-50">
                   {!hideCTAOne && CTAOne && (
                     <AnimatedButton
                       isBtnScale={false}
