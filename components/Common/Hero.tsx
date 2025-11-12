@@ -11,8 +11,8 @@ const isSafariOrIOS = () => {
   return (
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Safari") &&
-      !navigator.userAgent.includes("Chrome") &&
-      !navigator.userAgent.includes("Chromium"))
+      navigator.userAgent.includes("Chrome") &&
+      navigator.userAgent.includes("Chromium"))
   );
 };
 
@@ -229,19 +229,18 @@ const Hero: React.FC<HeroProps> = ({
           ) : (
             <video
               ref={videoRef}
-              className="w-full h-full object-cover"
-              style={{ maxWidth: "100vw", display: "block" }}
               muted
               playsInline
               loop
               autoPlay
               preload="auto"
+              className="w-full h-full object-cover pointer-events-none [transform:none] [will-change:auto]"
+              style={{ zIndex: 0 }}
             >
               <source
                 src="/Wave_Video/NRC_Wave_Enhanced.webm"
                 type="video/webm"
               />
-              Your browser does not support the video tag.
             </video>
           )}
         </div>
@@ -251,14 +250,14 @@ const Hero: React.FC<HeroProps> = ({
             isContact && "md:mt-28"
           } justify-center md:justify-start lg:justify-center md:pt-[25%] lg:pt-0 text-center px-4 gothicFont relative z-[5]`}
           initial={{ opacity: 0 }}
-          animate={{ opacity: isInitialized ? 1 : 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="text-3xl md:text-5xl lg:text-6xl font-light mb-8 overflow-hidden gothicFont">
             <motion.div
               className="flex flex-col -gap-5"
               initial={{ opacity: 0 }}
-              animate={{ opacity: isInitialized ? 1 : 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.3 }}
             >
               {/* Desktop Titles */}
@@ -266,7 +265,7 @@ const Hero: React.FC<HeroProps> = ({
                 <motion.div
                   className="text-black font-[400]"
                   initial={{ y: "100%" }}
-                  animate={{ y: isInitialized ? "0%" : "100%" }}
+                  animate={{ y: "0%" }}
                   transition={{
                     duration: 0.6,
                     delay: 0.4,
@@ -283,7 +282,7 @@ const Hero: React.FC<HeroProps> = ({
                   <motion.div
                     className="font-normal"
                     initial={{ y: "100%" }}
-                    animate={{ y: isInitialized ? "0%" : "100%" }}
+                    animate={{ y: "0%" }}
                     transition={{
                       duration: 0.6,
                       delay: 0.5,
@@ -303,7 +302,7 @@ const Hero: React.FC<HeroProps> = ({
                 <motion.span
                   className="text-black inline-block font-[400]"
                   initial={{ y: "100%" }}
-                  animate={{ y: isInitialized ? "0%" : "100%" }}
+                  animate={{ y: "0%" }}
                   transition={{
                     duration: 0.6,
                     delay: 0.4,
@@ -322,7 +321,7 @@ const Hero: React.FC<HeroProps> = ({
                   <motion.span
                     className="font-normal inline-block"
                     initial={{ y: "100%" }}
-                    animate={{ y: isInitialized ? "0%" : "100%" }}
+                    animate={{ y: "0%" }}
                     transition={{
                       duration: 0.6,
                       delay: 0.5,
@@ -345,8 +344,8 @@ const Hero: React.FC<HeroProps> = ({
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
                   animate={{
-                    y: isInitialized ? "0%" : "100%",
-                    opacity: isInitialized ? 1 : 0,
+                    y: "0%",
+                    opacity: 1,
                   }}
                   transition={{
                     duration: 0.6,
@@ -376,8 +375,8 @@ const Hero: React.FC<HeroProps> = ({
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
                   animate={{
-                    y: isInitialized ? "0%" : "100%",
-                    opacity: isInitialized ? 1 : 0,
+                    y: "0%",
+                    opacity: 1,
                   }}
                   transition={{
                     duration: 0.6,
@@ -403,7 +402,19 @@ const Hero: React.FC<HeroProps> = ({
 
               {/* CTA Buttons */}
               {isCTA && (
-                <div className="flex flex-row gap-4 justify-center items-center">
+                <motion.div
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{
+                    y: "0%",
+                    opacity: 1,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.6,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                  className="flex flex-row gap-4 justify-center items-center"
+                >
                   {!hideCTAOne && CTAOne && (
                     <AnimatedButton
                       isBtnScale={false}
@@ -420,7 +431,7 @@ const Hero: React.FC<HeroProps> = ({
                       className="border border-[#070708] shadow-[inset_0_4px_4px_rgba(255,255,255,0.3)]"
                     />
                   )}
-                </div>
+                </motion.div>
               )}
             </motion.div>
           </div>
