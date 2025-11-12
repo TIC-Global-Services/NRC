@@ -20,7 +20,6 @@ const isSafariOrIOS = () => {
   return isIOS || isSafari;
 };
 
-
 interface HeroProps {
   isContact?: boolean;
   title1?: string;
@@ -78,6 +77,12 @@ const Hero: React.FC<HeroProps> = ({
   const mountedRef = useRef<boolean>(true);
 
   const safari = isSafariOrIOS();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // ✅ Image Sequence Animation (for Safari/iOS)
   useEffect(() => {
@@ -224,7 +229,8 @@ const Hero: React.FC<HeroProps> = ({
             WebkitTransform: "none",
           }}
         >
-          {safari ? (
+          {/* Only render after client mount */}
+          {isClient && safari ? (
             <canvas
               ref={canvasRef}
               width={1920}
@@ -232,21 +238,23 @@ const Hero: React.FC<HeroProps> = ({
               className="w-full h-full object-cover pointer-events-none"
             />
           ) : (
-            <video
-              ref={videoRef}
-              muted
-              playsInline
-              loop
-              autoPlay
-              preload="auto"
-              className="w-full h-full object-cover pointer-events-none [transform:none] [will-change:auto]"
-              style={{ zIndex: 0 }}
-            >
-              <source
-                src="/Wave_Video/NRC_Wave_Enhanced.webm"
-                type="video/webm"
-              />
-            </video>
+            isClient && (
+              <video
+                ref={videoRef}
+                muted
+                playsInline
+                loop
+                autoPlay
+                preload="auto"
+                className="w-full h-full object-cover pointer-events-none [transform:none] [will-change:auto]"
+                style={{ zIndex: 0 }}
+              >
+                <source
+                  src="/Wave_Video/NRC_Wave_Enhanced.webm"
+                  type="video/webm"
+                />
+              </video>
+            )
           )}
         </div>
 
