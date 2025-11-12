@@ -255,20 +255,32 @@ export default function TrackRecordSection() {
             </div>
 
             {/* 🔹 Mobile Fund Buttons */}
-            <div className="md:hidden mt-6 space-y-2">
-              {fundOptions.map((fund) => (
-                <button
-                  key={fund}
-                  onClick={() => setSelectedFund(fund)}
-                  className={`w-full cursor-pointer text-left px-4 py-3 rounded-lg leading-[33px] text-base ${
-                    selectedFund === fund
-                      ? "bg-[#F6F9FC] text-black border border-[#ECF0F4]"
-                      : "opacity-50"
-                  }`}
-                >
-                  <span className="font-medium">{fund}</span>
-                </button>
-              ))}
+            <div className="md:hidden mt-6 relative">
+              <select
+                id="fund-selector"
+                value={selectedFund}
+                onChange={(e) => setSelectedFund(e.target.value)}
+                className="w-full appearance-none px-4 py-3 rounded-lg border border-[#ECF0F4] bg-white text-gray-800 text-base font-medium  focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+              >
+                {fundOptions.map((fund) => (
+                  <option key={fund} value={fund}>
+                    {fund}
+                  </option>
+                ))}
+              </select>
+              <svg
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
             </div>
 
             {/* Chart Column */}

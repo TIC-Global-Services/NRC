@@ -187,7 +187,6 @@ export default function TrustedPartner() {
     }
   };
 
-  
   return (
     <Container className="bg-[#F6F9FC]">
       <div className="mx-auto">
@@ -224,6 +223,21 @@ export default function TrustedPartner() {
                 </div>
               </div>
 
+              {/* Fund Selector - Mobile / Tablet */}
+              <div className="lg:hidden mt-6 mb-4">
+                <select
+                  value={selectedFund}
+                  onChange={(e) => setSelectedFund(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-[#ECF0F4] bg-white text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  {fundOptions.map((fund) => (
+                    <option key={fund} value={fund}>
+                      {fund}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* CTA Button */}
               <div className="mt-6 hidden lg:block">
                 <SlideUpText animationMode="once">
@@ -238,7 +252,9 @@ export default function TrustedPartner() {
 
           {/* RIGHT SIDE - CHART */}
           <div className="mt-4 md:mt-12 mb-12 md:mb-0">
-            {loading ? renderChart(): (
+            {loading ? (
+              renderChart()
+            ) : (
               <>
                 {selectedFund === "Aurum Small Cap Opportunities (ASCO)" ? (
                   <AnimatedChart

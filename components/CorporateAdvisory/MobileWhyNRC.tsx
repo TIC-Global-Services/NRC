@@ -26,9 +26,9 @@ const PartnershipCard: React.FC<PartnershipCardProps> = ({
     description,
 }) => {
     return (
-        <div className="flex flex-col h-[50dvh] rounded-xl gap-10 overflow-hidden">
+        <div className="flex flex-col h-[60dvh] rounded-xl gap-10 overflow-hidden">
             <div className="flex flex-col items-start  justify-start md:mb-0">
-                <h3 className="md:text-3xl text-2xl leading-[23px] md:leading-[31px] text-black mb-[10px] font-bold">{title}</h3>
+                <h3 className="md:text-3xl text-2xl  md:leading-[31px] text-black mb-[10px] font-bold">{title}</h3>
                 <p className="md:text-lg text-sm leading-4 font-normal md:leading-[31px] max-w-xs md:max-w-xl">{description}</p>
             </div>
             <div>

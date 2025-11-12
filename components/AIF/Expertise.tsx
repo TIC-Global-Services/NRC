@@ -58,9 +58,11 @@ const DeskCustomCard = memo(
 );
 
 const MobileCustomCard = memo(
-  ({ title, description, imageUrl, className = "", onClick }: CustomCardProps) => (
+  ({ title, description, imageUrl, cardIndex, className = "", onClick }: CustomCardProps) => (
     <div
-      className={`relative bg-[#F3F3F5] hover:bg-[#C5C3FE] rounded-xl overflow-hidden transition-all duration-300 cursor-pointer h-full ${className}`}
+      className={`relative ${
+        cardIndex === 2 || cardIndex === 4 ? "bg-[#C5C3FE]" : "bg-[#F3F3F5]"
+      } hover:bg-[#C5C3FE] rounded-xl overflow-hidden transition-all duration-300 cursor-pointer h-full ${className}`}
       onClick={onClick}
     >
       <div className="grid grid-rows-[35%_65%] h-full">
@@ -293,6 +295,7 @@ const Expertise = () => {
               <div key={card.id} className="w-[90vw] flex-shrink-0">
                 <MobileCustomCard
                   {...card}
+                  cardIndex={card.id}
                   onClick={() => handleCardClick(card)}
                 />
               </div>
