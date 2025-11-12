@@ -5,13 +5,23 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import AnimatedButton from "../ui/animatedButton";
 
+// ✅ Detect Safari or iOS
+const isSafariOrIOS = () => {
+  if (typeof navigator === "undefined") return false;
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes("Safari") &&
+      !navigator.userAgent.includes("Chrome") &&
+      !navigator.userAgent.includes("Chromium"))
+  );
+};
+
 interface HeroProps {
   isContact?: boolean;
   title1?: string;
   title1Color?: string;
   title2?: string;
   title2Color?: string;
-  // Mobile-specific titles (optional)
   mobileTitle1?: string;
   mobileTitle1Color?: string;
   mobileTitle2?: string;
@@ -58,52 +68,74 @@ const Hero: React.FC<HeroProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const [videoReady, setVideoReady] = useState<boolean>(false);
-
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mountedRef = useRef<boolean>(true);
 
-  // Check if mobile-specific titles are provided
-  const hasMobileTitles =
-    mobileTitle1 !== undefined ||
-    mobileTitle1Color !== undefined ||
-    mobileTitle2 !== undefined ||
-    mobileTitle2Color !== undefined;
+  const safari = isSafariOrIOS();
 
-  // Use mobile titles if ANY mobile title prop is provided, otherwise use desktop titles
-  const effectiveMobileTitle1 = hasMobileTitles ? mobileTitle1 || "" : title1;
-  const effectiveMobileTitle1Color = hasMobileTitles
-    ? mobileTitle1Color || ""
-    : title1Color;
-  const effectiveMobileTitle2 = hasMobileTitles ? mobileTitle2 || "" : title2;
-  const effectiveMobileTitle2Color = hasMobileTitles
-    ? mobileTitle2Color || ""
-    : title2Color;
-
+  // ✅ Image Sequence Animation (for Safari/iOS)
   useEffect(() => {
+    if (!safari) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let frame = 0;
+    const totalFrames = 250;
+    const folderPath = "/Wave_Image_Sequence";
+    const image = new Image();
+    let animationId: number;
+    let lastTime = 0;
+    const fps = 30; // Adjust speed (30fps = smooth but not too heavy)
+    const frameDuration = 1000 / fps;
+
+    const drawFrame = (timestamp: number) => {
+      if (!lastTime) lastTime = timestamp;
+      const delta = timestamp - lastTime;
+
+      if (delta >= frameDuration) {
+        image.src = `${folderPath}/${String(frame + 1).padStart(4, "0")}.webp`;
+        image.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+        frame = (frame + 1) % totalFrames;
+        lastTime = timestamp;
+      }
+
+      animationId = requestAnimationFrame(drawFrame);
+    };
+
+    requestAnimationFrame(drawFrame);
+    return () => cancelAnimationFrame(animationId);
+  }, [safari]);
+
+  // ✅ Video playback logic for non-Safari browsers
+  useEffect(() => {
+    if (safari) return;
+
     const video = videoRef.current;
     if (!video) return;
 
     mountedRef.current = true;
+    setIsInitialized(true);
 
-    // Initialize text visibility immediately
-    if (mountedRef.current) {
-      setIsInitialized(true);
-    }
-
-    const safePlay = async (video: HTMLVideoElement) => {
+    const safePlay = async (v: HTMLVideoElement) => {
       try {
-        await video.play();
+        await v.play();
       } catch (err: any) {
-        if (err.name !== "AbortError") {
-          console.error("Video play failed:", err);
-        }
+        if (err.name !== "AbortError") console.error("Video play failed:", err);
       }
     };
 
     const handleLoadedData = () => {
       if (mountedRef.current) {
         setVideoReady(true);
-        safePlay(video); // ✅ use helper instead
+        safePlay(video);
       }
     };
 
@@ -114,50 +146,32 @@ const Hero: React.FC<HeroProps> = ({
       }
     };
 
-    const handleCanPlay = () => {
-      if (mountedRef.current && !videoReady) {
-        setVideoReady(true);
-        safePlay(video); // ✅ use helper instead
-      }
-    };
     video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("canplay", handleCanPlay);
     video.addEventListener("error", handleError);
-
-    // Attempt to play on load
     video.load();
     safePlay(video);
 
     return () => {
       mountedRef.current = false;
-      if (video) {
-        video.pause();
-        video.removeEventListener("loadeddata", handleLoadedData);
-        video.removeEventListener("canplay", handleCanPlay);
-        video.removeEventListener("error", handleError);
-      }
+      video.pause();
+      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("error", handleError);
     };
-  }, []);
+  }, [safari]);
 
-  // Handle visibility change to pause/resume video
+  // ✅ Pause/resume when tab hidden
   useEffect(() => {
+    if (safari) return;
     const handleVisibilityChange = () => {
-      if (!mountedRef.current) return;
-
       const video = videoRef.current;
       if (!video) return;
-
-      if (document.hidden) {
-        video.pause();
-      } else if (videoReady) {
-        video.play()
-      }
+      if (document.hidden) video.pause();
+      else if (videoReady) video.play();
     };
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [videoReady]);
+  }, [videoReady, safari]);
 
   if (error) {
     return (
@@ -170,6 +184,22 @@ const Hero: React.FC<HeroProps> = ({
     );
   }
 
+  // ✅ Mobile/desktop title logic
+  const hasMobileTitles =
+    mobileTitle1 !== undefined ||
+    mobileTitle1Color !== undefined ||
+    mobileTitle2 !== undefined ||
+    mobileTitle2Color !== undefined;
+
+  const effectiveMobileTitle1 = hasMobileTitles ? mobileTitle1 || "" : title1;
+  const effectiveMobileTitle1Color = hasMobileTitles
+    ? mobileTitle1Color || ""
+    : title1Color;
+  const effectiveMobileTitle2 = hasMobileTitles ? mobileTitle2 || "" : title2;
+  const effectiveMobileTitle2Color = hasMobileTitles
+    ? mobileTitle2Color || ""
+    : title2Color;
+
   return (
     <section
       className="w-full relative h-screen overflow-hidden"
@@ -178,26 +208,43 @@ const Hero: React.FC<HeroProps> = ({
       }}
     >
       <div className="w-full h-full flex items-center justify-center relative">
+        {/* 🧩 Video (desktop) or Canvas (Safari/iOS fallback) */}
         <div
           className="absolute bg-transparent -bottom-[35%] md:-bottom-[40%] w-full"
           style={{ height: "100vh" }}
         >
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover "
-            style={{
-              maxWidth: "100vw",
-              display: "block",
-            }}
-            muted
-            loop
-          >
-            <source src="/Wave_Video/NRC_Wave_Enhanced.webm" type="video/webm" />
-            <source src="/Wave_Video/Waves.mov" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          {safari ? (
+            <canvas
+              ref={canvasRef}
+              width={1920}
+              height={1080}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              style={{ maxWidth: "100vw", display: "block" }}
+              muted
+              playsInline
+              loop
+              autoPlay
+              preload="auto"
+            >
+              <source
+                src="/Wave_Video/NRC_Wave_Enhanced.webm"
+                type="video/webm"
+              />
+              <source
+                src="/Wave_Video/NRC_Wave_Transparent_HEVC.mov"
+                type='video/mp4; codecs="hvc1"'
+              />
+              Your browser does not support the video tag.
+            </video>
+          )}
         </div>
 
+        {/* 🧠 Text / Motion Section */}
         <motion.div
           className={`absolute inset-0 flex flex-col md:mt-20 2xl:mt-0 items-center ${
             isContact && "md:mt-28"
@@ -291,7 +338,7 @@ const Hero: React.FC<HeroProps> = ({
                 )}
               </div>
 
-              {/* Desktop - Subheading */}
+              {/* Desktop Desc */}
               <div className="text-sm md:text-lg lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:block hidden">
                 <motion.div
                   className="text-[#484848]"
@@ -322,7 +369,7 @@ const Hero: React.FC<HeroProps> = ({
                 </motion.div>
               </div>
 
-              {/* Mobile desc */}
+              {/* Mobile Desc */}
               <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden">
                 <motion.div
                   className="text-[#484848]"
@@ -353,6 +400,7 @@ const Hero: React.FC<HeroProps> = ({
                 </motion.div>
               </div>
 
+              {/* CTA Buttons */}
               {isCTA && (
                 <div className="flex flex-row gap-4 justify-center items-center">
                   {!hideCTAOne && CTAOne && (
@@ -362,7 +410,6 @@ const Hero: React.FC<HeroProps> = ({
                       label={CTAOne}
                     />
                   )}
-
                   {!hideCTATwo && CTATwo && (
                     <AnimatedButton
                       isBtnScale={false}
