@@ -14,7 +14,7 @@ gsap.registerPlugin(Draggable);
 
 const Glance = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const draggableRef = useRef<Draggable[]>([]);
+  const draggableRef = useRef<Draggable | null>(null);
   const currentIndexRef = useRef(0);
 
   const cards = [
@@ -56,10 +56,12 @@ const Glance = () => {
       const maxX = 0;
       const minX = -(cardWidth * (cards.length - 1));
 
-      draggableRef.current = Draggable.create(slider, {
+      const draggable = Draggable.create(slider, {
         type: "x",
         bounds: { minX, maxX },
         inertia: true,
+        throwResistance: 1000,
+        edgeResistance: 0.8,
         snap: {
           x: (endValue) => {
             const snapIndex = Math.round(-endValue / cardWidth);
@@ -70,39 +72,53 @@ const Glance = () => {
             return -currentIndexRef.current * cardWidth;
           },
         },
-      });
+        onDragEnd: function () {
+          // Keep current index updated on manual drag
+          const newIndex = Math.round(-this.x / cardWidth);
+          currentIndexRef.current = Math.max(
+            0,
+            Math.min(newIndex, cards.length - 1)
+          );
+        },
+      })[0];
+
+      draggableRef.current = draggable;
     }
 
     return () => {
-      draggableRef.current.forEach((d) => d.kill());
+      draggableRef.current?.kill();
     };
   }, [cards.length]);
 
+  /** ✅ Smooth programmatic scroll (linked to Draggable) */
+  const scrollToCard = (index: number) => {
+    const cardWidth = getScreenWidth() * 0.8;
+    const targetX = -index * cardWidth;
+
+    if (!sliderRef.current || !draggableRef.current) return;
+
+    gsap.to(sliderRef.current, {
+      x: targetX,
+      duration: 0.6, // slightly longer for smoother feel
+      ease: "power2.out",
+      onUpdate: () => {
+        draggableRef.current?.update();
+      }, // keeps internal sync
+    });
+
+    currentIndexRef.current = index;
+  };
+
   // ✅ Move to previous card
   const handlePrev = () => {
-    if (!draggableRef.current[0]) return;
-    const cardWidth = getScreenWidth() * 0.8;
-    currentIndexRef.current = Math.max(0, currentIndexRef.current - 1);
-    gsap.to(sliderRef.current, {
-      x: -currentIndexRef.current * cardWidth,
-      duration: 0.5,
-      ease: "power3.out",
-    });
+    const prevIndex = Math.max(0, currentIndexRef.current - 1);
+    scrollToCard(prevIndex);
   };
 
   // ✅ Move to next card
   const handleNext = () => {
-    if (!draggableRef.current[0]) return;
-    const cardWidth = getScreenWidth() * 0.8;
-    currentIndexRef.current = Math.min(
-      cards.length - 1,
-      currentIndexRef.current + 1
-    );
-    gsap.to(sliderRef.current, {
-      x: -currentIndexRef.current * cardWidth,
-      duration: 0.5,
-      ease: "power3.out",
-    });
+    const nextIndex = Math.min(cards.length - 1, currentIndexRef.current + 1);
+    scrollToCard(nextIndex);
   };
 
   return (
@@ -127,7 +143,7 @@ const Glance = () => {
       </div>
 
       {/* Desktop Grid */}
-      <div className="md:grid md:grid-cols-3 gap-6 lg:gap-8 2xl:gap-[22px] justify-items-center hidden mt-12">
+      <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8 2xl:gap-[22px] justify-items-center mt-12">
         {cards.map((card) => (
           <InfoCard
             key={card.id}
@@ -146,7 +162,7 @@ const Glance = () => {
         <div className="overflow-hidden w-full">
           <div
             ref={sliderRef}
-            className="flex transition-transform"
+            className="flex"
             style={{ width: `${cards.length * 80}vw` }}
           >
             {cards.map((card) => (

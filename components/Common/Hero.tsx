@@ -261,7 +261,7 @@ const Hero: React.FC<HeroProps> = ({
         <motion.div
           className={`absolute inset-0 flex flex-col lg:mt-20 2xl:mt-0 items-center ${
             isContact && "md:mt-28"
-          } justify-center md:justify-start lg:justify-center lg:pt-[25%] lg:pt-0 text-center px-4 gothicFont relative z-[5]`}
+          } justify-center  text-center px-4 gothicFont relative z-[5]`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
