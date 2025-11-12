@@ -45,13 +45,17 @@ const Hero = () => {
     >
       {/* === Background Video === */}
       <video
-        className="absolute inset-0 w-full h-full object-cover z-10"
-        src="/Hero/NRC-River.mp4"
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+        playsInline
         autoPlay
         loop
         muted
-        playsInline
-      />
+        preload="auto"
+      >
+        <source src="/Hero/NRC-River.mp4" type="video/mp4" />
+        {/* Fallback text */}
+        Your browser does not support the video tag.
+      </video>
 
       {/* === Overlay Content === */}
       <div className="absolute top-32 left-1/2 -translate-x-1/2 flex flex-col items-center justify-start text-center px-4 z-30 gothicFont w-full">

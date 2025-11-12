@@ -8,13 +8,18 @@ import AnimatedButton from "../ui/animatedButton";
 // ✅ Detect Safari or iOS
 const isSafariOrIOS = () => {
   if (typeof navigator === "undefined") return false;
-  return (
-    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.userAgent.includes("Safari") &&
-      navigator.userAgent.includes("Chrome") &&
-      navigator.userAgent.includes("Chromium"))
-  );
+
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua);
+  const isSafari =
+    /Safari/.test(ua) &&
+    !/Chrome/.test(ua) &&
+    !/Chromium/.test(ua) &&
+    !/CriOS/.test(ua);
+
+  return isIOS || isSafari;
 };
+
 
 interface HeroProps {
   isContact?: boolean;

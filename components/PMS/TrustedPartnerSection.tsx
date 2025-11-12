@@ -224,19 +224,33 @@ export default function TrustedPartner() {
               </div>
 
               {/* Fund Selector - Mobile / Tablet */}
-              <div className="lg:hidden mt-6 mb-4">
-                <select
-                  value={selectedFund}
-                  onChange={(e) => setSelectedFund(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-[#ECF0F4] bg-white text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary"
-                >
-                  {fundOptions.map((fund) => (
-                    <option key={fund} value={fund}>
-                      {fund}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <div className="md:hidden mt-6 relative">
+              <select
+                id="fund-selector"
+                value={selectedFund}
+                onChange={(e) => setSelectedFund(e.target.value)}
+                className="w-full appearance-none px-4 py-3 rounded-lg border border-[#ECF0F4] bg-white text-gray-800 text-base font-medium  focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+              >
+                {fundOptions.map((fund) => (
+                  <option key={fund} value={fund}>
+                    {fund}
+                  </option>
+                ))}
+              </select>
+              <svg
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
 
               {/* CTA Button */}
               <div className="mt-6 hidden lg:block">
