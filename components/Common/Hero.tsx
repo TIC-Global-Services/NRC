@@ -210,15 +210,21 @@ const Hero: React.FC<HeroProps> = ({
       <div className="w-full h-full flex items-center justify-center relative">
         {/* 🧩 Video (desktop) or Canvas (Safari/iOS fallback) */}
         <div
-          className="absolute bg-transparent -bottom-[35%] md:-bottom-[40%] w-full"
-          style={{ height: "100vh" }}
+          className="absolute bg-transparent -bottom-[35%] md:-bottom-[40%] w-full z-0"
+          style={{
+            height: "100vh",
+            zIndex: 0,
+            transform: "translateZ(0)",
+            willChange: "transform",
+            WebkitTransform: "none",
+          }}
         >
           {safari ? (
             <canvas
               ref={canvasRef}
               width={1920}
               height={1080}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
             />
           ) : (
             <video
@@ -240,11 +246,10 @@ const Hero: React.FC<HeroProps> = ({
           )}
         </div>
 
-        {/* 🧠 Text / Motion Section */}
         <motion.div
           className={`absolute inset-0 flex flex-col md:mt-20 2xl:mt-0 items-center ${
             isContact && "md:mt-28"
-          } justify-center md:justify-start lg:justify-center md:pt-[25%] lg:pt-0 text-center px-4 z-10 gothicFont`}
+          } justify-center md:justify-start lg:justify-center md:pt-[25%] lg:pt-0 text-center px-4 gothicFont relative z-[5]`}
           initial={{ opacity: 0 }}
           animate={{ opacity: isInitialized ? 1 : 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -294,7 +299,7 @@ const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Mobile Titles */}
-              <div className="block md:hidden z-50">
+              <div className="block md:hidden">
                 <motion.span
                   className="text-black inline-block font-[400]"
                   initial={{ y: "100%" }}
@@ -366,7 +371,7 @@ const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Mobile Desc */}
-              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden z-50">
+              <div className="text-sm md:text-base lg:text-[20px] font-light md:leading-[24px] lg:leading-[34px] mt-5 md:mt-5 max-w-5xl mb-7 overflow-hidden mx-auto md:hidden">
                 <motion.div
                   className="text-[#484848]"
                   initial={{ y: "100%", opacity: 0 }}
@@ -398,7 +403,7 @@ const Hero: React.FC<HeroProps> = ({
 
               {/* CTA Buttons */}
               {isCTA && (
-                <div className="flex flex-row gap-4 justify-center items-center z-50">
+                <div className="flex flex-row gap-4 justify-center items-center">
                   {!hideCTAOne && CTAOne && (
                     <AnimatedButton
                       isBtnScale={false}
