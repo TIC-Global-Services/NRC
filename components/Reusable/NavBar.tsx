@@ -36,7 +36,6 @@ interface NavbarProps {
   isHomePage?: boolean;
 }
 
-
 const NAV_ITEMS: NavItemType[] = [
   { name: "Home", hasDropdown: false, link: "/" },
   { name: "About us", hasDropdown: false, link: "/about" },
@@ -160,9 +159,10 @@ const NavItem = React.memo<NavItemProps>(
         {/* Dropdown arrow */}
         {item.hasDropdown && (
           <motion.div
-            className="ml-1"
+            className="ml-1 cursor-pointer"
             animate={{ rotate: isDropdownOpen ? 180 : 0 }}
             transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+            onClick={handleClick} // ✅ Added this line
           >
             <ChevronDown className="w-4 h-4 text-black" />
           </motion.div>
@@ -234,10 +234,14 @@ const Navbar: React.FC<NavbarProps> = ({
   useEffect(() => setMounted(true), []);
   useEffect(() => setIsDropdownOpen(false), [pathname]);
 
-  const isHome = useMemo(() => mounted && pathname === "/", [mounted, pathname]);
+  const isHome = useMemo(
+    () => mounted && pathname === "/",
+    [mounted, pathname]
+  );
 
   const getActiveItem = useCallback((currentPath: string): string => {
-    if (currentPath === "/pms" || currentPath === "/aif") return "Asset Management";
+    if (currentPath === "/pms" || currentPath === "/aif")
+      return "Asset Management";
     const match = NAV_ITEMS.find((item) => item.link === currentPath);
     return match ? match.name : "Home";
   }, []);
@@ -249,7 +253,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const handleDropdownToggle = useCallback(() => {
     setIsDropdownOpen((prev) => !prev);
   }, []);
-
 
   return (
     <motion.div
@@ -348,6 +351,5 @@ const Navbar: React.FC<NavbarProps> = ({
     </motion.div>
   );
 };
-
 
 export default Navbar;

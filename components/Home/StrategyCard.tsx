@@ -5,6 +5,7 @@ import Image from "next/image";
 import SlideUpText from "../ui/SlideUpText";
 import ParallaxWrapper from "../ui/ParallaxSliderWrapper";
 import React from "react";
+import Link from "next/link";
 
 interface StrategyCardProps {
   title: string;
@@ -14,6 +15,7 @@ interface StrategyCardProps {
     heading: string;
     description: string;
   }[];
+  href: string;
   index?: number; // ADD THIS
   hasInteracted?: boolean; // ADD THIS
   onHover?: () => void; // ADD THIS
@@ -24,6 +26,7 @@ function StrategyCard({
   subtitle,
   imageUrl,
   sections,
+  href,
   index = 0, // ADD THIS
   hasInteracted = false, // ADD THIS
   onHover, // ADD THIS
@@ -69,7 +72,7 @@ function StrategyCard({
       </div>
 
       {/* Arrow Icon */}
-      <div className="absolute bottom-6 right-6">
+      <Link href={href} className="absolute bottom-6 right-6">
         {/* mobile */}
         <svg
           className="md:hidden "
@@ -155,7 +158,7 @@ function StrategyCard({
             </clipPath>
           </defs>
         </svg>
-      </div>
+      </Link>
     </div>
   );
 }
@@ -181,6 +184,7 @@ export default function StrategiesSection() {
             "A diversified strategy across market caps, balancing stability with growth and designed for smoother compounding.",
         },
       ],
+      href: "/pms"
     },
     {
       title: "Alternative Investment",
@@ -199,6 +203,7 @@ export default function StrategiesSection() {
             "A selective AIF for HNIs & Family Offices, targeting differentiated opportunities beyond traditional PMS mandates.",
         },
       ],
+      href:"/aif"
     },
   ];
 
@@ -208,7 +213,7 @@ export default function StrategiesSection() {
       <div className="absolute top-0 left-0 right-0 h-32 z-20 bg-gradient-to-b from-[#F6F9FC] via-[#F3F2F5] to-[#F3F2F5] backdrop-blur-sm" />
 
       <section className="z-50 relative">
-        <div className="max-w-7xl mx-auto ">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8 md:mb-11">
             <Badge label="What We Do" className="mb-4" />
@@ -230,12 +235,12 @@ export default function StrategiesSection() {
           </div>
 
           {/* Strategy Cards */}
-          <div className="lg:grid lg:grid-cols-2 md:justify-center md:items-center flex flex-col-reverse gap-4 md:gap-8">
+          <div className="justify-center items-center flex flex-col-reverse md:flex-row gap-4 md:gap-8 mx-auto">
             {strategies.map((strategy, index) => (
               <StrategyCard
                 key={index}
                 index={index}
-                hasInteracted={hasInteracted}
+                href={strategy.href}                hasInteracted={hasInteracted}
                 onHover={() => setHasInteracted(true)}
                 title={strategy.title}
                 subtitle={strategy.subtitle}

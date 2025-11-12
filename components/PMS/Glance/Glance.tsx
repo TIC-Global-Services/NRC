@@ -1,4 +1,5 @@
-// Glance.tsx
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import FlexibleHeading from "../../ui/FlexibleHeading";
 import InfoCard from "./Card";
@@ -7,16 +8,15 @@ import Container from "@/components/Reusable/Container";
 import { Draggable } from "gsap/Draggable";
 import gsap from "gsap";
 import AnimatedButton from "@/components/ui/animatedButton";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Register GSAP plugin
 gsap.registerPlugin(Draggable);
 
 const Glance = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const draggableRef = useRef<Draggable[]>([]);
   const currentIndexRef = useRef(0);
 
-  // Card data
   const cards = [
     {
       id: 1,
@@ -44,37 +44,24 @@ const Glance = () => {
     },
   ];
 
-  // Get screen width for mobile
-  const getScreenWidth = () => {
-    if (typeof window !== "undefined") {
-      return window.innerWidth;
-    }
-    return 375; // fallback width
-  };
+  const getScreenWidth = () =>
+    typeof window !== "undefined" ? window.innerWidth : 375;
 
   useEffect(() => {
     const slider = sliderRef.current;
-    const container = containerRef.current;
+    if (!slider) return;
 
-    if (!slider || !container) return;
-
-    // Only initialize draggable on mobile
-    const checkMobile = () => window.innerWidth < 768;
-
-    if (checkMobile()) {
-      const cardWidth = getScreenWidth() * 0.8; // 80% of screen width
+    if (window.innerWidth < 768) {
+      const cardWidth = getScreenWidth() * 0.8;
       const maxX = 0;
       const minX = -(cardWidth * (cards.length - 1));
 
-      const draggable = Draggable.create(slider, {
+      draggableRef.current = Draggable.create(slider, {
         type: "x",
-        bounds: {
-          minX: minX,
-          maxX: maxX,
-        },
+        bounds: { minX, maxX },
         inertia: true,
         snap: {
-          x: function (endValue) {
+          x: (endValue) => {
             const snapIndex = Math.round(-endValue / cardWidth);
             currentIndexRef.current = Math.max(
               0,
@@ -83,25 +70,47 @@ const Glance = () => {
             return -currentIndexRef.current * cardWidth;
           },
         },
-        onDrag: function () {
-          // Optional: Add any drag feedback here
-        },
-        onThrowUpdate: function () {
-          // Optional: Handle throw updates
-        },
-        onComplete: function () {
-          // Snap completed
-        },
       });
-
-      return () => {
-        draggable[0].kill();
-      };
     }
+
+    return () => {
+      draggableRef.current.forEach((d) => d.kill());
+    };
   }, [cards.length]);
 
+  // ✅ Move to previous card
+  const handlePrev = () => {
+    if (!draggableRef.current[0]) return;
+    const cardWidth = getScreenWidth() * 0.8;
+    currentIndexRef.current = Math.max(0, currentIndexRef.current - 1);
+    gsap.to(sliderRef.current, {
+      x: -currentIndexRef.current * cardWidth,
+      duration: 0.5,
+      ease: "power3.out",
+    });
+  };
+
+  // ✅ Move to next card
+  const handleNext = () => {
+    if (!draggableRef.current[0]) return;
+    const cardWidth = getScreenWidth() * 0.8;
+    currentIndexRef.current = Math.min(
+      cards.length - 1,
+      currentIndexRef.current + 1
+    );
+    gsap.to(sliderRef.current, {
+      x: -currentIndexRef.current * cardWidth,
+      duration: 0.5,
+      ease: "power3.out",
+    });
+  };
+
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile className="py-12 lg:py-0">
+    <Container
+      disablePaddingTopMobile
+      disablePaddingBottomMobile
+      className="py-12 lg:py-0"
+    >
       <FlexibleHeading
         title="Our PMS at a Glance."
         description="Our PMS is built for discerning investors who want long-term compounding, not index hugging. Every portfolio is curated with high conviction, disciplined risk frameworks, and skin in the game."
@@ -112,6 +121,7 @@ const Glance = () => {
         isMB={false}
       />
 
+      {/* CTA button (mobile only) */}
       <div className="flex items-center justify-center pt-6 pb-10 md:hidden">
         <AnimatedButton label="Discover Nine Rivers" className="mx-auto" />
       </div>
@@ -130,15 +140,14 @@ const Glance = () => {
         ))}
       </div>
 
-      {/* Mobile Slider */}
-      <div className="md:hidden">
-        <div ref={containerRef} className="overflow-hidden w-full">
+      {/* ✅ Mobile Slider with Bottom Arrows */}
+      <div className="md:hidden flex flex-col items-center">
+        {/* Slider */}
+        <div className="overflow-hidden w-full">
           <div
             ref={sliderRef}
-            className="flex"
-            style={{
-              width: `${cards.length * 80}vw`,
-            }}
+            className="flex transition-transform"
+            style={{ width: `${cards.length * 80}vw` }}
           >
             {cards.map((card) => (
               <div
@@ -157,6 +166,23 @@ const Glance = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* ✅ Arrows below slider */}
+        <div className="flex justify-center items-center gap-6 mt-6">
+          <button
+            onClick={handlePrev}
+            className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-md active:scale-95 transition"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-md active:scale-95 transition"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </Container>

@@ -288,7 +288,7 @@ export default function TrackRecordSection() {
               {/* Disclaimer or tagline */}
               <div className="text-secondary font-medium md:mb-3.5 mb-2 md:text-center md:text-lg md:leading-[23px] text-xs leading-[18px] text-center">
                 <AnimatePresence mode="wait">
-                  {selectedFund === "Aurum SME Trust" ? (
+                  {selectedFund === "Aurum SME Trust" && (
                     <motion.div
                       key="sme-text"
                       initial={{ opacity: 0, y: 20 }}
@@ -300,7 +300,9 @@ export default function TrackRecordSection() {
                         structured growth
                       </SlideUpText>
                     </motion.div>
-                  ) : selectedFund !== "Aurum Rising India Fund (ARIF)" ? (
+                  )}
+
+                  {selectedFund === "Aurum Small Cap Opportunities (ASCO)" && (
                     <motion.div
                       key="sebi-text"
                       initial={{ opacity: 0, y: 20 }}
@@ -308,11 +310,26 @@ export default function TrackRecordSection() {
                       exit={{ opacity: 0, y: -20 }}
                     >
                       <SlideUpText animationMode="always">
-                        Performance-related information is not verified by SEBI;
-                        individual portfolio performance may vary.
+                        Pursuing outsized long-term alpha through focused
+                        small-cap discovery.
                       </SlideUpText>
                     </motion.div>
-                  ) : null}
+                  ) }
+
+                  {selectedFund === "Aurum Multiplier Fund (AMP)" && (
+                    <motion.div
+                      key="sebi-text"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                    >
+                      <SlideUpText animationMode="always">
+                        Flexi-cap agility designed to deliver superior risk-adjusted returns
+                      </SlideUpText>
+                    </motion.div>
+                  ) }
+
+
                 </AnimatePresence>
               </div>
 

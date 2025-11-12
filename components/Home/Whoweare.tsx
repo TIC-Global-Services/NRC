@@ -18,9 +18,10 @@ export default function WealthCreationSection() {
     <Container
       disablePaddingTopMobile
       disablePaddingBottomMobile
-      className="pt-16"
+      disablePaddingBottomDesktop
+      className="pt-16 lg:pb-16"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1fr] gap-y-5 md:gap-20 w-full min-h-screen">
+      <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1fr] gap-y-5 md:gap-20 w-full xl:min-h-screen">
         {/* Left Side Content */}
         <div className="flex-1 flex flex-col justify-center lg:py-16 ">
           <PaperFoldTitle>

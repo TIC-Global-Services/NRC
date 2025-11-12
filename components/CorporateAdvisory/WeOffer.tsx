@@ -1,22 +1,27 @@
+"use client";
+
 import {
   WeOfferImg1,
   WeOfferImg2,
   WeOfferImg3,
 } from "@/assets/CorporateAdvisory";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import Container from "../Reusable/Container";
 import SlideUpText from "../ui/SlideUpText";
+import { motion, useAnimation } from "framer-motion";
 
 const Images = [WeOfferImg1, WeOfferImg2, WeOfferImg3];
 
 const WeOffer = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
-    <Container disablePaddingTopMobile disablePaddingBottomMobile className="w-full py-[74px] lg:py-0">
+    <Container
+      disablePaddingTopMobile
+      disablePaddingBottomMobile
+      className="w-full py-[74px] lg:py-0"
+    >
       <SlideUpText animationMode="once">
-        <h1 className="lg:text-[44px] md:text-3xl text-[26px] leading-[34px] md:leading-[40px] lg:leading-[60px] 2xl:px-28 md:mb-12 mb-7 text-center mx-auto">
+        <h1 className="lg:text-[38px] md:text-3xl text-[26px] leading-[34px] md:leading-[40px] lg:leading-[60px] 2xl:px-28 md:mb-12 mb-7 text-center mx-auto max-w-7xl">
           We offer{" "}
           <span className="text-primary">
             big firm capabilities with a boutique firm
@@ -25,31 +30,40 @@ const WeOffer = () => {
         </h1>
       </SlideUpText>
 
-      {/* Desktop view (animated flex gallery) */}
+      {/* ✅ Desktop view (smooth expand on hover) */}
       <div className="hidden md:flex items-center gap-5 w-full">
-        {Images.map((img, i) => (
-          <div
-            key={i}
-            className={`relative h-[318px] transition-all duration-500 ease-in-out ${hoveredIndex === null
-                ? "flex-1"
-                : hoveredIndex === i
-                  ? "flex-[2]"
-                  : "flex-[0.7]"
-              }`}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <Image
-              src={img}
-              alt={`We Offer ${i}`}
-              fill
-              className="object-cover rounded-lg transition-transform duration-300 ease-in-out"
-            />
-          </div>
-        ))}
+        {Images.map((img, i) => {
+          const controls = useAnimation();
+
+          const handleHoverStart = async () => {
+            await controls.start({ flex: 2, transition: { duration: 0.5 } });
+          };
+
+          const handleHoverEnd = async () => {
+            await controls.start({ flex: 1, transition: { duration: 0.5 } });
+          };
+
+          return (
+            <motion.div
+              key={i}
+              animate={controls}
+              initial={{ flex: 1 }}
+              onHoverStart={handleHoverStart}
+              onHoverEnd={handleHoverEnd}
+              className="relative h-[318px] overflow-hidden rounded-lg"
+            >
+              <Image
+                src={img}
+                alt={`We Offer ${i}`}
+                fill
+                className="object-cover transition-transform duration-500 ease-in-out hover:scale-105"
+              />
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Mobile view (single static image) */}
+      {/* ✅ Mobile view (static) */}
       <div className="md:hidden relative h-[300px] w-full">
         <Image
           src={Images[0]}

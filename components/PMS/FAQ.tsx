@@ -81,7 +81,7 @@ const FAQ = () => {
   };
 
   return (
-    <Container>
+    <Container disablePaddingTopMobile>
       <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] justify-center items-start">
         {/* <div className="max-w-2xl">
           <h2 className="text-4xl md:text-5xl font-normal text-gray-900 mb-4 leading-[58px]">

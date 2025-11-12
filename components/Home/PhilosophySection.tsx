@@ -12,7 +12,7 @@ export default function PhilosophySection() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-4 md:gap-16 items-center">
             {/* Left Content */}
-            <div className="h-full flex flex-col justify-between">
+            <div className="h-full flex flex-col justify-center ">
               <div className="space-y-2 md:space-y-4 ">
                 {/* Tag */}
                 <Badge label="Our Philosophy" />

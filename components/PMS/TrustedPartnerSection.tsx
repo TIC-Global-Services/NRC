@@ -203,7 +203,7 @@ export default function TrustedPartner() {
               />
 
               {/* Fund Selector - Desktop */}
-              <div className="hidden lg:block md:mb-6 md:mt-6">
+              <div className="hidden md:block md:mb-6 md:mt-6">
                 <div className="space-y-3">
                   {fundOptions.map((fund) => (
                     <button
@@ -253,14 +253,14 @@ export default function TrustedPartner() {
             </div>
 
               {/* CTA Button */}
-              <div className="mt-6 hidden lg:block">
+              {/* <div className="mt-6 hidden lg:block">
                 <SlideUpText animationMode="once">
                   <AnimatedButton
                     isBtnScale={false}
                     label="Detailed Performance Data"
                   />
                 </SlideUpText>
-              </div>
+              </div> */}
             </div>
           </div>
 
