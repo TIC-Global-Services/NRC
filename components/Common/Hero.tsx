@@ -230,7 +230,7 @@ const Hero: React.FC<HeroProps> = ({
           }}
         >
           {/* Only render after client mount */}
-          {isClient && safari ? (
+          { safari ? (
             <canvas
               ref={canvasRef}
               width={1920}
