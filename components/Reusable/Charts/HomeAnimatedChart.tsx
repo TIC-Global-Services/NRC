@@ -655,8 +655,8 @@ export const AnimatedChart = ({
         )}
 
         {/* SEBI Disclaimer */}
-        <p className="text-xs text-gray-500 mt-1 leading-relaxed max-w-md mx-auto">
-          Performance-related information is not verified by SEBI. As prescribed
+        <p className="text-[7px] text-gray-500 mt-1 leading-relaxed max-w-md mx-auto">
+          *Performance-related information is not verified by SEBI. As prescribed
           by SEBI, individual portfolio performance under the equity strategy
           may vary.
         </p>

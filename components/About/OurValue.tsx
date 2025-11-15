@@ -61,12 +61,12 @@ const OurValue = () => {
   return (
     <div
       ref={containerRef}
-      className="pt-24 bg-white h-auto lg:h-[600vh]"
+      className=" bg-white h-auto lg:h-[600vh]"
     >
       <div
         className="
           h-auto lg:h-[120vh]
-          lg:sticky -top-10
+          lg:sticky -top-20
           overflow-visible lg:overflow-hidden
         "
       >

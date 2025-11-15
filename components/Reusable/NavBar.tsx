@@ -256,7 +256,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <motion.div
-      className="fixed top-4 left-0 right-0 w-full hidden lg:block z-[999]"
+      className=" absolute top-4 w-full hidden lg:block z-[999]"
       initial={{ y: -100, opacity: 0 }}
       animate={{
         y: 0,

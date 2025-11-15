@@ -7,7 +7,7 @@ import { Col2Row1, Col2Row2 } from "@/assets/PMS";
 
 const OurEdge = () => {
   return (
-    <Container className="bg-[#FFFFFF]">
+    <Container className="bg-[#FFFFFF] lg:!pt-16">
 
       {/* 🟣 Headings */}
       {/* Desktop */}
@@ -85,7 +85,7 @@ const OurEdge = () => {
       </div>
 
       {/* 🟣 Desktop / Large Layout */}
-      <div className="hidden lg:grid grid-cols-3 gap-6  xl:gap-8 auto-rows-fr">
+      <div className="hidden lg:grid grid-cols-3 gap-6  xl:gap-8 auto-rows-fr max-h-[70dvh]">
 
         {/* Column 1 */}
         <div className="bg-[#F6F9FC] rounded-2xl p-8 flex flex-col justify-between">

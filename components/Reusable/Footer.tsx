@@ -332,7 +332,10 @@ const Footer = () => {
                   whileHover={{ color: "#ffffff" }}
                   className="cursor-pointer underline opacity-[60%]"
                 >
+                  <Link href={'/disclosure'}>
+                  
                   Disclosure
+                  </Link>
                 </motion.span>
               </div>
             </motion.div>

@@ -6,6 +6,7 @@ import WealthFlows from './WealthFlows'
 import OurValue from './OurValue'
 import { useRouter } from 'next/navigation'
 import RecentBlogs from '../CorporateAdvisory/RecentBlogs'
+import MediaCentreSection from '../Common/MediaCenter'
 
 const About = () => {
 
@@ -34,6 +35,7 @@ const About = () => {
         <OurValue />
         <WealthFlows />
         <RecentBlogs />
+        <MediaCentreSection />
       </div>
     );
 }

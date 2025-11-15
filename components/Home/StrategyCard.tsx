@@ -32,8 +32,8 @@ function StrategyCard({
   onHover, // ADD THIS
 }: StrategyCardProps) {
   return (
-    <div
-      className={`bg-white max-w-[572px] h-full rounded-2xl pt-5 md:pt-7 px-5 md:px-7 pb-20 hover:shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)] border border-gray-100 relative transition-shadow duration-500 ${!hasInteracted && index === 0 ? 'shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)]' : ''
+    <Link href={href}
+      className={`bg-white max-w-[572px] h-full rounded-2xl pt-5 md:pt-7 px-5 md:px-7 hover:shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)] border border-gray-100 relative transition-shadow duration-500 ${!hasInteracted && index === 0 ? 'shadow-[16px_6px_93px_0px_rgba(0,0,0,0.25)]' : ''
         }`}
       onMouseEnter={onHover} // ADD THIS
     >
@@ -70,96 +70,7 @@ function StrategyCard({
           ))}
         </SlideUpText>
       </div>
-
-      {/* Arrow Icon */}
-      <Link href={href} className="absolute bottom-6 right-6">
-        {/* mobile */}
-        <svg
-          className="md:hidden "
-          width="36"
-          height="36"
-          viewBox="0 0 36 36"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect width="36" height="36" rx="18" fill="#F1F1F2" />
-          <g clipPath="url(#clip0_140_3490)">
-            <g clipPath="url(#clip1_140_3490)">
-              <path
-                d="M14.8615 22L14 21.1385L19.9077 15.2308H14.6154V14H22V21.3846H20.7692V16.0923L14.8615 22Z"
-                fill="#1C1B1F"
-              />
-            </g>
-          </g>
-          <defs>
-            <clipPath id="clip0_140_3490">
-              <rect
-                width="16"
-                height="16"
-                fill="white"
-                transform="translate(9.36523 9.36499)"
-              />
-            </clipPath>
-            <clipPath id="clip1_140_3490">
-              <rect
-                width="17.27"
-                height="17.27"
-                fill="white"
-                transform="translate(9.36523 9.36499)"
-              />
-            </clipPath>
-          </defs>
-        </svg>
-
-        {/* desktop */}
-        <svg
-          className="md:block hidden"
-          width="62"
-          height="63"
-          viewBox="0 0 62 63"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect y="0.166016" width="62" height="62" rx="31" fill="#F1F1F2" />
-          <g clipPath="url(#clip0_140_1093)">
-            <g clipPath="url(#clip1_140_1093)">
-              <g clipPath="url(#clip2_140_1093)">
-                <path
-                  d="M24.7094 39.1846L22.9824 37.4576L34.8247 25.6153H24.216V23.1482H39.0189V37.951H36.5517V27.3423L24.7094 39.1846Z"
-                  fill="#1C1B1F"
-                />
-              </g>
-            </g>
-          </g>
-          <defs>
-            <clipPath id="clip0_140_1093">
-              <rect
-                width="17.27"
-                height="17.27"
-                fill="white"
-                transform="translate(22.3652 22.531)"
-              />
-            </clipPath>
-            <clipPath id="clip1_140_1093">
-              <rect
-                width="17.27"
-                height="17.27"
-                fill="white"
-                transform="translate(22.3652 22.531)"
-              />
-            </clipPath>
-            <clipPath id="clip2_140_1093">
-              <rect
-                width="17.27"
-                height="17.27"
-                fill="white"
-                transform="translate(22.3652 22.531)"
-              />
-            </clipPath>
-          </defs>
-        </svg>
-      </Link>
-    </div>
+    </Link>
   );
 }
 

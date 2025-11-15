@@ -9,9 +9,13 @@ import {
   kunaljadhwani,
   kunalsabnis,
   mustafaarif,
+  naman,
   nitinjain,
   pragatikhadse,
+  rahil,
+  rakesh,
   vallabh,
+  vinay,
 } from "@/assets/Teams";
 import { StaticImageData } from "next/image";
 import { gsap } from "gsap";
@@ -53,9 +57,29 @@ const teamMembers: TeamMember[] = [
     linkedinUrl: "https://linkedin.com/in/vinaykhatu",
   },
   {
+    id: 4,
+    name: "Vinay Khatu",
+    role: "President",
+    description:
+      "Vinay has 30 years of transactional expertise with more than 40 successful transactions encompassing PE, domestic and international M&A, and corporate finance for both established and startup businesses.",
+    imageUrl: vinay,
+    highlightWords: ["Khatu"],
+    linkedinUrl: "https://linkedin.com/in/vinaykhatu",
+  },
+  {
     id: 3,
-    name: "Kunal Jadhwani",
+    name: "Rahil Merchant",
     role: "Vice President - Research",
+    description:
+      "Rahil brings over 7 years of buy-side experience in Indian capital markets. Commencing his career as an Associate in the Institutional advisory team at Mata Securities, Rahil served as RM to several large corporates & UHNIs.  ",
+    imageUrl: rahil,
+    highlightWords: ["Merchant", "Research"],
+    linkedinUrl: "https://linkedin.com/in/vinaykhatu",
+  },
+  {
+    id: 5,
+    name: "Kunal Jadhwani",
+    role: "Portfolio Manager, AIF",
     description:
       "Kunal brings over 14 years of equity research experience across multiple sectors as an Analyst and Fund Manager at Motilal Oswal AMC and ENAM Family Office. He also had a brief stint as entrepreneur and seeded a consumer brand. Kunal is a Management Graduate from Mumbai University.",
     imageUrl: kunaljadhwani,
@@ -63,9 +87,9 @@ const teamMembers: TeamMember[] = [
     linkedinUrl: "https://linkedin.com/in/vinaykhatu",
   },
   {
-    id: 4,
+    id: 6,
     name: "Vallabh Daga",
-    role: "Executive Director & CFO",
+    role: "Research Analyst",
     description:
       "Vallabh brings diverse experience from the technology and ecommerce sectors to his role as a Research Analyst at Nine Rivers Capital. With a strong background in project management, sales support, and business optimization, he has developed a keen ability to analyze complex data and identify opportunities for growth.",
     imageUrl: vallabh,
@@ -73,24 +97,34 @@ const teamMembers: TeamMember[] = [
     highlightWords: ["Daga"],
   },
   {
-    id: 5,
+    id: 7,
+    name: "Naman Bhansali",
+    role: "Research Analyst",
+    description:
+      "Naman brings over three years of experience as an equity research analyst during which time he has honed his ability to thoroughly understand business models and identify earnings accretive opportunities. ",
+    imageUrl: naman,
+    linkedinUrl: "https://linkedin.com/in/rahulsharma",
+    highlightWords: ["Bhansali"],
+  },
+  {
+    id: 8,
+    name: "Rakesh Wadhwani",
+    role: "Research Analyst",
+    description:
+      "Rakesh brings over 6 years of buy-side experience in Indian capital markets. Over the years he has covered various sectors like Consumer Durable, Real Estate, Building Material Supplier (BMS), Consumer Discretionary and Retail with focus on Mid & Small Cap Space.",
+    imageUrl: rakesh,
+    linkedinUrl: "https://linkedin.com/in/rahulsharma",
+    highlightWords: ["Wadhwani"],
+  },
+  {
+    id: 9,
     name: "Mustafa Arif",
-    role: "President",
+    role: "Research Analyst",
     description:
       "Vinay has 30 years of transactional expertise with more than 40 successful transactions encompassing PE, domestic and international M&A, and corporate finance for both established and startup businesses.",
     imageUrl: mustafaarif,
     highlightWords: ["Arif"],
     linkedinUrl: "https://linkedin.com/in/vinaykhatu",
-  },
-  {
-    id: 6,
-    name: "Nitin Jain",
-    role: "Senior Portfolio Manager",
-    description:
-      "Pragati has over 20 years of public market experience in equity research across multiple sectors in India and Asia. She complements the company's research capabilities in evaluating investment opportunities in public markets.",
-    imageUrl: nitinjain,
-    linkedinUrl: "https://linkedin.com/in/meerasingh",
-    highlightWords: ["Jain"],
   },
 ];
 

@@ -11,7 +11,7 @@ const SMEPerformanceCard = () => {
           <div className=" md:py-16 py-4 px-4 md:px-14">
             {/* Subtitle */}
             <p className="text-primary md:text-sm text-xs leading-[19px] mb-5">
-              *Fund Vintage March 2023. Gross Performance excluding Carried
+              *Fund Vintage 31st Sep 2025. Gross Performance excluding Carried
               Interest
             </p>
 
@@ -20,7 +20,7 @@ const SMEPerformanceCard = () => {
               {/* MOIC Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
                 <div className="md:text-2xl text-xl md:leading-[19px] font-bold">
-                  1.62x
+                  1.40 X
                 </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
                   MOIC*
@@ -33,7 +33,7 @@ const SMEPerformanceCard = () => {
               {/* TVPI Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
                 <div className="md:text-2xl text-xl md:leading-[19px] font-bold">
-                  1.48x
+                  1.32x
                 </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
                   TVPI*
@@ -46,7 +46,7 @@ const SMEPerformanceCard = () => {
               {/* XIRR Card */}
               <div className="bg-[#E5E6EB] rounded-[6px] flex flex-col justify-between h-[168px] px-4 py-5">
                 <div className="md:text-2xl text-xl  md:leading-[19px] font-bold">
-                  29.75x
+                  19.93%
                 </div>
                 <div className="text-secondary text-xs md:text-sm md:leading-[19px] font-medium">
                   XIRR*

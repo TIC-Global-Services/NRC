@@ -57,8 +57,8 @@ const Partnerships = () => {
     },
     {
       image: PartnershipImg2,
-      alt: "Rigore",
-      title: "Rigore",
+      alt: "Rigor",
+      title: "Rigor",
       description: "PE-style diligence before every investment",
     },
     {

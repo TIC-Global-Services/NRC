@@ -9,7 +9,7 @@ export default function HeroSection() {
     router.push("/contact")
   }
   return (
-    <section className="relative min-h-[80vh] md:min-h-[70vh] lg:min-h-[100vh] flex items-start pt-40 justify-center overflow-hidden">
+    <section className="relative min-h-[80vh] md:min-h-[70vh] lg:min-h-[100vh] flex items-start pt-40 justify-center overflow-hidden mb-20">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

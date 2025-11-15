@@ -11,6 +11,10 @@ import satyajit from "@/assets/Teams/satyajit.png"
 import pratik from "@/assets/Teams/pratik.png";
 import roshini from "@/assets/Teams/roshini.png";
 import narayan from "@/assets/Teams/narayan.png";
+import vinay from "@/assets/Teams/vinay.jpg";
+import rahil from "@/assets/Teams/rahil.jpg";
+import naman from "@/assets/Teams/naman.jpg";
+import rakesh from "@/assets/Teams/rakesh.png";
 
 export {
     // leadership
@@ -29,6 +33,10 @@ export {
     vallabh,
     satyajit,
     pratik,
+    naman, 
+    vinay,
+    rakesh,
+    rahil,
 
     // others
     roshini,

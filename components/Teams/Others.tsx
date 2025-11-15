@@ -100,7 +100,7 @@ const OthersSection: React.FC = () => {
               <h1 className="text-3xl md:text-5xl font-light text-gray-900 mb-4">
                 <SlideUpText animationMode="always">
                   {/* Asset <span className="text-primary">Management Team</span> */}
-                  Others
+                  Operations & Compliance
                 </SlideUpText>
               </h1>
             </div>

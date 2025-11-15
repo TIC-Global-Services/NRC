@@ -99,7 +99,7 @@ const MobileNavbar = () => {
     <div className="relative z-[999]">
       {/* Header */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 lg:hidden block transition-opacity duration-300 ${
+        className={` absolute top-0 w-full z-50 lg:hidden block transition-opacity duration-300 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       >

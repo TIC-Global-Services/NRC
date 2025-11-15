@@ -37,7 +37,7 @@ const MediaCentreSection = () => {
   };
 
   return (
-    <Container className="py-12">
+    <Container >
       <div className="mx-auto">
         {/* Header */}
         <div className="flex md:justify-between justify-center items-center mb-6">

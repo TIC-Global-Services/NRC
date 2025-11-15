@@ -31,7 +31,10 @@ const CorporateAdvisory = () => {
         <AdvisoryBouquet />
         <OurTrack />
         <WhyNRC />
+        <div className=' pt-10 md:pb-20'>
+
         <RecentBlogs />
+        </div>
       </div>
     );
 }
