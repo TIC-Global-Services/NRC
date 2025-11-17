@@ -400,13 +400,13 @@ const Hero: React.FC<HeroProps> = ({
                   {mobDes1 && (
                     <>
                       {mobDes1}
-                      <br />
+                      
                     </>
                   )}
                   {mobDes2 && (
                     <>
                       {mobDes2}
-                      <br />
+                     
                     </>
                   )}
                   {mobDes3}

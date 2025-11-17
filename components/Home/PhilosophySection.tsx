@@ -20,8 +20,8 @@ export default function PhilosophySection() {
                 {/* Heading */}
                 <div className="md:space-y-2 md:mt-2 mt-4">
                   <SlideUpText animationMode="always">
-                    <h2 className="text-[26px] md:text-5xl   font-[400] leading-8 md:leading-[58px]">
-                      Private Equity Thinking.<span className="md:hidden text-primary ">Public</span>
+                    <h2 className="text-[26px] md:text-5xl  font-[400] leading-8 md:leading-[58px]">
+                      Private Equity Thinking. <span className="md:hidden text-primary ">Public</span>
                     </h2>
                   </SlideUpText>
                   <SlideUpText animationMode="always">
@@ -117,8 +117,6 @@ export default function PhilosophySection() {
             </div>
           </div>
 
-          {/* Desktop Button */}
-          {/* <AnimatedButton label="Learn More" className="mt-6 md:hidden block" /> */}
         </div>
       </section>
     </Container>

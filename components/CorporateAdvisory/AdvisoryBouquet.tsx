@@ -40,7 +40,7 @@ const AdvisoryBouquet = () => {
   };
 
   return (
-    <Container disablePaddingBottomMobile className="bg-[#FFFFFF] pb-16 md:pb-0">
+    <Container disablePaddingBottomMobile disablePaddingBottomDesktop className="bg-[#FFFFFF] pb-16 ">
       <div className="min-h-screen">
         <div className="mx-auto">
           {/* Header */}

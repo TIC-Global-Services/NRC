@@ -436,11 +436,11 @@ const TwoDistinctComponent: React.FC<TwoDistinctProps> = ({
           </div>
 
           {/* row2col2 */}
-          <div className="lg:h-[450px] lg:block hidden">
+          <div className="lg:h-[450px] lg:block hidden w-full">
             <Image
               src={Row5Col2}
               alt="Row5Col2"
-              className="h-full"
+              className="h-full w-full object-cover rounded-2xl"
               width={653}
               height={450}
             />
