@@ -85,7 +85,7 @@ const RecentBlogs = () => {
         </div>
 
         <AnimatedButton
-          className="md:hidden mt-6 mb-36"
+          className="md:hidden mt-6 md:mb-36"
           onClick={() => router.push("/insights")}
           label="Explore More"
         />

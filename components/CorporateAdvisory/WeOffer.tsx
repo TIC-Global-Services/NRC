@@ -21,7 +21,7 @@ const WeOffer = () => {
       className="w-full py-[74px] lg:py-0"
     >
       <SlideUpText animationMode="once">
-        <h1 className="lg:text-[38px] md:text-3xl text-[26px] leading-[34px] md:leading-[40px] lg:leading-[60px] 2xl:px-28 md:mb-12 mb-7 text-center mx-auto max-w-7xl">
+        <h1 className="lg:text-[38px] md:text-3xl text-xl leading-[34px] md:leading-[40px] lg:leading-[60px] 2xl:px-28 md:mb-12 mb-7 text-center mx-auto max-w-7xl">
           We offer{" "}
           <span className="text-primary">
             big firm capabilities with a boutique firm

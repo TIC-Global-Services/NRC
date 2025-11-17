@@ -84,7 +84,7 @@ const Strategies: React.FC = () => {
             <h3 className="text-xl md:text-[24px] lg:text-[26px] text-[#000000] mb-3 lg:mb-4 leading-tight">
               Aurum Small <span className="text-primary">Cap Opportunities</span>
             </h3>
-            <div className="overflow-hidden relative flex-1 flex flex-col justify-start mt-[40%]">
+            <div className="overflow-hidden relative flex-1 flex flex-col justify-start md:mt-[40%]">
               <h4 className="text-base md:text-[20px] lg:text-2xl text-[#000000] mb-2 font-medium">
                 {leftStrategyContent[currentStep].subheading}
               </h4>
@@ -125,7 +125,7 @@ const Strategies: React.FC = () => {
             <h3 className="text-xl md:text-[24px] lg:text-[26px] text-[#000000] mb-3 lg:mb-4 leading-tight">
               Aurum <span className="text-primary">Multiplier Portfolio</span>
             </h3>
-            <div className="overflow-hidden relative flex-1 flex flex-col justify-start mt-[40%]">
+            <div className="overflow-hidden relative flex-1 flex flex-col justify-start md:mt-[40%]">
               <h4 className="text-base md:text-[20px] lg:text-2xl text-[#000000] mb-2 font-medium">
                 {rightStrategyContent[currentStep].subheading}
               </h4>
@@ -137,7 +137,7 @@ const Strategies: React.FC = () => {
         </div>
 
         {/* Navigation Arrows */}
-        <div className="flex items-center justify-center gap-6 mt-10">
+        <div className="flex items-center justify-center gap-6 md:mt-10">
           <button
             onClick={handlePrev}
             className="w-12 h-12 rounded-full border border-gray-300 hover:border-primary flex items-center justify-center transition-all duration-300 cursor-pointer"

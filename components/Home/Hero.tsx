@@ -52,7 +52,7 @@ const Hero = () => {
         muted
         preload="auto"
       >
-        <source src="/Hero/NRC-River.mp4" type="video/mp4" />
+        <source src="/Hero/NRC_River_Enhanced1.mp4" type="video/mp4" />
         {/* Fallback text */}
         Your browser does not support the video tag.
       </video>

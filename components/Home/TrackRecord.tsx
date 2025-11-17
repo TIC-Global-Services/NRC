@@ -213,7 +213,7 @@ export default function TrackRecordSection() {
 
           <div className="grid lg:grid-cols-[0.45fr_0.55fr] items-end">
             {/* Left Column - Desktop Fund Selection */}
-            <div className="hidden md:block lg:max-w-md">
+            <div className="hidden md:block ">
               <div className="mb-3">
                 <Badge label="Our Track Record" />
                 <div className="lg:max-w-2xl mt-4">
