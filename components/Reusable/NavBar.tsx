@@ -174,10 +174,8 @@ const NavItem = React.memo<NavItemProps>(
             <motion.div
               className="absolute top-full mt-6 left-0 rounded-2xl min-w-[200px] z-50"
               style={{
-                WebkitBackdropFilter: "blur(20px)",
                 border: "1px solid #FFFFFF1A",
-                boxShadow: "0px 48px 100px 0px #110C2E26",
-                background: "#FFFFFF52",
+                background: "#FFFFFF",
               }}
               initial={{ opacity: 0, y: -15, scale: 0.9 }}
               animate={{

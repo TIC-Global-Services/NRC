@@ -1,9 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Linkedin, Youtube, Twitter, MapPin } from 'lucide-react';
-import Container from './Container';
-import { Location } from '@/assets/CommonSVGs';
-import Link from 'next/link';
+import React from "react";
+import { motion } from "framer-motion";
+import { Linkedin, Youtube, Twitter, MapPin } from "lucide-react";
+import Container from "./Container";
+import { Location } from "@/assets/CommonSVGs";
+import Link from "next/link";
 
 const Footer = () => {
   const containerVariants = {
@@ -13,14 +13,14 @@ const Footer = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -53,19 +53,19 @@ const Footer = () => {
                     whileHover={{ x: 4 }}
                     className="cursor-pointer hover:text-white transition-colors"
                   >
-                    About us
+                    <Link href={"/about"}>About us</Link>
                   </motion.div>
                   <motion.div
                     whileHover={{ x: 4 }}
                     className="cursor-pointer hover:text-white transition-colors"
                   >
-                    Investors
+                    <Link href={"/team"}>Team</Link>
                   </motion.div>
                   <motion.div
                     whileHover={{ x: 4 }}
                     className="cursor-pointer hover:text-white transition-colors"
                   >
-                    Insights
+                    <Link href={"/contact"}>Contact</Link>
                   </motion.div>
                 </div>
               </motion.div>
@@ -80,13 +80,19 @@ const Footer = () => {
                     whileHover={{ x: 4 }}
                     className="cursor-pointer hover:text-white transition-colors"
                   >
-                    Asset Management
+                    <Link href={"/pms"}>PMS</Link>
                   </motion.div>
                   <motion.div
                     whileHover={{ x: 4 }}
                     className="cursor-pointer hover:text-white transition-colors"
                   >
-                    Corporate Advisory
+                    <Link href={"/aif"}>AIF</Link>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    className="cursor-pointer hover:text-white transition-colors"
+                  >
+                    <Link href={"/corporate-advisory"}>Corporate Advisory</Link>
                   </motion.div>
                 </div>
               </motion.div>
@@ -323,19 +329,13 @@ const Footer = () => {
                   whileHover={{ color: "#ffffff" }}
                   className="cursor-pointer underline opacity-[60%]"
                 >
-                  <Link href={'/disclaimer'}>
-                  
-                  Disclaimer
-                  </Link>
+                  <Link href={"/disclaimer"}>Disclaimer</Link>
                 </motion.span>
                 <motion.span
                   whileHover={{ color: "#ffffff" }}
                   className="cursor-pointer underline opacity-[60%]"
                 >
-                  <Link href={'/disclosure'}>
-                  
-                  Disclosure
-                  </Link>
+                  <Link href={"/disclosure"}>Disclosure</Link>
                 </motion.span>
               </div>
             </motion.div>
