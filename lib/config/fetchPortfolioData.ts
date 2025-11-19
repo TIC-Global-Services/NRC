@@ -100,10 +100,18 @@ export async function fetchPortfolioData(
     })
     .filter((r: any): r is PortfolioRow => r !== null);
 
+  console.log("Fetched JSON:", json);
+  console.log("Detected lastUpdated:", json.lastUpdated);
+
   return {
     data: formatted,
-    lastUpdated: json?.lastUpdated,
-    sheetName: json?.sheetName,
+    lastUpdated:
+      json.lastUpdated ||
+      json.last_updated ||
+      json.updatedAt ||
+      json.updated_at ||
+      null,
+    sheetName: json.sheetName || json.sheet || null,
   };
 }
 
@@ -119,8 +127,18 @@ function parseMonthYear(monthStr: string): Date {
   ];
 
   const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   for (const format of formats) {
@@ -137,16 +155,12 @@ function parseMonthYear(monthStr: string): Date {
       if (year < 100) year += 2000;
     } else if (format === formats[1]) {
       const [_, part, yr] = match;
-      month = isNaN(+part)
-        ? monthNames.indexOf(part)
-        : parseInt(part) - 1;
+      month = isNaN(+part) ? monthNames.indexOf(part) : parseInt(part) - 1;
       year = parseInt(yr);
     } else {
       const [_, yr, part] = match;
       year = parseInt(yr);
-      month = isNaN(+part)
-        ? monthNames.indexOf(part)
-        : parseInt(part) - 1;
+      month = isNaN(+part) ? monthNames.indexOf(part) : parseInt(part) - 1;
     }
 
     if (month >= 0 && year > 1900) return new Date(year, month);
