@@ -28,7 +28,7 @@ const Glance = () => {
     },
     {
       id: 2,
-      title: "2 Strategies (Small Cap & Flexi-Cap)",
+      title: "2 Strategies : Small Cap & Flexi-Cap",
       imageSrc: GlanceImg2.src || GlanceImg2,
       imageAlt: "Portfolio Strategy",
       imageWidth: 250,

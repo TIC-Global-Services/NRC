@@ -297,25 +297,7 @@ export const AnimatedChart = ({
   const portfolioCAGR = calculateCAGR(data.data);
   const benchmarkCAGR = calculateCAGR(data.benchmarkData);
 
-  const findBestGrowthPoint = () => {
-    let maxDifference = -Infinity;
-    let bestIndex = -1;
-
-    data.data.forEach((portfolioPoint, index) => {
-      if (index < data.benchmarkData.length) {
-        const difference =
-          portfolioPoint.value - data.benchmarkData[index].value;
-        if (difference > maxDifference && difference > 100) {
-          maxDifference = difference;
-          bestIndex = index;
-        }
-      }
-    });
-
-    return bestIndex;
-  };
-
-  const bestGrowthIndex = findBestGrowthPoint();
+  const latestIndex = data.data.length - 1;
 
   const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
     if (!svgRef.current) return;
@@ -495,7 +477,7 @@ export const AnimatedChart = ({
           />
 
           {/* +X.X% Bubble */}
-          {bestGrowthIndex !== -1 && animationProgress >= 0.98 && (
+          {animationProgress >= 0.98 && (
             <g
               style={{
                 opacity: Math.min((animationProgress - 0.98) / 0.02, 1),
@@ -503,14 +485,14 @@ export const AnimatedChart = ({
                 transformBox: "fill-box",
               }}
             >
-              {/* Circle highlight */}
+              {/* Highlight Circle */}
               <circle
-                cx={paddingLeft + bestGrowthIndex * xStep}
+                cx={paddingLeft + latestIndex * xStep}
                 cy={
                   height -
                   paddingBottom -
                   ((getAnimatedValue(
-                    data.data[bestGrowthIndex].value,
+                    data.data[latestIndex].value,
                     animationProgress
                   ) -
                     minValue) /
@@ -522,12 +504,12 @@ export const AnimatedChart = ({
                 fillOpacity="0.15"
               />
               <circle
-                cx={paddingLeft + bestGrowthIndex * xStep}
+                cx={paddingLeft + latestIndex * xStep}
                 cy={
                   height -
                   paddingBottom -
                   ((getAnimatedValue(
-                    data.data[bestGrowthIndex].value,
+                    data.data[latestIndex].value,
                     animationProgress
                   ) -
                     minValue) /
@@ -541,12 +523,12 @@ export const AnimatedChart = ({
               {/* Tooltip bubble */}
               <g
                 transform={`translate(${
-                  paddingLeft + bestGrowthIndex * xStep - 24.5
+                  paddingLeft + latestIndex * xStep - 24.5
                 }, ${
                   height -
                   paddingBottom -
                   ((getAnimatedValue(
-                    data.data[bestGrowthIndex].value,
+                    data.data[latestIndex].value,
                     animationProgress
                   ) -
                     minValue) /
@@ -566,7 +548,7 @@ export const AnimatedChart = ({
                   textAnchor="middle"
                   dominantBaseline="middle"
                 >
-                  +{data.data[bestGrowthIndex].value.toFixed(1)}%
+                  +{data.data[latestIndex].value.toFixed(1)}%
                 </text>
               </g>
             </g>
@@ -656,9 +638,9 @@ export const AnimatedChart = ({
 
         {/* SEBI Disclaimer */}
         <p className="text-[7px] text-gray-500 mt-1 leading-relaxed max-w-md mx-auto">
-          *Performance-related information is not verified by SEBI. As prescribed
-          by SEBI, individual portfolio performance under the equity strategy
-          may vary.
+          *Performance-related information is not verified by SEBI. As
+          prescribed by SEBI, individual portfolio performance under the equity
+          strategy may vary.
         </p>
       </div>
     </div>
